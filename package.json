@@ -4,10 +4,13 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "dev": "vue-cli-service build && vue-cli-service serve --mode development",
+    "prod": "vue-cli-service build && vue-cli-service serve --mode production"
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "pinia": "^2.0.22",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0"
   },
