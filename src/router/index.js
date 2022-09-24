@@ -1,25 +1,32 @@
+import { nextTick } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
+import main from './main'
+import member from './member'
+import display from './display'
+import product from './product'
+import error from './error'
+
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+  ...error,
+  ...main,
+  ...member,
+  ...display,
+  ...product,
 ]
-
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next)=> {
+  next();
+});
+
+router.afterEach((to, from)=> {
+  nextTick(()=> {
+    document.title = 'shopping'.concat(to.meta.title!==undefined ? ' | '.concat(to.meta.title) : '');
+  })
 })
 
 export default router

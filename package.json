@@ -9,6 +9,8 @@
     "prod": "vue-cli-service build && vue-cli-service serve --mode production"
   },
   "dependencies": {
+    "axios": "^0.27.2",
+    "bootstrap": "^5.2.1",
     "core-js": "^3.6.5",
     "pinia": "^2.0.22",
     "vue": "^3.0.0",
