@@ -10,12 +10,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const config = useConfig();
 // e : config set
 
-// vue create
+// s : vue create
 const app = createApp(App);
 
 app.use(router);
 app.use(config.axiosConfig())
 app.use(createPinia());
 app.mount('#app');
+// e : vue create
 
 

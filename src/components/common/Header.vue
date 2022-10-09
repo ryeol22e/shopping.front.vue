@@ -4,7 +4,8 @@
 			<div class="container">
 				<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 					<router-link to="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-						<svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+						<!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg> -->
+						<span class="px-3 text-secondary">SHOP</span>
 					</router-link>
 
 					<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -20,9 +21,10 @@
 					</div> -->
 
 					<div class="text-end">
-						<button type="button" class="btn btn-outline-light me-2" v-if="!isLogin">Login</button>
+						<router-link to="/login" type="button" class="btn btn-outline-light me-2" v-if="!isLogin">Login</router-link>
 						<button type="button" class="btn btn-outline-light me-2" v-else>Logout</button>
-						<button type="button" class="btn btn-warning">Sign-up</button>
+						<router-link to="/signup" type="button" class="btn btn-warning me-2" v-if="!isLogin">Sign-up</router-link>
+						<router-link to="/admin/dashboard" type="button" class="btn btn-outline-light me-2" v-if="!isLogin">DashBoard</router-link>
 					</div>
 				</div>
 			</div>
@@ -32,15 +34,19 @@
 
 <script setup>
 	import { onMounted, ref, computed } from 'vue';
+	import {useRouter} from 'vue-router';
 	import useStoreCommon from '@/store/useStoreCommon';
 	import useStoreMember from '@/store/useStoreMember';
 
 	const useCommon = useStoreCommon();
 	const useMember = useStoreMember();
-
+	const router = useRouter();
 	const headers = computed(()=> useCommon.getHeaders);
 	const isLogin = computed(()=> useMember.isLogin);
 	
+	const adminDashBoard = ()=> {
+		router.push('/admin/dashboard');
+	}
 	onMounted(()=> {
 		useCommon.setHeaders();
 	});
