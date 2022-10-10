@@ -22,17 +22,18 @@
 			<input type="password" class="form-control" id="password" placeholder="Password" v-model="data.memberPassword">
 			<label for="password">Password</label>
 		</div>
-		<div class="form-floating">
-			<input type="text" class="form-control" id="authNumber" v-model="data.authNumber">
+		<div class="form-floating ">
+			<input type="text" class="form-control" id="authNumber" placeholder="인증번호" v-model="data.authNumber" readonly>
 			<label for="authNumber">인증번호</label>
 			<button class="btn btn-primary" type="button" @click="getAuthNumber">인증번호 받기</button>
 		</div>
+		
 		<button class="w-100 btn btn-lg btn-primary" type="button" @click="signUp">Sign up</button>
 	</main>
 </template>
 
 <script setup>
-	import {reactive, onMounted, computed} from 'vue';
+	import {ref, reactive, onMounted, computed} from 'vue';
 	import {useRouter} from 'vue-router';
 	import useStoreMember from '@/store/useStoreMember';
 
@@ -80,27 +81,32 @@
 			if(sessionAuthNum===inputAuthNum) {
 				data.tempYn = 'N';
 				useMember.signUpProcess(data);
+				const signResult = computed(()=> useMember.getSignUpResult);
 
-				const result = useMember.getSignUpResult;
+				setTimeout(() => {
+					if(signResult) {
+						alert('가입이 완료되었습니다.');
 
-				if(result) {
-					alert('가입이 완료되었습니다.');
-
-					sessionStorage.removeItem('authNumber');
-					router.push('/');
-				}
+						sessionStorage.removeItem('authNumber');
+						router.push('/');
+					}
+				}, 100);
 			}
 		}
 	}
 	const getAuthNumber = ()=> {
 		if(validate()) {
 			useMember.setAuthNumber(data);
+			const authNumber = computed(()=> useMember.getAuthNumber);
+			
+			setTimeout(() => {
+				sessionStorage.setItem('authNumber', authNumber.value);
+				data.authNumber = authNumber.value;
+			}, 100);
 		}
 	}
 
-	onMounted(()=> {
-		
-	});
+	
 </script>
 
 <style scoped>

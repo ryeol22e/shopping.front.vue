@@ -22,7 +22,7 @@
 
 					<div class="text-end">
 						<router-link to="/login" type="button" class="btn btn-outline-light me-2" v-if="!isLogin">Login</router-link>
-						<button type="button" class="btn btn-outline-light me-2" v-else>Logout</button>
+						<button type="button" class="btn btn-outline-light me-2" v-else @click="logout">Logout</button>
 						<router-link to="/signup" type="button" class="btn btn-warning me-2" v-if="!isLogin">Sign-up</router-link>
 						<router-link to="/admin/dashboard" type="button" class="btn btn-outline-light me-2" v-if="!isLogin">DashBoard</router-link>
 					</div>
@@ -37,18 +37,26 @@
 	import {useRouter} from 'vue-router';
 	import useStoreCommon from '@/store/useStoreCommon';
 	import useStoreMember from '@/store/useStoreMember';
+	import {useUtilCookie} from '@/assets/js/utils/useUtils';
 
 	const useCommon = useStoreCommon();
 	const useMember = useStoreMember();
+	const useCookie = useUtilCookie();
 	const router = useRouter();
 	const headers = computed(()=> useCommon.getHeaders);
+	// const isLogin = useCookie.getCookie('token')==='' ? false : true;
 	const isLogin = computed(()=> useMember.isLogin);
 	
 	const adminDashBoard = ()=> {
 		router.push('/admin/dashboard');
 	}
+	const logout = ()=> {
+		useCookie.deleteCookie('token');
+		useMember.setIsLogin(false);
+	}
 	onMounted(()=> {
 		useCommon.setHeaders();
+
 	});
 </script>
 

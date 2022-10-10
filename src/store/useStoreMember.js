@@ -4,19 +4,26 @@ import axios from "axios";
 export default defineStore('member', {
 	state : ()=> ({
 		isLogin : false,
+		token : '',
 		signUpResult : false,
+		authNumber : '',
 	}),
 	getters : {
 		isLogin : state=> state.isLogin,
+		getToken : state=> state.token,
 		getSignUpResult : state=> state.signUpResult,
+		getAuthNumber : state=> state.authNumber,
 	},
 	actions : {
 		async loginProcess(param) {
-			this.isLogin = await axios.get('/member/login', {
+			this.token = await axios.get('/member/login', {
 				params : param
 			})
 			.then(res=> res.data)
 			.catch(error=> console.log(error));
+		},
+		setIsLogin(bool) {
+			this.isLogin = bool;
 		},
 		async signUpProcess(param) {
 			this.signUpResult = await axios.post('/member/join', param)
@@ -24,13 +31,8 @@ export default defineStore('member', {
 				.catch(error=> console.log(error));
 		},
 		async setAuthNumber(param) {
-			await axios.post('/member/auth/number', param)
-				.then(res=> {
-					const authNumber = res.data;
-
-					sessionStorage.setItem('authNumber', authNumber);
-					alert(`인증번호는 "${authNumber}" 입니다.`);
-				})
+			this.authNumber = await axios.post('/member/auth/number', param)
+				.then(res=> res.data)
 				.catch(error=> console.log(error));
 		}
 	}

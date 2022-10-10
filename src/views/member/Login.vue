@@ -3,25 +3,74 @@
 		<h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
 		<div class="form-floating">
-			<input type="email" class="form-control" placeholder="name@example.com">
-			<label for="floatingInput">Email address</label>
+			<input type="email" class="form-control" placeholder="ID" v-model="data.memberId">
+			<label for="floatingInput">ID</label>
 		</div>
 		<div class="form-floating">
-			<input type="password" class="form-control" placeholder="Password">
+			<input type="password" class="form-control" placeholder="Password" v-model="data.memberPassword">
 			<label for="floatingPassword">Password</label>
 		</div>
 
 		<div class="checkbox mb-3">
 			<label>
-				<input type="checkbox" value="remember-me"> Remember me
+				<input type="checkbox" value="remember-me" v-model="remember"> Remember me
 			</label>
 		</div>
-		<button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+		<button class="w-100 btn btn-lg btn-primary" type="button" @click="loginProcess">Sign in</button>
 		<p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
 	</main>
 </template>
 
-<script setup></script>
+<script setup>
+	import {ref, reactive, onMounted, computed} from 'vue';
+	import {useRouter} from 'vue-router';
+	import useStoreMember from '@/store/useStoreMember';
+	import {useUtilCookie} from '@/assets/js/utils/useUtils';
+
+	const useCookie = useUtilCookie();
+	const useMember = useStoreMember();
+	const router = useRouter();
+	const memberId = useCookie.getCookie('memberId');
+	const remember = ref(memberId==='' ? false : true);
+	const data = reactive({
+		memberId : remember ? memberId : '',
+		memberPassword : '',
+	});
+	const loginProcess = ()=> {
+		if(validate()) {
+			useMember.loginProcess(data);
+			const token = computed(()=> useMember.getToken);
+
+			if(remember) {
+				useCookie.setCookie('memberId', data.memberId);
+			}
+
+			setTimeout(() => {
+				if(token.value!=='') {
+					useMember.setIsLogin(true);
+					useCookie.setCookie('token', token.value);
+					router.push('/');
+				}
+			}, 100);
+		}
+	};
+	const validate = ()=> {
+		if(data.memberId==='') {
+			alert('아이디를 입력해주세요.');
+			return false;
+		}
+		if(data.memberPassword==='') {
+			alert('비밀번호를 입력해주세요.');
+			return false;
+		}
+
+		return true;
+	}
+
+	onMounted(()=> {
+		
+	});
+</script>
 
 <style scoped>
 	@import '../../assets/css/signin.css';
