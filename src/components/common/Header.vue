@@ -1,7 +1,7 @@
 <template>
 	<main>
 		<header class="p-3 text-bg-dark">
-			<div class="container">
+			<div>
 				<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 					<router-link to="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
 						<!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg> -->
@@ -62,39 +62,39 @@
 		user-select: none;
 		}
 
-		@media (min-width: 768px) {
+	@media (min-width: 768px) {
 		.bd-placeholder-img-lg {
 			font-size: 3.5rem;
 		}
-		}
+	}
 
-		.b-example-divider {
+	.b-example-divider {
 		height: 3rem;
 		background-color: rgba(0, 0, 0, .1);
 		border: solid rgba(0, 0, 0, .15);
 		border-width: 1px 0;
 		box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-		}
+	}
 
-		.b-example-vr {
+	.b-example-vr {
 		flex-shrink: 0;
 		width: 1.5rem;
 		height: 100vh;
-		}
+	}
 
-		.bi {
+	.bi {
 		vertical-align: -.125em;
 		fill: currentColor;
-		}
+	}
 
-		.nav-scroller {
+	.nav-scroller {
 		position: relative;
 		z-index: 2;
 		height: 2.75rem;
 		overflow-y: hidden;
-		}
+	}
 
-		.nav-scroller .nav {
+	.nav-scroller .nav {
 		display: flex;
 		flex-wrap: nowrap;
 		padding-bottom: 1rem;
@@ -103,5 +103,5 @@
 		text-align: center;
 		white-space: nowrap;
 		-webkit-overflow-scrolling: touch;
-		}
+	}
 </style>

@@ -3,23 +3,105 @@
 		<h1 class="h3 mb-3 fw-normal">sign up plaase.</h1>
 
 		<div class="form-floating">
-			<input type="email" class="form-control" id="email" placeholder="name@example.com">
-			<label for="email">Email address</label>
-		</div>
-		<div class="form-floating">
-			<input type="text" class="form-control" id="userName" placeholder="홍길동">
+			<input type="text" class="form-control" id="userName" placeholder="홍길동" v-model="data.memberName">
 			<label for="userName">Name</label>
 		</div>
 		<div class="form-floating">
-			<input type="password" class="form-control" id="password" placeholder="Password">
+			<input type="text" class="form-control" id="address" placeholder="Address" v-model="data.memberAddr">
+			<label for="address">Adress</label>
+		</div>
+		<div class="form-floating">
+			<input type="text" class="form-control" id="memberId" placeholder="user123" v-model="data.memberId">
+			<label for="memberId">Member Id</label>
+		</div>
+		<div class="form-floating">
+			<input type="email" class="form-control" id="email" placeholder="name@example.com" v-model="data.memberEmail">
+			<label for="email">Email address</label>
+		</div>
+		<div class="form-floating">
+			<input type="password" class="form-control" id="password" placeholder="Password" v-model="data.memberPassword">
 			<label for="password">Password</label>
 		</div>
-
-		<button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+		<div class="form-floating">
+			<input type="text" class="form-control" id="authNumber" v-model="data.authNumber">
+			<label for="authNumber">인증번호</label>
+			<button class="btn btn-primary" type="button" @click="getAuthNumber">인증번호 받기</button>
+		</div>
+		<button class="w-100 btn btn-lg btn-primary" type="button" @click="signUp">Sign up</button>
 	</main>
 </template>
 
-<script setup></script>
+<script setup>
+	import {reactive, onMounted, computed} from 'vue';
+	import {useRouter} from 'vue-router';
+	import useStoreMember from '@/store/useStoreMember';
+
+	const router = useRouter();
+	const useMember = useStoreMember();
+	const data = reactive({
+		memberId : '',
+		memberPassword : '',
+		memberName : '',
+		memberEmail : '',
+		memberAddr : '',
+		authNumber : '',
+		tempYn : 'Y',
+
+	});
+	const validate = ()=> {
+		if(data.memberId==='') {
+			alert('아이디를 입력해주세요.');
+			return false;
+		}
+		if(data.memberPassword==='') {
+			alert('비밀번호를 입력해주세요.');
+			return false;
+		}
+		if(data.memberName==='') {
+			alert('이름을 입력해주세요.');
+			return false;
+		}
+		if(data.memberEmail==='') {
+			alert('이메일을 입력해주세요.');
+			return false;
+		}
+		if(data.memberAddr==='') {
+			alert('주소를 입력해주세요.');
+			return false;
+		}
+
+		return true;
+	};
+	const signUp = ()=> {
+		if(validate()) {
+			const sessionAuthNum = sessionStorage.getItem('authNumber');
+			const inputAuthNum = data.authNumber;
+
+			if(sessionAuthNum===inputAuthNum) {
+				data.tempYn = 'N';
+				useMember.signUpProcess(data);
+
+				const result = useMember.getSignUpResult;
+
+				if(result) {
+					alert('가입이 완료되었습니다.');
+
+					sessionStorage.removeItem('authNumber');
+					router.push('/');
+				}
+			}
+		}
+	}
+	const getAuthNumber = ()=> {
+		if(validate()) {
+			useMember.setAuthNumber(data);
+		}
+	}
+
+	onMounted(()=> {
+		
+	});
+</script>
 
 <style scoped>
 	@import '../../assets/css/signin.css';
