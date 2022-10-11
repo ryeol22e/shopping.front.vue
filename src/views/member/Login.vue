@@ -36,22 +36,21 @@
 		memberId : remember ? memberId : '',
 		memberPassword : '',
 	});
-	const loginProcess = ()=> {
+	
+	const loginProcess = async ()=> {
 		if(validate()) {
 			useMember.loginProcess(data);
-			const token = computed(()=> useMember.getToken);
+			const token = await useMember.getToken;
 
 			if(remember) {
 				useCookie.setCookie('memberId', data.memberId);
 			}
 
-			setTimeout(() => {
-				if(token.value!=='') {
-					useMember.setIsLogin(true);
-					useCookie.setCookie('token', token.value);
-					router.push('/');
-				}
-			}, 100);
+			if(token!=='') {
+				useCookie.setCookie('token', token);
+				useMember.setLogin(true);
+				router.push('/');
+			}
 		}
 	};
 	const validate = ()=> {

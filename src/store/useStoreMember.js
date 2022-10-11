@@ -9,21 +9,26 @@ export default defineStore('member', {
 		authNumber : '',
 	}),
 	getters : {
-		isLogin : state=> state.isLogin,
+		getIsLogin : state=> state.isLogin,
 		getToken : state=> state.token,
 		getSignUpResult : state=> state.signUpResult,
 		getAuthNumber : state=> state.authNumber,
 	},
 	actions : {
+		setLogin(bool) {
+			this.isLogin = bool;
+		},
+		async loginCheck() {
+			this.isLogin = await axios.get('/member/check/login')
+				.then(res=> res.data)
+				.catch(error=> console.log(error));
+		},
 		loginProcess(param) {
 			this.token = axios.get('/member/login', {
 				params : param
 			})
 			.then(res=> res.data)
 			.catch(error=> console.log(error));
-		},
-		setIsLogin(bool) {
-			this.isLogin = bool;
 		},
 		signUpProcess(param) {
 			this.signUpResult = axios.post('/member/join', param)
