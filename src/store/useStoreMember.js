@@ -15,8 +15,8 @@ export default defineStore('member', {
 		getAuthNumber : state=> state.authNumber,
 	},
 	actions : {
-		async loginProcess(param) {
-			this.token = await axios.get('/member/login', {
+		loginProcess(param) {
+			this.token = axios.get('/member/login', {
 				params : param
 			})
 			.then(res=> res.data)
@@ -25,13 +25,13 @@ export default defineStore('member', {
 		setIsLogin(bool) {
 			this.isLogin = bool;
 		},
-		async signUpProcess(param) {
-			this.signUpResult = await axios.post('/member/join', param)
+		signUpProcess(param) {
+			this.signUpResult = axios.post('/member/join', param)
 				.then(res=> res.data)
 				.catch(error=> console.log(error));
 		},
-		async setAuthNumber(param) {
-			this.authNumber = await axios.post('/member/auth/number', param)
+		setAuthNumber(param) {
+			this.authNumber = axios.post('/member/auth/number', param)
 				.then(res=> res.data)
 				.catch(error=> console.log(error));
 		}

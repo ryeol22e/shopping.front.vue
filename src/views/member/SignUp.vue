@@ -23,7 +23,7 @@
 			<label for="password">Password</label>
 		</div>
 		<div class="form-floating ">
-			<input type="text" class="form-control" id="authNumber" placeholder="인증번호" v-model="data.authNumber" readonly>
+			<input type="text" class="form-control" id="authNumber" placeholder="인증번호" v-model="data.authNumber">
 			<label for="authNumber">인증번호</label>
 			<button class="btn btn-primary" type="button" @click="getAuthNumber">인증번호 받기</button>
 		</div>
@@ -73,7 +73,7 @@
 
 		return true;
 	};
-	const signUp = ()=> {
+	const signUp = async ()=> {
 		if(validate()) {
 			const sessionAuthNum = sessionStorage.getItem('authNumber');
 			const inputAuthNum = data.authNumber;
@@ -81,7 +81,7 @@
 			if(sessionAuthNum===inputAuthNum) {
 				data.tempYn = 'N';
 				useMember.signUpProcess(data);
-				const signResult = computed(()=> useMember.getSignUpResult);
+				const signResult = await useMember.getSignUpResult;
 
 				setTimeout(() => {
 					if(signResult) {
@@ -94,15 +94,13 @@
 			}
 		}
 	}
-	const getAuthNumber = ()=> {
+	const getAuthNumber = async ()=> {
 		if(validate()) {
 			useMember.setAuthNumber(data);
-			const authNumber = computed(()=> useMember.getAuthNumber);
+			const authNumber = await useMember.getAuthNumber;
 			
-			setTimeout(() => {
-				sessionStorage.setItem('authNumber', authNumber.value);
-				data.authNumber = authNumber.value;
-			}, 100);
+			sessionStorage.setItem('authNumber', authNumber);
+			alert(`인증번호는 "${authNumber}"입니다.`);
 		}
 	}
 
