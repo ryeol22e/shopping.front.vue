@@ -29,8 +29,10 @@ router.beforeEach((to, from, next)=> {
 
   if(token!=='') {
 		axios.defaults.headers.common['Authorization'] = 'Bearer '.concat(token);
+    axios.defaults.headers.common['MemberId'] = localStorage.getItem('memberId');
 	} else {
 		delete axios.defaults.headers.common['Authorization'];
+    delete axios.defaults.headers.common['MemberId'];
 	}
   
   useMember.authCheck();

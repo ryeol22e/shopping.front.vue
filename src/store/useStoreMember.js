@@ -4,13 +4,13 @@ import axios from "axios";
 export default defineStore('member', {
 	state : ()=> ({
 		isLogin : false,
-		token : '',
+		userInfo : '',
 		signUpResult : false,
 		authNumber : '',
 	}),
 	getters : {
 		getIsLogin : state=> state.isLogin,
-		getToken : state=> state.token,
+		getUserInfo : state=> state.userInfo,
 		getSignUpResult : state=> state.signUpResult,
 		getAuthNumber : state=> state.authNumber,
 	},
@@ -24,7 +24,7 @@ export default defineStore('member', {
 				.catch(error=> console.log(error));
 		},
 		loginProcess(param) {
-			this.token = axios.get('/member/login', {
+			this.userInfo = axios.get('/member/login', {
 				params : param
 			})
 			.then(res=> res.data)

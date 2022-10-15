@@ -5,7 +5,7 @@
 				<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 					<router-link to="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
 						<!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg> -->
-						<span class="px-3 text-secondary">SHOP</span>
+						<h3 class="px-3 text-secondary">SHOP</h3>
 					</router-link>
 
 					<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -24,7 +24,7 @@
 						<router-link to="/login" type="button" class="btn btn-outline-light me-2" v-if="!isLogin">Login</router-link>
 						<button type="button" class="btn btn-outline-light me-2" v-else @click="logout">Logout</button>
 						<router-link to="/signup" type="button" class="btn btn-warning me-2" v-if="!isLogin">Sign-up</router-link>
-						<router-link to="/admin/dashboard" type="button" class="btn btn-outline-light me-2" v-if="isLogin">DashBoard</router-link>
+						<router-link to="/admin/dashboard" type="button" class="btn btn-outline-light me-2" v-if="isLogin && roleAdmin==='10003'">DashBoard</router-link>
 					</div>
 				</div>
 			</div>
@@ -43,6 +43,7 @@
 	const useCookie = useUtilCookie();
 	const headers = computed(()=> useCommon.getHeaders);
 	const isLogin = computed(()=> useMember.getIsLogin);
+	const roleAdmin = ref(JSON.parse(sessionStorage.getItem('userInfo')).memberRole);
 	
 	const logout = ()=> {
 		useCookie.deleteCookie('token');

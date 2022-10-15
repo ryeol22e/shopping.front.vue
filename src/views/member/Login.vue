@@ -7,7 +7,7 @@
 			<label for="floatingInput">ID</label>
 		</div>
 		<div class="form-floating">
-			<input type="password" class="form-control" placeholder="Password" v-model="data.memberPassword">
+			<input type="password" class="form-control" placeholder="Password" v-model="data.memberPassword" @keyup.enter="loginProcess">
 			<label for="floatingPassword">Password</label>
 		</div>
 
@@ -30,7 +30,7 @@
 	const useCookie = useUtilCookie();
 	const useMember = useStoreMember();
 	const router = useRouter();
-	const memberId = useCookie.getCookie('memberId');
+	const memberId = localStorage.getItem('memberId');
 	const remember = ref(memberId==='' ? false : true);
 	const data = reactive({
 		memberId : remember ? memberId : '',
@@ -40,16 +40,20 @@
 	const loginProcess = async ()=> {
 		if(validate()) {
 			useMember.loginProcess(data);
-			const token = await useMember.getToken;
-
-			if(remember) {
-				useCookie.setCookie('memberId', data.memberId);
-			}
-
+			const userInfo = await useMember.getUserInfo;
+			const token = userInfo.accessToken;
+			
 			if(token!=='') {
+				if(remember) {
+					localStorage.setItem('memberId', userInfo.memberId);
+				}
+
+				sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
 				useCookie.setCookie('token', token);
 				useMember.setLogin(true);
 				router.push('/');
+			} else {
+				alert('로그인에 실패했습니다.');
 			}
 		}
 	};
