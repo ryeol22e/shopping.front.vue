@@ -21,9 +21,10 @@
 					</div> -->
 
 					<div class="text-end">
-						<router-link to="/login" type="button" class="btn btn-outline-light me-2" v-if="!isLogin">Login</router-link>
-						<button type="button" class="btn btn-outline-light me-2" v-else @click="logout">Logout</button>
-						<router-link to="/signup" type="button" class="btn btn-warning me-2" v-if="!isLogin">Sign-up</router-link>
+						<router-link to="/login" class="px-2 text-secondary text-white" v-if="!isLogin"><span>Login</span></router-link>
+						<a href="javascript:void(0);" class="px-2 text-secondary text-white" v-else>Mypage</a>
+						<router-link to="/signup" class="px-2 text-secondary text-white" v-if="!isLogin">Sign-up</router-link>
+						<a href="javascript:void(0);" class="px-2 text-secondary text-white" v-else @click="logout">Logout</a>
 						<router-link to="/admin/dashboard" type="button" class="btn btn-outline-light me-2" v-if="isLogin && roleAdmin==='10003'">DashBoard</router-link>
 					</div>
 				</div>
@@ -51,13 +52,16 @@
 	}
 	onMounted(()=> {
 		useCommon.setHeaders();
-
 	});
 
 </script>
 
 <style scoped>
 	@import '../../assets/css/headers.css';
+
+	a {
+		text-decoration: none;
+	}
 	.bd-placeholder-img {
 		font-size: 1.125rem;
 		text-anchor: middle;
