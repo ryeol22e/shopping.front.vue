@@ -33,7 +33,7 @@ router.beforeEach((to, from, next)=> {
 		delete axios.defaults.headers.common['Authorization'];
 	}
   
-  useMember.loginCheck();
+  useMember.authCheck();
   
   next();
 });

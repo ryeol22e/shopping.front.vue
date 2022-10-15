@@ -18,8 +18,8 @@ export default defineStore('member', {
 		setLogin(bool) {
 			this.isLogin = bool;
 		},
-		async loginCheck() {
-			this.isLogin = await axios.get('/member/check/login')
+		async authCheck() {
+			this.isLogin = await axios.get('/auth/check')
 				.then(res=> res.data)
 				.catch(error=> console.log(error));
 		},
