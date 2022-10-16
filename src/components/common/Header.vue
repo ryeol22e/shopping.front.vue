@@ -44,7 +44,7 @@
 	const useCookie = useUtilCookie();
 	const headers = computed(()=> useCommon.getHeaders);
 	const isLogin = computed(()=> useMember.getIsLogin);
-	const roleAdmin = ref(JSON.parse(sessionStorage.getItem('userInfo')).memberRole);
+	const roleAdmin = ref(JSON.parse(sessionStorage.getItem('userInfo'))?.memberRole);
 	
 	const logout = ()=> {
 		useCookie.deleteCookie('token');
