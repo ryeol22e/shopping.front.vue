@@ -4,7 +4,7 @@ import router from '@/router';
 
 export const useConfig = ()=> {
 	const axiosConfig = ()=> {
-		axios.defaults.baseURL = process.env.VUE_APP_API_URL;
+		axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
 		axios.defaults.responseType = 'json';
 		axios.defaults.responseEncoding = 'UTF-8';
 		axios.defaults.paramsSerializer = params=> {

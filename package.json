@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "dev": "vue-cli-service build && vue-cli-service serve --mode development",
-    "prod": "vue-cli-service build && vue-cli-service serve --mode production"
+    "build": "vite build",
+    "local": "vite build && vite --mode vite.local",
+    "dev": "vite build && vite --mode development",
+    "prod": "vite build && vite --mode production"
   },
   "dependencies": {
     "axios": "^0.27.2",
@@ -14,18 +14,11 @@
     "core-js": "^3.6.5",
     "pinia": "^2.0.22",
     "qs": "^6.11.0",
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0"
+    "vue": "^3.2.38",
+    "vue-router": "^4.1.5"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.15",
-    "@vue/cli-plugin-router": "~4.5.15",
-    "@vue/cli-service": "~4.5.15",
-    "@vue/compiler-sfc": "^3.0.0"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "@vitejs/plugin-vue": "^3.0.3",
+    "vite": "^3.0.9"
+  }
 }
