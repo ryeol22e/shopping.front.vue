@@ -2,17 +2,33 @@ import { nextTick } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import useStoreMember from '../store/useStoreMember'
 import {useUtilCookie} from '../assets/js/utils/useUtils'
-import main from './main'
 import member from './member'
 import display from './display'
 import product from './product'
-import error from './error'
 import axios from 'axios'
 
 
 const routes = [
-  ...error,
-  ...main,
+  {
+		path : '/',
+		name : 'Main',
+		component : ()=> import('@/views/main/Main.vue'),
+	},
+  {
+		path : '/:pathMatch(.*)*',
+		redirect : to=> {
+			return {name : 'Error', params : {errorType : '404'}};
+		}
+	},
+	{
+		path : '/error/:errorType',
+		name : 'Error',
+		component : ()=> import('@/views/common/CommonError.vue'),
+		props : true,
+		meta : {
+			title : 'error :('
+		}
+	},
   ...member,
   ...display,
   ...product,
