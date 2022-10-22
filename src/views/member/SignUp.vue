@@ -108,7 +108,7 @@
 </script>
 
 <style scoped>
-	@import '../../assets/css/signin.css';
+	@import '@/assets/css/signin.css';
 	.bd-placeholder-img {
 		font-size: 1.125rem;
 		text-anchor: middle;

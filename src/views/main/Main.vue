@@ -87,7 +87,7 @@
 </script>
 
 <style scoped>
-	@import '../../assets/css/main.css';
+	@import '@/assets/css/main.css';
 	.bd-placeholder-img {
 		font-size: 1.125rem;
 		text-anchor: middle;

@@ -25,7 +25,7 @@
 	import {ref, reactive, onMounted, computed} from 'vue';
 	import {useRouter} from 'vue-router';
 	import useStoreMember from '@/store/useStoreMember';
-	import {useUtilCookie} from '@/assets/js/utils/useUtils';
+	import {useUtilCookie} from '@/composables/useUtils';
 
 	const useCookie = useUtilCookie();
 	const useMember = useStoreMember();
@@ -76,7 +76,7 @@
 </script>
 
 <style scoped>
-	@import '../../assets/css/signin.css';
+	@import '@/assets/css/signin.css';
 	.bd-placeholder-img {
 		font-size: 1.125rem;
 		text-anchor: middle;

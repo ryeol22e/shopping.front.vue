@@ -1,7 +1,8 @@
 import { nextTick } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import useStoreMember from '../store/useStoreMember'
-import {useUtilCookie} from '../assets/js/utils/useUtils'
+import {useUtilCookie} from '../composables/useUtils'
+import admin from './admin'
 import member from './member'
 import display from './display'
 import product from './product'
@@ -29,9 +30,10 @@ const routes = [
 			title : 'error :('
 		}
 	},
-  ...member,
-  ...display,
-  ...product,
+	...admin,
+	...member,
+	...display,
+	...product,
 ]
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
