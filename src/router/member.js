@@ -15,12 +15,5 @@ export default [
 			title : 'join'
 		}
 	},
-	{
-		path : '/admin/dashboard',
-		name : 'DashBoard',
-		component : ()=> import('@/views/admin/DashBoard.vue'),
-		meta : {
-			title : 'dashboard'
-		}
-	}
+	
 ]

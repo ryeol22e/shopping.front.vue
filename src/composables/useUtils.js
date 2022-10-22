@@ -47,7 +47,7 @@ export const useUtilCookie = ()=> {
 	 * @param {*} key 
 	 * @returns 
 	 */
-	const getCookie = (key)=> {
+	const getCookie = key=> {
 		const object = cookieObject();
 		let value = null;
 
@@ -62,7 +62,7 @@ export const useUtilCookie = ()=> {
 	 * cookie 삭제
 	 * @param {*} key 
 	 */
-	const deleteCookie = (key)=> {
+	const deleteCookie = key=> {
 		const object = cookieObject();
 
 		if(key.constructor!==String) {

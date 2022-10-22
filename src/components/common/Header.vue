@@ -25,7 +25,7 @@
 						<a href="javascript:void(0);" class="px-2 text-secondary text-white" v-else>Mypage</a>
 						<router-link to="/signup" class="px-2 text-secondary text-white" v-if="!isLogin">Sign-up</router-link>
 						<a href="javascript:void(0);" class="px-2 text-secondary text-white" v-else @click="logout">Logout</a>
-						<router-link to="/admin/dashboard" type="button" class="btn btn-outline-light me-2" v-if="isLogin && roleAdmin==='10003'">DashBoard</router-link>
+						<router-link to="/admin/dashboard" type="button" class="btn btn-outline-light me-2" v-if="isLogin && roleAdmin==='10003'">관리자</router-link>
 					</div>
 				</div>
 			</div>
@@ -34,30 +34,34 @@
 </template>
 
 <script setup>
-	import { onMounted, ref, computed } from 'vue';
+	import { onMounted, ref, computed, watchEffect } from 'vue';
 	import useStoreCommon from '@/store/useStoreCommon';
 	import useStoreMember from '@/store/useStoreMember';
-	import {useUtilCookie} from '@/assets/js/utils/useUtils';
+	import {useUtilCookie} from '@/composables/useUtils';
 
 	const useCommon = useStoreCommon();
 	const useMember = useStoreMember();
 	const useCookie = useUtilCookie();
 	const headers = computed(()=> useCommon.getHeaders);
 	const isLogin = computed(()=> useMember.getIsLogin);
-	const roleAdmin = ref(JSON.parse(sessionStorage.getItem('userInfo'))?.memberRole);
+	const roleAdmin = computed(()=> useMember.getUserRole);
 	
 	const logout = ()=> {
 		useCookie.deleteCookie('token');
+		sessionStorage.removeItem('userInfo');
 		useMember.setLogin(false);
 	}
 	onMounted(()=> {
 		useCommon.setHeaders();
 	});
+	watchEffect(()=> {
+		roleAdmin.value;
+	})
 
 </script>
 
 <style scoped>
-	@import '../../assets/css/headers.css';
+	@import '@/assets/css/headers.css';
 
 	a {
 		text-decoration: none;

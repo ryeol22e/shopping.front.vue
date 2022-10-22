@@ -1,0 +1,98 @@
+<template>
+	<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+		<div class="position-sticky pt-3 sidebar-sticky">
+			<ul class="nav flex-column">
+				<li class="nav-item" v-for="(item, index) in list" :key="index">
+					<router-link :to="item.addInfo2" :class="`nav-link ${menuName===item.codeName ? 'active' : ''}`" aria-current="page" @click="currActive(item.codeName)">
+						<!-- <span data-feather="file" class="align-text-bottom"></span> -->
+						{{item.codeName}}
+					</router-link>
+				</li>
+				<!-- <li class="nav-item">
+					<a class="nav-link" href="#">
+						<span data-feather="file" class="align-text-bottom"></span>
+						Orders
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<span data-feather="shopping-cart" class="align-text-bottom"></span>
+						Products
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<span data-feather="users" class="align-text-bottom"></span>
+						Customers
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<span data-feather="bar-chart-2" class="align-text-bottom"></span>
+						Reports
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<span data-feather="layers" class="align-text-bottom"></span>
+						Integrations
+					</a>
+				</li> -->
+			</ul>
+
+			<!-- <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+				<span>Saved reports</span>
+				<a class="link-secondary" href="#" aria-label="Add a new report">
+					<span data-feather="plus-circle" class="align-text-bottom"></span>
+				</a>
+			</h6>
+			<ul class="nav flex-column mb-2">
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<span data-feather="file-text" class="align-text-bottom"></span>
+						Current month
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<span data-feather="file-text" class="align-text-bottom"></span>
+						Last quarter
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<span data-feather="file-text" class="align-text-bottom"></span>
+						Social engagement
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<span data-feather="file-text" class="align-text-bottom"></span>
+						Year-end sale
+					</a>
+				</li>
+			</ul> -->
+		</div>
+	</nav>
+</template>
+
+<script setup>
+	import {ref} from 'vue';
+	const menuName = ref('Dashboard');
+	const currActive = name=> {
+		menuName.value = name;
+	};
+
+	defineProps({
+		list : {
+			type: Array,
+			default : [],
+		},
+	});
+
+
+</script>
+
+<style scoped>
+	@import '@/assets/css/dashboard.css';
+</style>

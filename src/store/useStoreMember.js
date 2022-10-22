@@ -1,22 +1,26 @@
 import { defineStore } from "pinia";
+import { memberEnum } from "../composables/useEnum";
 import axios from "axios";
 
 export default defineStore('member', {
 	state : ()=> ({
 		isLogin : false,
-		userInfo : '',
+		userInfo : {},
+		userRole : JSON.parse(sessionStorage.getItem('userInfo'))?.memberRole || memberEnum.ANONYMOUS,
 		signUpResult : false,
 		authNumber : '',
 	}),
 	getters : {
 		getIsLogin : state=> state.isLogin,
 		getUserInfo : state=> state.userInfo,
+		getUserRole : state=> state.userRole,
 		getSignUpResult : state=> state.signUpResult,
 		getAuthNumber : state=> state.authNumber,
 	},
 	actions : {
 		setLogin(bool) {
 			this.isLogin = bool;
+			this.userRole = JSON.parse(sessionStorage.getItem('userInfo'))?.memberRole || memberEnum.ANONYMOUS;
 		},
 		async authCheck() {
 			this.isLogin = await axios.get('/auth/check')
