@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-	import {ref, reactive, onMounted, computed} from 'vue';
+	import {reactive} from 'vue';
 	import {useRouter} from 'vue-router';
 	import useStoreMember from '@/store/useStoreMember';
 

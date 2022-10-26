@@ -1,6 +1,6 @@
 <template>
 	<div class="album py-5 bg-light">
-		<div class="container" v-if="list.length>0">
+		<div v-if="list.length>0" class="container">
 			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 				<router-link :to="{name : 'ProductDetail', params : {prdtNo : item.prdtNo}}"  v-for="item in list" :key="item.prdtNo">
 					<div class="col">
@@ -23,14 +23,14 @@
 				</router-link>
 			</div>
 		</div>
-		<div class="container" v-else>
+		<div v-else class="container">
 			<h1>등록된 상품이 없습니다.</h1>
 		</div>
 	</div>
 </template>
 
 <script setup>
-	defineProps({
+	const props = defineProps({
 		list : {
 			type : Array,
 			default : [],

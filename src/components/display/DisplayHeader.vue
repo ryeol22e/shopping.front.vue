@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-	defineProps({
+	const props = defineProps({
 		title : {
 			type : String,
 			default : '',

@@ -21,11 +21,11 @@
 					</div> -->
 
 					<div class="text-end">
-						<router-link to="/login" class="px-2 text-secondary text-white" v-if="!isLogin"><span>Login</span></router-link>
-						<a href="javascript:void(0);" class="px-2 text-secondary text-white" v-else>Mypage</a>
-						<router-link to="/signup" class="px-2 text-secondary text-white" v-if="!isLogin">Sign-up</router-link>
-						<a href="javascript:void(0);" class="px-2 text-secondary text-white" v-else @click="logout">Logout</a>
-						<router-link to="/admin/dashboard" type="button" class="btn btn-outline-light me-2" v-if="isLogin && roleAdmin==='10003'">관리자</router-link>
+						<router-link  v-if="!isLogin" to="/login" class="px-2 text-secondary text-white"><span>Login</span></router-link>
+						<a v-else href="javascript:void(0);" class="px-2 text-secondary text-white">Mypage</a>
+						<router-link v-if="!isLogin" to="/signup" class="px-2 text-secondary text-white">Sign-up</router-link>
+						<a v-else @click="logout" href="javascript:void(0);" class="px-2 text-secondary text-white">Logout</a>
+						<router-link v-if="isLogin && roleAdmin==='10003'" to="/admin/dashboard" type="button" class="btn btn-outline-light me-2">관리자</router-link>
 					</div>
 				</div>
 			</div>
