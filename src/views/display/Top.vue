@@ -18,5 +18,5 @@
 
 	onMounted(()=> {
 		useProduct.setList('1357900001');
-	})
+	});
 </script>

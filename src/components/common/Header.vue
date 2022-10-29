@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-	import { onMounted, ref, computed, watchEffect } from 'vue';
+	import { onMounted, computed, watchEffect } from 'vue';
 	import useStoreCommon from '@/store/useStoreCommon';
 	import useStoreMember from '@/store/useStoreMember';
 	import {useUtilCookie} from '@/composables/useUtils';

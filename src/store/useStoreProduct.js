@@ -5,10 +5,14 @@ export const useStoreProduct = defineStore('useStoreProduct', {
 	state : ()=> ({
 		list : [],
 		detail : {},
+		cateList : [],
+		saveProductResult : false,
 	}),
 	getters : {
 		getList : state=> state.list,
 		getDetail : state=> state.detail,
+		getCateList : state=> state.cateList,
+		getPrdtResult : state=> state.saveProductResult,
 	},
 	actions : {
 		async setList(cateNo) {
@@ -26,6 +30,21 @@ export const useStoreProduct = defineStore('useStoreProduct', {
 			this.detail = await axios.get(`/product/${prdtNo}`)
 			.then(res=> res.data)
 			.catch(error=> console.log(error));
+		},
+		async setCateList(param) {
+			this.cateList = await axios.get(`/cate/list`, {
+				params : param,
+			})
+			.then(res=> res.data)
+			.catch(error=> console.log(error));
+		},
+		async setProductData(data) {
+			this.saveProductResult = await axios.post(`/product/${data.prdtNo}`, data)
+				.then(res=> res.data)
+				.catch(error=> {
+					console.log(error);
+					return false;
+				});
 		}
 	}
 });
