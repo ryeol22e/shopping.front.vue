@@ -48,8 +48,13 @@ export const useCommon = ()=> {
 			}
 		})
 	};
+	const useNumComma = (data)=> {
+		const num = Number(data);
 
+		return num.toLocaleString(navigator.language);
+	}
 	return {
 		useDashboard,
+		useNumComma,
 	};
 };

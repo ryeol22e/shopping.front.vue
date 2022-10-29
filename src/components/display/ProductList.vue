@@ -9,7 +9,7 @@
 
 							<div class="card-body">
 								<h5 class="text-black">{{item.prdtName}}</h5>
-								<!-- <p class="card-text text-black">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
+								<p class="card-text text-black">판매가 : {{numberComma(item.sellPrice)}}원</p>
 								<div class="d-flex justify-content-between align-items-center">
 									<!-- <div class="btn-group">
 										<button type="button" class="btn btn-sm btn-outline-secondary">View</button>
@@ -30,6 +30,10 @@
 </template>
 
 <script setup>
+	import {useCommon} from '@/assets/js/config/useCommon.js';
+
+	const common = useCommon();
+	const numberComma = common.useNumComma;
 	const props = defineProps({
 		list : {
 			type : Array,

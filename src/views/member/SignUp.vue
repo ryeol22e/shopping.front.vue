@@ -1,6 +1,6 @@
 <template>
 	<main class="form-signin w-100 m-auto">
-		<h1 class="h3 mb-3 fw-normal">sign up plaase.</h1>
+		<h1 class="h3 mb-3 fw-normal">Please sign up</h1>
 
 		<div class="form-floating">
 			<input type="text" class="form-control" id="userName" placeholder="홍길동" v-model="data.memberName">
@@ -22,10 +22,14 @@
 			<input type="password" class="form-control" id="password" placeholder="Password" v-model="data.memberPassword">
 			<label for="password">Password</label>
 		</div>
-		<div class="form-floating ">
-			<input type="text" class="form-control" id="authNumber" placeholder="인증번호" v-model="data.authNumber">
-			<label for="authNumber">인증번호</label>
-			<button class="btn btn-primary" type="button" @click="getAuthNumber">인증번호 받기</button>
+		<div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+			<div class="form-floating">	
+				<input type="text" class="form-control" id="authNumber" placeholder="인증번호" v-model="data.authNumber">
+				<label for="authNumber">인증번호</label>
+			</div>
+			<div class="btn-group me-2" role="group" aria-label="First group">
+				<button class="btn btn-primary" type="button" @click="getAuthNumber">인증번호 받기</button>
+			</div>
 		</div>
 		
 		<button class="w-100 btn btn-lg btn-primary" type="button" @click="signUp">Sign up</button>

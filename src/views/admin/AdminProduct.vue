@@ -5,7 +5,7 @@
 		</div>
 		<div class="input-group mb-3">
 			<span class="input-group-text">상품번호</span>
-			<input v-model="data.prdtNo" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+			<input v-model="data.prdtNo" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" maxlength="10">
 		</div>
 		<div class="input-group mb-3">
 			<span class="input-group-text">카테고리</span>
@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-	import { reactive, computed, onMounted } from 'vue';
+	import { reactive, computed, onMounted, watchEffect } from 'vue';
 	import { useRouter } from 'vue-router';
 	import {useStoreProduct} from '@/store/useStoreProduct.js';
 
@@ -82,11 +82,10 @@
 		
 		return true;
 	};
-
 	const registProduct = async ()=> {
 		if(dataValidate()) {
-			useProduct.setProductData(data);
-			const result = await useProduct.getPrdtResult;
+			await useProduct.setProductData(data);
+			const result = useProduct.getPrdtResult;
 
 			if(result) {
 				alert('상품이 등록되었습니다.');
@@ -95,13 +94,20 @@
 				alert('등록 실패했습니다.');
 			}
 		}
-	}
+	};
 
+	watchEffect(()=> {
+		const regex = /[^0-9]/gi;
+		
+		if(regex.test(data.prdtNo)) {
+			data.prdtNo = data.prdtNo.replace(regex, '');
+		}
+	});
 	onMounted(()=> {
 		useProduct.setCateList({
 			useYn : 'Y',
 			dispYn : 'Y',
 		});
-	})
+	});
 
 </script>
