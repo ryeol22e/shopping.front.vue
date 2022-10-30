@@ -5,14 +5,16 @@ export default defineStore('common', {
 	state : ()=> ({
 		headers : [],
 		adminLnb : [],
+		mypage : [],
 	}),
 	getters : {
 		getHeaders : state=> state.headers,
 		getAdminLnb : state=> state.adminLnb,
+		getMypage : state=> state.mypage,
 	},
 	actions : {
 		async setHeaders() {
-			this.headers = await axios.get('/common/headers', {
+			this.headers = await axios.get('/common/10000', {
 				params : {
 					codeType : '10000',
 					codeDepth : '1',
@@ -29,6 +31,17 @@ export default defineStore('common', {
 					useYn : 'Y'
 				}
 			}).then(res=> res.data)
+			.catch(error=> console.log(error));
+		},
+		setMypageList() {
+			this.mypage = axios.get('/common/10002', {
+				params : {
+					codeType : '10002',
+					codeDepth : '1',
+					useYn : 'Y'
+				}
+			})
+			.then(res=> res.data)
 			.catch(error=> console.log(error));
 		}
 	}

@@ -1,4 +1,5 @@
 <template>
+	<Mypage :list="myPageList" :isShow="mypageIsShow"/>
 	<main>
 		<header class="p-3 text-bg-dark">
 			<div>
@@ -22,7 +23,7 @@
 
 					<div class="text-end">
 						<router-link  v-if="!isLogin" to="/login" class="px-2 text-secondary text-white"><span>Login</span></router-link>
-						<a v-else href="javascript:void(0);" class="px-2 text-secondary text-white">Mypage</a>
+						<a v-else @click="mypageOpen" href="javascript:void(0);" class="px-2 text-secondary text-white" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Mypage</a>
 						<a class="text-white">·</a>
 						<router-link v-if="!isLogin" to="/signup" class="px-2 text-secondary text-white">Sign-up</router-link>
 						<a v-else @click="logout" href="javascript:void(0);" class="px-2 text-secondary text-white">Logout</a>
@@ -35,7 +36,8 @@
 </template>
 
 <script setup>
-	import { onMounted, computed, watchEffect } from 'vue';
+	import Mypage from '@/components/common/Mypage.vue';
+	import { onMounted, computed, watchEffect, ref } from 'vue';
 	import useStoreCommon from '@/store/useStoreCommon';
 	import useStoreMember from '@/store/useStoreMember';
 	import {useUtilCookie} from '@/composables/useUtils';
@@ -46,18 +48,24 @@
 	const headers = computed(()=> useCommon.getHeaders);
 	const isLogin = computed(()=> useMember.getIsLogin);
 	const roleAdmin = computed(()=> useMember.getUserRole);
-	
+	const myPageList = ref([]);
+	const mypageIsShow = ref(false);
 	const logout = ()=> {
 		useCookie.deleteCookie('token');
 		sessionStorage.removeItem('userInfo');
 		useMember.setLogin(false);
-	}
+	};
+	const mypageOpen = async ()=> {
+		useCommon.setMypageList();
+		myPageList.value = await useCommon.getMypage;
+		mypageIsShow.value = true;
+	};
 	onMounted(()=> {
 		useCommon.setHeaders();
 	});
 	watchEffect(()=> {
 		roleAdmin.value;
-	})
+	});
 
 </script>
 
