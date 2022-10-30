@@ -42,7 +42,7 @@
 			useMember.loginProcess(data);
 			const userInfo = await useMember.getUserInfo;
 			const token = userInfo?.accessToken || '';
-			console.log(token);
+			
 			if(token!=='') {
 				if(remember) {
 					localStorage.setItem('memberId', userInfo.memberId);
