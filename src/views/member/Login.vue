@@ -24,10 +24,10 @@
 <script setup>
 	import {ref, reactive, onMounted, computed} from 'vue';
 	import {useRouter} from 'vue-router';
-	import useStoreMember from '@/store/useStoreMember';
-	import {useUtilCookie} from '@/composables/useUtils';
+	import useStoreMember from '@/store/useStoreMember.js';
+	import {useUtils} from '@/composables/useUtils.js';
 
-	const useCookie = useUtilCookie();
+	const useCookie = useUtils().useCookie();
 	const useMember = useStoreMember();
 	const router = useRouter();
 	const memberId = localStorage.getItem('memberId');

@@ -40,11 +40,11 @@
 	import { onMounted, computed, watchEffect, ref } from 'vue';
 	import useStoreCommon from '@/store/useStoreCommon';
 	import useStoreMember from '@/store/useStoreMember';
-	import {useUtilCookie} from '@/composables/useUtils';
+	import {useUtils} from '@/composables/useUtils';
 
 	const useCommon = useStoreCommon();
 	const useMember = useStoreMember();
-	const useCookie = useUtilCookie();
+	const useCookie = useUtils().useCookie();
 	const headers = computed(()=> useCommon.getHeaders);
 	const isLogin = computed(()=> useMember.getIsLogin);
 	const roleAdmin = computed(()=> useMember.getUserRole);

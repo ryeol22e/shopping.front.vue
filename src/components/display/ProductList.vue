@@ -5,7 +5,11 @@
 				<router-link :to="{name : 'ProductDetail', params : {prdtNo : item.prdtNo}}"  v-for="item in list" :key="item.prdtNo">
 					<div class="col">
 						<div class="card shadow-sm">
-							<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+							<img v-if="!isEmpty(item.imageUrl)" :src="item.imageUrl" alt=""/>
+							<svg v-else class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+								<title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/>
+								<text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+							</svg>
 
 							<div class="card-body">
 								<h5 class="text-black">{{item.prdtName}}</h5>
@@ -30,9 +34,11 @@
 </template>
 
 <script setup>
-	import {useCommon} from '@/assets/js/config/useCommon.js';
+	import {useCommon} from '@/composables/useCommon.js';
+	import {useUtils} from '@/composables/useUtils.js';
 
 	const common = useCommon();
+	const isEmpty = useUtils().isEmpty;
 	const numberComma = common.useNumComma;
 	const props = defineProps({
 		list : {

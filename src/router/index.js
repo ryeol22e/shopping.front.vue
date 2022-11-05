@@ -1,7 +1,7 @@
 import { nextTick } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import useStoreMember from '../store/useStoreMember'
-import {useUtilCookie} from '../composables/useUtils'
+import {useUtils} from '../composables/useUtils'
 import admin from './admin'
 import member from './member'
 import display from './display'
@@ -47,7 +47,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next)=> {
   const useMember = useStoreMember();
-  const useCookie = useUtilCookie();
+  const useCookie = useUtils().useCookie();
   const token = useCookie.getCookie('token');
 
   if(token!=='') {

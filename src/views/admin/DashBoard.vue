@@ -149,7 +149,7 @@
 
 <script setup>
 	import {onMounted} from 'vue';
-	import {useCommon} from '@/assets/js/config/useCommon.js';
+	import {useCommon} from '@/composables/useCommon.js';
 
 	const common = useCommon();
 
