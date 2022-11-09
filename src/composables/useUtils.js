@@ -104,10 +104,24 @@ export const useUtils = ()=> {
 	
 		return true;
 	};
+	const changeToFormData = (data)=> {
+		const form = new FormData();
+		const keyList = Object.keys(data);
+
+		for(let i=0 ; i<keyList.length ; i++) {
+			const key = keyList[i];
+			const value = data[key];
+
+			form.append(key, value);
+		}
+
+		return form;
+	};
 
 	return {
 		useCookie,
 		isEmpty,
+		changeToFormData,
 	}
 };
 

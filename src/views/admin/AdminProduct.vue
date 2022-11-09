@@ -29,6 +29,10 @@
 			<input v-model="data.prdtName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 		</div>
 		<div class="input-group mb-3">
+			<span class="input-group-text">이미지</span>
+			<input @change="imageUpload" class="form-control" type="file">
+		</div>
+		<div class="input-group mb-3">
 			<span class="input-group-text">정상가</span>
 			<input v-model="data.normalPrice" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 		</div>
@@ -44,9 +48,11 @@
 <script setup>
 	import { reactive, computed, onMounted, watchEffect } from 'vue';
 	import { useRouter } from 'vue-router';
+	import {useUtils} from '@/composables/useUtils.js';
 	import {useStoreProduct} from '@/store/useStoreProduct.js';
 
 	const router = useRouter();
+	const utils = useUtils();
 	const useProduct = useStoreProduct();
 	const cateList = computed(()=> useProduct.getCateList);
 	const data = reactive({
@@ -57,7 +63,11 @@
 		sellPrice : '',
 		useYn : 'N',
 		dispYn : 'N',
+		file : null,
 	});
+	const imageUpload = (e)=> {
+		data.file = e.target.files[0];
+	};
 	const dataValidate = ()=> {
 		if(data.prdtNo==='') {
 			alert('상품번호를 입력하세요.');
@@ -84,7 +94,7 @@
 	};
 	const registProduct = async ()=> {
 		if(dataValidate()) {
-			await useProduct.setProductData(data);
+			await useProduct.setProductData(utils.changeToFormData(data));
 			const result = useProduct.getPrdtResult;
 
 			if(result) {

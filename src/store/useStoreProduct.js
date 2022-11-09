@@ -39,7 +39,12 @@ export const useStoreProduct = defineStore('useStoreProduct', {
 			.catch(error=> console.log(error));
 		},
 		async setProductData(data) {
-			this.saveProductResult = await axios.post(`/product/${data.prdtNo}`, data)
+			const prdtNo = data.get('prdtNo');
+			this.saveProductResult = await axios.post(`/product/${prdtNo}`, data, {
+				headers : {
+					'Content-Type' : 'multipart/form-data',
+				}
+			})
 				.then(res=> res.data)
 				.catch(error=> {
 					console.log(error);

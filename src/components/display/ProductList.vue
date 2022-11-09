@@ -5,7 +5,7 @@
 				<router-link :to="{name : 'ProductDetail', params : {prdtNo : item.prdtNo}}"  v-for="item in list" :key="item.prdtNo">
 					<div class="col">
 						<div class="card shadow-sm">
-							<img v-if="!isEmpty(item.imageUrl)" :src="item.imageUrl" alt=""/>
+							<img v-if="!isEmpty(item.image)" :src="`data:image/png;base64,${item.image}`" alt="" height="225"/>
 							<svg v-else class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
 								<title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/>
 								<text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
