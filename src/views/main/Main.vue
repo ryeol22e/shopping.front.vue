@@ -6,7 +6,7 @@
 			</div>
 			<div class="carousel-inner">
 				<div v-if="bannerList.length>0" v-for="(item , index) in bannerList" :key="index" :class="`carousel-item ${index===0 ? 'active' : ''}`">
-					<img v-if="!isEmpty(item.imageUrl)" :src="item.imageUrl" alt="">
+					<img v-if="!isEmpty(item.image)" :src="`data:image/png;base64,${item.image}`" alt="" class="bd-placeholder-img">
 					<svg v-else class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
 
 					<div class="container">
@@ -63,7 +63,7 @@
 </template>
 
 <script setup>
-	import { ref, computed, onMounted } from 'vue';
+	import { computed, onMounted } from 'vue';
 	import useStoreMain from '@/store/useStoreMain';
 	import {useUtils} from '@/composables/useUtils.js';
 

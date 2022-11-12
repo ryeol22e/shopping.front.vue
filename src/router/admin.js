@@ -27,6 +27,14 @@ export default [
 					title : 'product',
 				}
 			},
+			{
+				path : 'banner',
+				name : 'AdminBanner',
+				component : ()=> import('@/views/admin/AdminBanner.vue'),
+				meta : {
+					title : 'banners',
+				}
+			}
 		]
 	}
 ]
