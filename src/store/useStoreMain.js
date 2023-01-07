@@ -10,10 +10,10 @@ export default defineStore('main', {
 	},
 	actions : {
 		async setBannerList(param) {
-			this.bannerList = await axios.get('/display/main/banner', {
+			await axios.get('/display/main/banner', {
 				params : param
 			})
-			.then(res=> res.data)
+			.then(res=> this.bannerList = res.data)
 			.catch(error=> console.log(error));
 		},
 	}

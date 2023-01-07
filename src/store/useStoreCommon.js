@@ -14,34 +14,35 @@ export default defineStore('common', {
 	},
 	actions : {
 		async setHeaders() {
-			this.headers = await axios.get('/common/10000', {
+			await axios.get('/common/10000', {
 				params : {
 					codeType : '10000',
 					codeDepth : '1',
 					useYn : 'Y',
 				}
-			}).then(res=> res.data)
+			})
+			.then(res=> this.headers = res.data)
 			.catch(error=> console.log(error));
 		},
 		async setAdminLnb() {
-			this.adminLnb = await axios.get('/admin/menu', {
+			await axios.get('/admin/menu', {
 				params : {
 					codeType : '10003',
 					codeDepth : '1',
 					useYn : 'Y'
 				}
-			}).then(res=> res.data)
+			}).then(res=> this.adminLnb = res.data)
 			.catch(error=> console.log(error));
 		},
 		setMypageList() {
-			this.mypage = axios.get('/common/10002', {
+			axios.get('/common/10002', {
 				params : {
 					codeType : '10002',
 					codeDepth : '1',
 					useYn : 'Y'
 				}
 			})
-			.then(res=> res.data)
+			.then(res=> this.mypage = res.data)
 			.catch(error=> console.log(error));
 		}
 	}

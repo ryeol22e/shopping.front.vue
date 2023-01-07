@@ -16,40 +16,37 @@ export const useStoreProduct = defineStore('useStoreProduct', {
 	},
 	actions : {
 		async setList(cateNo) {
-			this.list = await axios.get('/display/product/list', {
+			await axios.get('/display/product/list', {
 				params : {
 					cateNo : cateNo,
 					useYn : 'Y',
 					dispYn : 'Y',
 				}
 			})
-			.then(res=> res.data)
+			.then(res=> this.list = res.data)
 			.catch(error=> console.log(error));
 		},
 		async setDetail(prdtNo) {
-			this.detail = await axios.get(`/product/${prdtNo}`)
-			.then(res=> res.data)
+			await axios.get(`/product/${prdtNo}`)
+			.then(res=> this.detail = res.data)
 			.catch(error=> console.log(error));
 		},
 		async setCateList(param) {
-			this.cateList = await axios.get(`/cate/list`, {
+			await axios.get(`/cate/list`, {
 				params : param,
 			})
-			.then(res=> res.data)
+			.then(res=> this.cateList = res.data)
 			.catch(error=> console.log(error));
 		},
 		async setProductData(data) {
 			const prdtNo = data.get('prdtNo');
-			this.saveProductResult = await axios.post(`/product/${prdtNo}`, data, {
+			await axios.post(`/product/${prdtNo}`, data, {
 				headers : {
 					'Content-Type' : 'multipart/form-data',
 				}
 			})
-				.then(res=> res.data)
-				.catch(error=> {
-					console.log(error);
-					return false;
-				});
+			.then(res=> this.saveProductResult = res.data || false)
+			.catch(error=> console.log(error));
 		}
 	}
 });
