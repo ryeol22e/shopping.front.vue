@@ -17,7 +17,7 @@ export default defineConfig(({command, mode})=> {
 		server : {
 			port : env.VITE_APP_PORT,
 			host : true,
-			// origin : `http://${profile==='prod' ? 'www' : profile}.shoppingmall.com:7800`,
+			origin : `http://${profile==='prod' ? 'www' : profile}.shoppingmall.com:7800`,
 		}
 	
 	}
