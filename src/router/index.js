@@ -55,7 +55,6 @@ router.beforeEach((to, from, next)=> {
 		axios.defaults.headers.common['MemberId'] = localStorage.getItem('memberId');
 	} else {
 		delete axios.defaults.headers.common['Authorization'];
-		delete axios.defaults.headers.common['MemberId'];
 	}
   
   useMember.authCheck();
@@ -66,7 +65,7 @@ router.beforeEach((to, from, next)=> {
 router.afterEach((to, from)=> {
   nextTick(()=> {
     document.title = 'shopping'.concat(to.meta.title!==undefined ? ' | '.concat(to.meta.title) : '');
-  })
-})
+  });
+});
 
 export default router

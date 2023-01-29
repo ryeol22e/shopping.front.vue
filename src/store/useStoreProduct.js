@@ -16,7 +16,7 @@ export const useStoreProduct = defineStore('useStoreProduct', {
 	},
 	actions : {
 		async setList(cateNo) {
-			await axios.get('/display/product/list', {
+			await axios.get(`/display/product/list`, {
 				params : {
 					cateNo : cateNo,
 					useYn : 'Y',

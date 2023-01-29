@@ -27,11 +27,12 @@
 	import useStoreMember from '@/store/useStoreMember.js';
 	import {useUtils} from '@/composables/useUtils.js';
 
-	const useCookie = useUtils().useCookie();
+	const utils = useUtils();
+	const useCookie = utils.useCookie();
 	const useMember = useStoreMember();
 	const router = useRouter();
 	const memberId = localStorage.getItem('memberId');
-	const remember = ref(memberId==='' ? false : true);
+	const remember = ref(utils.isEmpty(memberId) ? false : true);
 	const data = reactive({
 		memberId : remember ? memberId : '',
 		memberPassword : '',

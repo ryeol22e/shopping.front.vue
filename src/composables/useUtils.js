@@ -117,11 +117,17 @@ export const useUtils = ()=> {
 
 		return form;
 	};
+	const scrollEvent = target=> {
+		return window.addEventListener('scroll', (e)=> {
+
+		});
+	}
 
 	return {
 		useCookie,
 		isEmpty,
 		changeToFormData,
-	}
+		scrollEvent,
+	};
 };
 
