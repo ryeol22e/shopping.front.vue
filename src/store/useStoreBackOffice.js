@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import {api} from "@/composables/useAxios.js"
 import router from '@/router/index.js';
 
 export const useStoreBo = defineStore('useStoreBo', {
@@ -11,7 +11,7 @@ export const useStoreBo = defineStore('useStoreBo', {
 	},
 	actions : {
 		registBannerInfo(data) {
-			axios.post('/admin/banner/save', data, {
+			api.post('/admin/banner/save', data, {
 				headers : {
 					'Content-Type' : 'multipart/form-data',
 				}

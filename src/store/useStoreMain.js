@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import {api} from "@/composables/useAxios.js"
 
 export default defineStore('main', {
 	state : ()=> ({
@@ -10,7 +10,7 @@ export default defineStore('main', {
 	},
 	actions : {
 		async setBannerList(param) {
-			await axios.get('/display/main/banner', {
+			await api.get('/display/main/banner', {
 				params : param
 			})
 			.then(res=> this.bannerList = res.data)

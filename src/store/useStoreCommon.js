@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import {api} from "@/composables/useAxios.js"
 
 export default defineStore('common', {
 	state : ()=> ({
@@ -14,7 +14,7 @@ export default defineStore('common', {
 	},
 	actions : {
 		async setHeaders() {
-			await axios.get('/common/10000', {
+			await api.get('/common/10000', {
 				params : {
 					codeType : '10000',
 					codeDepth : '1',
@@ -25,7 +25,7 @@ export default defineStore('common', {
 			.catch(error=> console.log(error));
 		},
 		async setAdminLnb() {
-			await axios.get('/admin/menu', {
+			await api.get('/admin/menu', {
 				params : {
 					codeType : '10003',
 					codeDepth : '1',
@@ -35,7 +35,7 @@ export default defineStore('common', {
 			.catch(error=> console.log(error));
 		},
 		setMypageList() {
-			axios.get('/common/10002', {
+			api.get('/common/10002', {
 				params : {
 					codeType : '10002',
 					codeDepth : '1',

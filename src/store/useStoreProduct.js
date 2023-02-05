@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import {api} from "@/composables/useAxios.js"
 
 export const useStoreProduct = defineStore('useStoreProduct', {
 	state : ()=> ({
@@ -16,7 +16,7 @@ export const useStoreProduct = defineStore('useStoreProduct', {
 	},
 	actions : {
 		async setList(cateNo) {
-			await axios.get(`/display/product/list`, {
+			await api.get(`/display/product/list`, {
 				params : {
 					cateNo : cateNo,
 					useYn : 'Y',
@@ -27,12 +27,12 @@ export const useStoreProduct = defineStore('useStoreProduct', {
 			.catch(error=> console.log(error));
 		},
 		async setDetail(prdtNo) {
-			await axios.get(`/product/${prdtNo}`)
+			await api.get(`/product/${prdtNo}`)
 			.then(res=> this.detail = res.data)
 			.catch(error=> console.log(error));
 		},
 		async setCateList(param) {
-			await axios.get(`/cate/list`, {
+			await api.get(`/cate/list`, {
 				params : param,
 			})
 			.then(res=> this.cateList = res.data)
@@ -40,7 +40,7 @@ export const useStoreProduct = defineStore('useStoreProduct', {
 		},
 		async setProductData(data) {
 			const prdtNo = data.get('prdtNo');
-			await axios.post(`/product/${prdtNo}`, data, {
+			await api.post(`/product/${prdtNo}`, data, {
 				headers : {
 					'Content-Type' : 'multipart/form-data',
 				}

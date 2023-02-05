@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { MEMBER_CONST } from "@/composables/useEnum.js";
-import axios from "axios";
+import {api} from "@/composables/useAxios.js"
 import {useUtils} from '@/composables/useUtils.js';
 
 const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
@@ -26,24 +26,24 @@ export default defineStore('member', {
 			this.userRole = userInfo?.memberRole || MEMBER_CONST.ANONYMOUS;
 		},
 		async authCheck() {
-			await axios.get('/auth/check')
+			await api.get('/auth/check')
 				.then(res=> {this.isLogin = res.data})
 				.catch(error=> console.log(error));
 		},
 		loginProcess(param) {
-			axios.get('/member/login', {
+			api.get('/member/login', {
 				params : param
 			})
 			.then(res=> this.userInfo = res.data)
 			.catch(error=> console.log(error));
 		},
 		signUpProcess(param) {
-			axios.post('/member/join', param)
+			api.post('/member/join', param)
 			.then(res=> this.signUpResult = res.data)
 			.catch(error=> console.log(error));
 		},
 		setAuthNumber(param) {
-			axios.post('/member/auth/number', param)
+			api.post('/member/auth/number', param)
 			.then(res=> this.authNumber = res.data)
 			.catch(error=> console.log(error));
 		}
