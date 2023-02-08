@@ -9,6 +9,7 @@
     "prod": "vite build && vite --mode production"
   },
   "dependencies": {
+    "@vitejs/plugin-basic-ssl": "^1.0.1",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.1",
     "core-js": "^3.6.5",

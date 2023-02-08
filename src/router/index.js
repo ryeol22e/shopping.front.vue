@@ -1,12 +1,12 @@
 import { nextTick } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import useStoreMember from '../store/useStoreMember'
-import {useUtils} from '../composables/useUtils'
+import useStoreMember from '@/store/useStoreMember'
+import {useUtils} from '@/composables/useUtils'
 import admin from './admin'
 import member from './member'
 import display from './display'
 import product from './product'
-import axios from 'axios'
+import {api} from '@/composables/useAxios'
 
 
 const routes = [
@@ -51,10 +51,10 @@ router.beforeEach((to, from, next)=> {
   const token = useCookie.getCookie('token');
 
   if(token!=='') {
-		axios.defaults.headers.common['Authorization'] = 'Bearer '.concat(token);
-		axios.defaults.headers.common['MemberId'] = localStorage.getItem('memberId');
+		api.defaults.headers.common['Authorization'] = 'Bearer '.concat(token);
+		api.defaults.headers.common['MemberId'] = localStorage.getItem('memberId');
 	} else {
-		delete axios.defaults.headers.common['Authorization'];
+		delete api.defaults.headers.common['Authorization'];
 	}
   
   useMember.authCheck();
