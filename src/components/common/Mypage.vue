@@ -6,8 +6,8 @@
 		</div>
 		<div class="offcanvas-body">
 				<ul>
-					<li v-for="(item, index) in list" :key="index" @click="goMypage(item.addInfo2)" data-bs-dismiss="offcanvas" aria-label="Close">
-						<a href="#" class="text-black" style="text-decoration: none;">{{item.codeName}}</a>
+					<li v-for="(item, index) in list" :key="index" data-bs-dismiss="offcanvas" aria-label="Close">
+						<RouterLink :to="item.addInfo2" class="text-black" style="text-decoration: none;">{{item.codeName}}</RouterLink>
 					</li>
 				</ul>
 		</div>
@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-	import {useRouter} from 'vue-router';
+	import {useRouter, RouterLink} from 'vue-router';
 
 	const router = useRouter();
 	const props = defineProps({
@@ -28,10 +28,6 @@
 			default : false,
 		}
 	});
-
-	const goMypage = (url)=> {
-		router.push(url);
-	};
 </script>
 
 <style scope>
