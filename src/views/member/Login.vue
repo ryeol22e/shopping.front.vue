@@ -27,6 +27,10 @@
 	import useStoreMember from '@/store/useStoreMember.js';
 	import {useUtils} from '@/composables/useUtils.js';
 
+	if(!utils.isEmpty(sessionStorage.getItem('userInfo'))) {
+		router.push('/');
+	}
+	
 	const utils = useUtils();
 	const useCookie = utils.useCookie();
 	const useMember = useStoreMember();
@@ -38,7 +42,6 @@
 		memberId : remember ? memberId : '',
 		memberPassword : '',
 	});
-	
 	const loginProcess = async ()=> {
 		if(validate()) {
 			await useMember.loginProcess(data);
