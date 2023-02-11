@@ -3,13 +3,11 @@ import { MEMBER_CONST } from "@/composables/useEnum.js";
 import {api} from "@/composables/useAxios.js"
 import {useUtils} from '@/composables/useUtils.js';
 
-const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
-
 export default defineStore('member', {
 	state : ()=> ({
-		isLogin : !useUtils().isEmpty(userInfo) ? true : false,
+		isLogin : !useUtils().isEmpty(sessionStorage.getItem('userInfo')) ? true : false,
 		userInfo : {},
-		userRole : userInfo?.memberRole || MEMBER_CONST.ANONYMOUS,
+		userRole : JSON.parse(sessionStorage.getItem('userInfo'))?.memberRole || MEMBER_CONST.ANONYMOUS,
 		signUpResult : false,
 		authNumber : '',
 	}),
@@ -23,15 +21,15 @@ export default defineStore('member', {
 	actions : {
 		setLogin(bool) {
 			this.isLogin = bool;
-			this.userRole = userInfo?.memberRole || MEMBER_CONST.ANONYMOUS;
+			this.userRole = JSON.parse(sessionStorage.getItem('userInfo'))?.memberRole || MEMBER_CONST.ANONYMOUS;
 		},
 		async authCheck() {
 			await api.get('/auth/check')
-				.then(res=> {this.isLogin = res.data})
+				.then(res=> this.isLogin = res.data)
 				.catch(error=> console.log(error));
 		},
-		loginProcess(param) {
-			api.get('/member/login', {
+		async loginProcess(param) {
+			await api.get('/member/login', {
 				params : param
 			})
 			.then(res=> this.userInfo = res.data)

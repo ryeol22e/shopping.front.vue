@@ -2,7 +2,7 @@
 	<main>
 		<div v-if="bannerList.length>0" id="myCarousel" class="carousel slide" data-bs-ride="carousel">
 			<div v-if="bannerList.length>1" class="carousel-indicators">
-				<button v-for="(item, index) in bannerList" :key="index" type="button" :data-bs-target="`#myCarousel${index}`" :data-bs-slide-to="index" class="active" aria-current="true" :aria-label="`Slide ${index}`"></button>
+				<button v-for="(item, index) in bannerList" :key="item.bannerId" type="button" :data-bs-target="`#myCarousel`" :data-bs-slide-to="index" class="active" aria-current="true" :aria-label="`Slide ${index}`"></button>
 			</div>
 			<div class="carousel-inner">
 				<div v-if="bannerList.length>0" v-for="(item , index) in bannerList" :key="index" :class="`carousel-item ${index===0 ? 'active' : ''}`">
@@ -63,7 +63,7 @@
 </template>
 
 <script setup>
-	import { computed, onMounted } from 'vue';
+	import { ref, computed, onMounted } from 'vue';
 	import useStoreMain from '@/store/useStoreMain';
 	import {useUtils} from '@/composables/useUtils.js';
 
@@ -132,5 +132,13 @@
 		text-align: center;
 		white-space: nowrap;
 		-webkit-overflow-scrolling: touch;
+	}
+
+	p {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		/* width: 100px; */
+		/* height: 20px; */
 	}
 </style>

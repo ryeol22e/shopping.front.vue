@@ -33,6 +33,7 @@
 	const router = useRouter();
 	const memberId = localStorage.getItem('memberId');
 	const remember = ref(utils.isEmpty(memberId) ? false : true);
+	const userInfo = computed(()=> useMember.getUserInfo);
 	const data = reactive({
 		memberId : remember ? memberId : '',
 		memberPassword : '',
@@ -40,16 +41,15 @@
 	
 	const loginProcess = async ()=> {
 		if(validate()) {
-			useMember.loginProcess(data);
-			const userInfo = await useMember.getUserInfo;
-			const token = userInfo?.accessToken || '';
+			await useMember.loginProcess(data);
+			const token = userInfo.value.accessToken || '';
 			
-			if(token!=='') {
+			if(!utils.isEmpty(token)) {
 				if(remember) {
-					localStorage.setItem('memberId', userInfo.memberId);
+					localStorage.setItem('memberId', userInfo.value.memberId);
 				}
 
-				sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+				sessionStorage.setItem('userInfo', JSON.stringify(userInfo.value));
 				useCookie.setCookie('token', token);
 				useMember.setLogin(true);
 				router.push('/');

@@ -27,7 +27,7 @@
 						<a class="text-white">·</a>
 						<router-link v-if="!isLogin" to="/signup" class="px-2 text-secondary text-white">Sign-up</router-link>
 						<a v-else @click="logout" href="javascript:void(0);" class="px-2 text-secondary text-white">Logout</a>
-						<router-link v-if="isLogin && roleAdmin==='10003'" to="/admin/dashboard" type="button" class="btn btn-outline-light me-2">관리자</router-link>
+						<router-link v-if="isLogin && roleAdmin===MEMBER_CONST.ADMIN" to="/admin/dashboard" type="button" class="btn btn-outline-light me-2">관리자</router-link>
 					</div>
 				</div>
 			</div>
@@ -41,6 +41,7 @@
 	import useStoreCommon from '@/store/useStoreCommon';
 	import useStoreMember from '@/store/useStoreMember';
 	import {useUtils} from '@/composables/useUtils';
+	import {MEMBER_CONST} from '@/composables/useEnum';
 
 	const useCommon = useStoreCommon();
 	const useMember = useStoreMember();
@@ -48,16 +49,15 @@
 	const headers = computed(()=> useCommon.getHeaders);
 	const isLogin = computed(()=> useMember.getIsLogin);
 	const roleAdmin = computed(()=> useMember.getUserRole);
-	const myPageList = ref([]);
+	const myPageList = computed(()=> useCommon.getMypage);
 	const mypageIsShow = ref(false);
 	const logout = ()=> {
 		useCookie.deleteCookie('token');
 		sessionStorage.removeItem('userInfo');
 		useMember.setLogin(false);
 	};
-	const mypageOpen = async ()=> {
+	const mypageOpen = ()=> {
 		useCommon.setMypageList();
-		myPageList.value = await useCommon.getMypage;
 		mypageIsShow.value = true;
 	};
 	onMounted(()=> {
