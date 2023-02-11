@@ -1,14 +1,14 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import basicSsl from '@vitejs/plugin-basic-ssl'
+import fs from 'fs'
 
 // https://vitejs.dev/config/
 export default defineConfig(({command, mode})=> {
 	const env = loadEnv(mode, process.cwd(), '');
 	const active = env.NODE_ENV;
 	const config = {
-		plugins: [vue(), basicSsl()],
+		plugins: [vue()],
 		resolve: {
 			alias: {
 				'@': fileURLToPath(new URL('./src', import.meta.url))
@@ -19,8 +19,12 @@ export default defineConfig(({command, mode})=> {
 			port : env.VITE_APP_PORT,
 			host : true,
 		},
-		https : true,
-	
+	}
+
+	if(active==='development') {
+		config.server.https = {}
+		config.server.https.pfx = fs.readFileSync('./src/assets/file/ssl/shoppingmall.p12')
+		config.server.https.passphrase = 'shoppingmall1234'
 	}
 
 	return config

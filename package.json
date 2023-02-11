@@ -4,9 +4,8 @@
   "private": true,
   "scripts": {
     "build": "vite build",
-    "local": "vite --mode vite.local",
-    "dev": "vite build && vite --mode development",
-    "prod": "vite build && vite --mode production"
+    "dev": "vite --mode development",
+    "prod": "vite --mode production"
   },
   "dependencies": {
     "@vitejs/plugin-basic-ssl": "^1.0.1",
