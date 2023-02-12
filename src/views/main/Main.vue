@@ -63,7 +63,7 @@
 </template>
 
 <script setup>
-	import { ref, computed, onMounted } from 'vue';
+	import { ref, computed, onMounted, onUpdated } from 'vue';
 	import useStoreMain from '@/store/useStoreMain';
 	import {useUtils} from '@/composables/useUtils.js';
 
@@ -77,6 +77,11 @@
 			useYn : 'Y',
 			dispYn : 'Y'
 		});
+	});
+	onUpdated(()=> {
+		if(bannerList.value.length>1) {
+			document.querySelectorAll('button.active')[0].dispatchEvent(new Event('click'));
+		}
 	});
 		
 </script>
