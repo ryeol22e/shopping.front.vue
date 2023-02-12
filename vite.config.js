@@ -21,7 +21,7 @@ export default defineConfig(({command, mode})=> {
 		},
 	}
 
-	if(active==='development') {
+	if(active==='local') {
 		config.server.https = {}
 		config.server.https.pfx = fs.readFileSync('./src/assets/file/ssl/shoppingmall.p12')
 		config.server.https.passphrase = 'shoppingmall1234'
