@@ -3,9 +3,9 @@
 		<div class="position-sticky pt-3 sidebar-sticky">
 			<ul class="nav flex-column">
 				<li v-for="(item, index) in list" :key="index" class="nav-item">
-					<router-link :to="item.addInfo2" :class="`nav-link ${menuName===item.codeName ? 'active' : ''}`" aria-current="page" @click="currActive(item.codeName)">
+					<router-link :to="item.addInfo2" :class="`nav-link ${menuName === item.codeName ? 'active' : ''}`" aria-current="page" @click="currActive(item.codeName)">
 						<!-- <span data-feather="file" class="align-text-bottom"></span> -->
-						{{item.codeName}}
+						{{ item.codeName }}
 					</router-link>
 				</li>
 				<!-- <li class="nav-item">
@@ -77,21 +77,19 @@
 </template>
 
 <script setup>
-	import {ref} from 'vue';
-	
+	import { ref } from 'vue';
+
 	const menuName = ref('Dashboard');
-	const currActive = name=> {
+	const currActive = name => {
 		menuName.value = name;
 	};
 
 	defineProps({
-		list : {
+		list: {
 			type: Array,
-			default : [],
+			default: [],
 		},
 	});
-
-
 </script>
 
 <style scoped>

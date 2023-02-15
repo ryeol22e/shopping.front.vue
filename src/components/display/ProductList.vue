@@ -1,19 +1,20 @@
 <template>
 	<div class="album py-5 bg-light">
-		<div v-if="list.length>0" class="container">
+		<div v-if="list.length > 0" class="container">
 			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-				<router-link :to="{name : 'ProductDetail', params : {prdtNo : item.prdtNo}}"  v-for="item in list" :key="item.prdtNo">
+				<router-link :to="{ name: 'ProductDetail', params: { prdtNo: item.prdtNo } }" v-for="item in list" :key="item.prdtNo">
 					<div class="col">
 						<div class="card shadow-sm">
-							<img v-if="!isEmpty(item.image)" :src="`data:image/png;base64,${item.image}`" alt="" height="225"/>
+							<img v-if="!isEmpty(item.image)" :src="`data:image/png;base64,${item.image}`" alt="" height="225" />
 							<svg v-else class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-								<title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/>
+								<title>Placeholder</title>
+								<rect width="100%" height="100%" fill="#55595c" />
 								<text x="50%" y="50%" fill="#eceeef" dy=".3em">No Image</text>
 							</svg>
 
 							<div class="card-body">
-								<h5 class="text-black">{{item.prdtName}}</h5>
-								<p class="card-text text-black">판매가 : {{numberComma(item.sellPrice)}}원</p>
+								<h5 class="text-black">{{ item.prdtName }}</h5>
+								<p class="card-text text-black">판매가 : {{ numberComma(item.sellPrice) }}원</p>
 								<div class="d-flex justify-content-between align-items-center">
 									<!-- <div class="btn-group">
 										<button type="button" class="btn btn-sm btn-outline-secondary">View</button>
@@ -34,17 +35,17 @@
 </template>
 
 <script setup>
-	import {useCommon} from '@/composables/useCommon.js';
-	import {useUtils} from '@/composables/useUtils.js';
+	import { useCommon } from '@/composables/useCommon.js';
+	import { useUtils } from '@/composables/useUtils.js';
 
 	const common = useCommon();
 	const isEmpty = useUtils().isEmpty;
 	const numberComma = common.useNumComma;
 	const props = defineProps({
-		list : {
-			type : Array,
-			default : [],
-		}
+		list: {
+			type: Array,
+			default: [],
+		},
 	});
 </script>
 
@@ -68,10 +69,10 @@
 
 	.b-example-divider {
 		height: 3rem;
-		background-color: rgba(0, 0, 0, .1);
-		border: solid rgba(0, 0, 0, .15);
+		background-color: rgba(0, 0, 0, 0.1);
+		border: solid rgba(0, 0, 0, 0.15);
 		border-width: 1px 0;
-		box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+		box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, 0.1), inset 0 0.125em 0.5em rgba(0, 0, 0, 0.15);
 	}
 
 	.b-example-vr {
@@ -81,7 +82,7 @@
 	}
 
 	.bi {
-		vertical-align: -.125em;
+		vertical-align: -0.125em;
 		fill: currentColor;
 	}
 

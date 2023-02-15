@@ -148,15 +148,14 @@
 </template>
 
 <script setup>
-	import {onMounted} from 'vue';
-	import {useCommon} from '@/composables/useCommon.js';
+	import { onMounted } from 'vue';
+	import { useCommon } from '@/composables/useCommon.js';
 
 	const common = useCommon();
 
-	onMounted(()=> {
+	onMounted(() => {
 		common.useDashboard();
 	});
-
 </script>
 
 <style scoped>
@@ -177,10 +176,10 @@
 
 	.b-example-divider {
 		height: 3rem;
-		background-color: rgba(0, 0, 0, .1);
-		border: solid rgba(0, 0, 0, .15);
+		background-color: rgba(0, 0, 0, 0.1);
+		border: solid rgba(0, 0, 0, 0.15);
 		border-width: 1px 0;
-		box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+		box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, 0.1), inset 0 0.125em 0.5em rgba(0, 0, 0, 0.15);
 	}
 
 	.b-example-vr {
@@ -190,7 +189,7 @@
 	}
 
 	.bi {
-		vertical-align: -.125em;
+		vertical-align: -0.125em;
 		fill: currentColor;
 	}
 

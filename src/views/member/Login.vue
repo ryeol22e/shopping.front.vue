@@ -3,18 +3,16 @@
 		<h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
 		<div class="form-floating">
-			<input type="email" class="form-control" placeholder="ID" v-model="data.memberId">
+			<input type="email" class="form-control" placeholder="ID" v-model="data.memberId" />
 			<label for="floatingInput">ID</label>
 		</div>
 		<div class="form-floating">
-			<input type="password" class="form-control" placeholder="Password" v-model="data.memberPassword" @keyup.enter="loginProcess">
+			<input type="password" class="form-control" placeholder="Password" v-model="data.memberPassword" @keyup.enter="loginProcess" />
 			<label for="floatingPassword">Password</label>
 		</div>
 
 		<div class="checkbox mb-3">
-			<label>
-				<input type="checkbox" value="remember-me" v-model="remember"> Remember me
-			</label>
+			<label> <input type="checkbox" value="remember-me" v-model="remember" /> Remember me </label>
 		</div>
 		<button class="w-100 btn btn-lg btn-primary" type="button" @click="loginProcess">Sign in</button>
 		<p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
@@ -22,10 +20,10 @@
 </template>
 
 <script setup>
-	import {ref, reactive, computed, onMounted} from 'vue';
-	import {useRouter} from 'vue-router';
+	import { ref, reactive, computed, onMounted } from 'vue';
+	import { useRouter } from 'vue-router';
 	import useStoreMember from '@/store/useStoreMember.js';
-	import {useUtils} from '@/composables/useUtils.js';
+	import { useUtils } from '@/composables/useUtils.js';
 
 	const utils = useUtils();
 	const useCookie = utils.useCookie();
@@ -33,18 +31,18 @@
 	const router = useRouter();
 	const memberId = localStorage.getItem('memberId');
 	const remember = ref(utils.isEmpty(memberId) ? false : true);
-	const userInfo = computed(()=> useMember.getUserInfo);
+	const userInfo = computed(() => useMember.getUserInfo);
 	const data = reactive({
-		memberId : remember ? memberId : '',
-		memberPassword : '',
+		memberId: remember ? memberId : '',
+		memberPassword: '',
 	});
-	const loginProcess = async ()=> {
-		if(validate()) {
+	const loginProcess = async () => {
+		if (validate()) {
 			await useMember.loginProcess(data);
 			const token = userInfo.value.accessToken || '';
-			
-			if(!utils.isEmpty(token)) {
-				if(remember) {
+
+			if (!utils.isEmpty(token)) {
+				if (remember) {
 					localStorage.setItem('memberId', userInfo.value.memberId);
 				}
 
@@ -57,23 +55,23 @@
 			}
 		}
 	};
-	const validate = ()=> {
-		if(data.memberId==='') {
+	const validate = () => {
+		if (data.memberId === '') {
 			alert('아이디를 입력해주세요.');
 			return false;
 		}
-		if(data.memberPassword==='') {
+		if (data.memberPassword === '') {
 			alert('비밀번호를 입력해주세요.');
 			return false;
 		}
 
 		return true;
-	}
+	};
 
-	onMounted(()=> {
-		if(!utils.isEmpty(sessionStorage.getItem('userInfo'))) {
+	onMounted(() => {
+		if (!utils.isEmpty(sessionStorage.getItem('userInfo'))) {
 			router.push('/');
-		}	
+		}
 	});
 </script>
 
@@ -95,10 +93,10 @@
 
 	.b-example-divider {
 		height: 3rem;
-		background-color: rgba(0, 0, 0, .1);
-		border: solid rgba(0, 0, 0, .15);
+		background-color: rgba(0, 0, 0, 0.1);
+		border: solid rgba(0, 0, 0, 0.15);
 		border-width: 1px 0;
-		box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+		box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, 0.1), inset 0 0.125em 0.5em rgba(0, 0, 0, 0.15);
 	}
 
 	.b-example-vr {
@@ -108,7 +106,7 @@
 	}
 
 	.bi {
-		vertical-align: -.125em;
+		vertical-align: -0.125em;
 		fill: currentColor;
 	}
 

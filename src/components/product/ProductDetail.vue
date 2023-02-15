@@ -1,12 +1,10 @@
-<template>
-
-</template>
+<template></template>
 
 <script setup>
 	defineProps({
-		item : {
-			type : Object,
-			default : {},
-		}
+		item: {
+			type: Object,
+			default: {},
+		},
 	});
 </script>

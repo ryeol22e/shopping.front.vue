@@ -1,20 +1,21 @@
-import { defineStore } from "pinia";
-import {api} from "@/composables/useAxios.js"
+import { defineStore } from 'pinia';
+import { api } from '@/composables/useAxios.js';
 
 export default defineStore('main', {
-	state : ()=> ({
-		bannerList : [],
+	state: () => ({
+		bannerList: [],
 	}),
-	getters : {
-		getBannerList : state=> state.bannerList,
+	getters: {
+		getBannerList: state => state.bannerList,
 	},
-	actions : {
+	actions: {
 		async setBannerList(param) {
-			await api.get('/display/main/banner', {
-				params : param
-			})
-			.then(res=> this.bannerList = res.data)
-			.catch(error=> console.log(error));
+			await api
+				.get('/display/main/banner', {
+					params: param,
+				})
+				.then(res => (this.bannerList = res.data))
+				.catch(error => console.log(error));
 		},
-	}
-})
+	},
+});

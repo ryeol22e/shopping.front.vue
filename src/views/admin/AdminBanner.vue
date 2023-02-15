@@ -5,11 +5,11 @@
 		</div>
 		<div class="input-group mb-3">
 			<span class="input-group-text">TITLE</span>
-			<input v-model="data.title" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+			<input v-model="data.title" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
 		</div>
 		<div class="input-group mb-3">
 			<span class="input-group-text">DESCRIPTION</span>
-			<input v-model="data.description" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+			<input v-model="data.description" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
 		</div>
 		<div class="input-group mb-3">
 			<span class="input-group-text">사용여부</span>
@@ -25,13 +25,13 @@
 		</div>
 		<div class="input-group mb-3">
 			<span class="input-group-text">전시시작일</span>
-			<input v-model="data.dispStart" type="date">
+			<input v-model="data.dispStart" type="date" />
 			<span class="input-group-text">전시종료일</span>
-			<input v-model="data.dispEnd" type="date">
+			<input v-model="data.dispEnd" type="date" />
 		</div>
 		<div class="input-group mb-3">
 			<span class="input-group-text">이미지</span>
-			<input @change="imageUpload" class="form-control" type="file">
+			<input @change="imageUpload" class="form-control" type="file" />
 		</div>
 
 		<button type="button" class="btn btn-primary" @click="registBanner">등록</button>
@@ -46,41 +46,40 @@
 	const isEmpty = useUtils().isEmpty;
 	const useBo = useStoreBo();
 	const data = reactive({
-		bannerType : '10000',
-		title : '',
-		description : '',
-		dispStart : '',
-		dispEnd : '',
-		useYn : 'Y',
-		dispYn : 'Y',
-		file : null,
-
+		bannerType: '10000',
+		title: '',
+		description: '',
+		dispStart: '',
+		dispEnd: '',
+		useYn: 'Y',
+		dispYn: 'Y',
+		file: null,
 	});
-	const imageUpload = (e)=> {
+	const imageUpload = e => {
 		data.file = e.target.files[0];
 	};
-	const validate = ()=> {
-		if(isEmpty(data.title)) {
+	const validate = () => {
+		if (isEmpty(data.title)) {
 			alert('title을 입력해주세요.');
 			return false;
 		}
-		if(isEmpty(data.description)) {
+		if (isEmpty(data.description)) {
 			alert('description을 입력해주세요.');
 			return false;
 		}
-		if(isEmpty(data.dispStart)) {
+		if (isEmpty(data.dispStart)) {
 			alert('전시시작일을 입력해주세요.');
 			return false;
 		}
-		if(isEmpty(data.dispEnd)) {
+		if (isEmpty(data.dispEnd)) {
 			alert('전시종료일을 입력해주세요.');
 			return false;
 		}
 
 		return true;
 	};
-	const registBanner = ()=> {
-		if(validate()) {
+	const registBanner = () => {
+		if (validate()) {
 			useBo.registBannerInfo(useUtils().changeToFormData(data));
 		}
 	};

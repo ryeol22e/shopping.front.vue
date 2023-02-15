@@ -1,49 +1,52 @@
-import { defineStore } from "pinia";
-import {api} from "@/composables/useAxios.js"
+import { defineStore } from 'pinia';
+import { api } from '@/composables/useAxios.js';
 
 export default defineStore('common', {
-	state : ()=> ({
-		headers : [],
-		adminLnb : [],
-		mypage : [],
+	state: () => ({
+		headers: [],
+		adminLnb: [],
+		mypage: [],
 	}),
-	getters : {
-		getHeaders : state=> state.headers,
-		getAdminLnb : state=> state.adminLnb,
-		getMypage : state=> state.mypage,
+	getters: {
+		getHeaders: state => state.headers,
+		getAdminLnb: state => state.adminLnb,
+		getMypage: state => state.mypage,
 	},
-	actions : {
+	actions: {
 		async setHeaders() {
-			await api.get('/common/10000', {
-				params : {
-					codeType : '10000',
-					codeDepth : '1',
-					useYn : 'Y',
-				}
-			})
-			.then(res=> this.headers = res.data)
-			.catch(error=> console.log(error));
+			await api
+				.get('/common/10000', {
+					params: {
+						codeType: '10000',
+						codeDepth: '1',
+						useYn: 'Y',
+					},
+				})
+				.then(res => (this.headers = res.data))
+				.catch(error => console.log(error));
 		},
 		async setAdminLnb() {
-			await api.get('/admin/menu', {
-				params : {
-					codeType : '10003',
-					codeDepth : '1',
-					useYn : 'Y'
-				}
-			}).then(res=> this.adminLnb = res.data)
-			.catch(error=> console.log(error));
+			await api
+				.get('/admin/menu', {
+					params: {
+						codeType: '10003',
+						codeDepth: '1',
+						useYn: 'Y',
+					},
+				})
+				.then(res => (this.adminLnb = res.data))
+				.catch(error => console.log(error));
 		},
 		setMypageList() {
 			api.get('/common/10002', {
-				params : {
-					codeType : '10002',
-					codeDepth : '1',
-					useYn : 'Y'
-				}
+				params: {
+					codeType: '10002',
+					codeDepth: '1',
+					useYn: 'Y',
+				},
 			})
-			.then(res=> this.mypage = res.data)
-			.catch(error=> console.log(error));
-		}
-	}
+				.then(res => (this.mypage = res.data))
+				.catch(error => console.log(error));
+		},
+	},
 });

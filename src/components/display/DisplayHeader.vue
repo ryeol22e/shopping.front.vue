@@ -2,8 +2,8 @@
 	<section class="py-5 text-center container">
 		<div class="row py-lg-5">
 			<div class="col-lg-6 col-md-8 mx-auto">
-				<h1 class="fw-light">{{title}}</h1>
-				<p class="lead text-muted">{{desc}}</p>
+				<h1 class="fw-light">{{ title }}</h1>
+				<p class="lead text-muted">{{ desc }}</p>
 				<!-- <p>
 					<a href="#" class="btn btn-primary my-2">Main call to action</a>
 					<a href="#" class="btn btn-secondary my-2">Secondary action</a>
@@ -15,13 +15,13 @@
 
 <script setup>
 	const props = defineProps({
-		title : {
-			type : String,
-			default : '',
+		title: {
+			type: String,
+			default: '',
 		},
-		desc : {
-			type : String,
-			default : '',
-		}
+		desc: {
+			type: String,
+			default: '',
+		},
 	});
 </script>

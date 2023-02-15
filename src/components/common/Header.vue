@@ -1,5 +1,5 @@
 <template>
-	<Mypage :list="myPageList" :isShow="mypageIsShow"/>
+	<Mypage :list="myPageList" :isShow="mypageIsShow" />
 	<main>
 		<header class="p-3 text-bg-dark">
 			<div>
@@ -12,7 +12,7 @@
 					<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
 						<li v-for="header in headers" :key="header.codeId">
 							<router-link :to="header.addInfo2" class="nav-link px-2 text-secondary text-white">
-								{{header.codeName}}
+								{{ header.codeName }}
 							</router-link>
 						</li>
 					</ul>
@@ -22,12 +22,12 @@
 					</div> -->
 
 					<div class="text-end">
-						<router-link  v-if="!isLogin" to="/login" class="px-2 text-secondary text-white"><span>Login</span></router-link>
+						<router-link v-if="!isLogin" to="/login" class="px-2 text-secondary text-white"><span>Login</span></router-link>
 						<a v-else @click="mypageOpen" href="javascript:void(0);" class="px-2 text-secondary text-white" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Mypage</a>
 						<a class="text-white">·</a>
 						<router-link v-if="!isLogin" to="/signup" class="px-2 text-secondary text-white">Sign-up</router-link>
 						<a v-else @click="logout" href="javascript:void(0);" class="px-2 text-secondary text-white">Logout</a>
-						<router-link v-if="isLogin && roleAdmin===MEMBER_CONST.ADMIN" to="/admin/dashboard" type="button" class="btn btn-outline-light me-2">관리자</router-link>
+						<router-link v-if="isLogin && roleAdmin === MEMBER_CONST.ADMIN" to="/admin/dashboard" type="button" class="btn btn-outline-light me-2">관리자</router-link>
 					</div>
 				</div>
 			</div>
@@ -40,33 +40,32 @@
 	import { onMounted, computed, watchEffect, ref } from 'vue';
 	import useStoreCommon from '@/store/useStoreCommon';
 	import useStoreMember from '@/store/useStoreMember';
-	import {useUtils} from '@/composables/useUtils';
-	import {MEMBER_CONST} from '@/composables/useEnum';
+	import { useUtils } from '@/composables/useUtils';
+	import { MEMBER_CONST } from '@/composables/useEnum';
 
 	const useCommon = useStoreCommon();
 	const useMember = useStoreMember();
 	const useCookie = useUtils().useCookie();
-	const headers = computed(()=> useCommon.getHeaders);
-	const isLogin = computed(()=> useMember.getIsLogin);
-	const roleAdmin = computed(()=> useMember.getUserRole);
-	const myPageList = computed(()=> useCommon.getMypage);
+	const headers = computed(() => useCommon.getHeaders);
+	const isLogin = computed(() => useMember.getIsLogin);
+	const roleAdmin = computed(() => useMember.getUserRole);
+	const myPageList = computed(() => useCommon.getMypage);
 	const mypageIsShow = ref(false);
-	const logout = ()=> {
+	const logout = () => {
 		useCookie.deleteCookie('token');
 		sessionStorage.removeItem('userInfo');
 		useMember.setLogin(false);
 	};
-	const mypageOpen = ()=> {
+	const mypageOpen = () => {
 		useCommon.setMypageList();
 		mypageIsShow.value = true;
 	};
-	onMounted(()=> {
+	onMounted(() => {
 		useCommon.setHeaders();
 	});
-	watchEffect(()=> {
+	watchEffect(() => {
 		roleAdmin.value;
 	});
-
 </script>
 
 <style scoped>
@@ -81,7 +80,7 @@
 		-webkit-user-select: none;
 		-moz-user-select: none;
 		user-select: none;
-		}
+	}
 
 	@media (min-width: 768px) {
 		.bd-placeholder-img-lg {
@@ -91,10 +90,10 @@
 
 	.b-example-divider {
 		height: 3rem;
-		background-color: rgba(0, 0, 0, .1);
-		border: solid rgba(0, 0, 0, .15);
+		background-color: rgba(0, 0, 0, 0.1);
+		border: solid rgba(0, 0, 0, 0.15);
 		border-width: 1px 0;
-		box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+		box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, 0.1), inset 0 0.125em 0.5em rgba(0, 0, 0, 0.15);
 	}
 
 	.b-example-vr {
@@ -104,7 +103,7 @@
 	}
 
 	.bi {
-		vertical-align: -.125em;
+		vertical-align: -0.125em;
 		fill: currentColor;
 	}
 
