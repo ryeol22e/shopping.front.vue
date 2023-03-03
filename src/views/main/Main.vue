@@ -79,9 +79,9 @@
 </template>
 
 <script setup>
-	import { ref, computed, onMounted, onUpdated } from "vue";
-	import useStoreMain from "@/store/useStoreMain";
-	import { useUtils } from "@/composables/useUtils.js";
+	import { ref, computed, onMounted, onUpdated } from 'vue';
+	import useStoreMain from '@/store/useStoreMain';
+	import { useUtils } from '@/composables/useUtils';
 
 	const isEmpty = useUtils().isEmpty;
 	const useMain = useStoreMain();
@@ -89,20 +89,20 @@
 
 	onMounted(() => {
 		useMain.setBannerList({
-			bannerType: "10000",
-			useYn: "Y",
-			dispYn: "Y",
+			bannerType: '10000',
+			useYn: 'Y',
+			dispYn: 'Y',
 		});
 	});
 	onUpdated(() => {
 		if (bannerList.value.length > 1) {
-			document.querySelectorAll("button.active")[0].dispatchEvent(new Event("click"));
+			document.querySelectorAll('button.active')[0].dispatchEvent(new Event('click'));
 		}
 	});
 </script>
 
 <style scoped>
-	@import "@/assets/css/main.css";
+	@import '@/assets/css/main.css';
 	.bd-placeholder-img {
 		font-size: 1.125rem;
 		text-anchor: middle;
