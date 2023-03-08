@@ -1,5 +1,5 @@
 <template>
-	<main>
+	<main v-show="!useStoreCommon().getIsLoadingShow">
 		<div v-if="bannerList.length > 0" id="myCarousel" class="carousel slide" data-bs-ride="carousel">
 			<div v-if="bannerList.length > 1" class="carousel-indicators">
 				<button v-for="(item, index) in bannerList" :key="item.bannerId" type="button" :data-bs-target="`#myCarousel`" :data-bs-slide-to="index" class="active" aria-current="true" :aria-label="`Slide ${index}`"></button>
@@ -82,6 +82,7 @@
 	import { ref, computed, onMounted, onUpdated } from 'vue';
 	import useStoreMain from '@/store/useStoreMain';
 	import { useUtils } from '@/composables/useUtils';
+	import useStoreCommon from '@/store/useStoreCommon';
 
 	const isEmpty = useUtils().isEmpty;
 	const useMain = useStoreMain();
