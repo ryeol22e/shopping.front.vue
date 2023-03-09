@@ -1,8 +1,6 @@
-import useStoreCommon from './useStoreCommon';
 import { defineStore } from 'pinia';
 import { api } from '@/composables/useAxios.js';
 
-const useCommon = useStoreCommon();
 export const useStoreProduct = defineStore('useStoreProduct', {
 	state: () => ({
 		list: [],
@@ -18,7 +16,6 @@ export const useStoreProduct = defineStore('useStoreProduct', {
 	},
 	actions: {
 		async setList(cateNo) {
-			useCommon.setIsLoadingShow(true);
 			await api
 				.get(`/display/product/list`, {
 					params: {
@@ -29,7 +26,6 @@ export const useStoreProduct = defineStore('useStoreProduct', {
 				})
 				.then(res => (this.list = res.data))
 				.catch(error => console.log(error));
-			useCommon.setIsLoadingShow(false);
 		},
 		async setDetail(prdtNo) {
 			await api

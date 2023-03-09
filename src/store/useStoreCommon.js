@@ -6,18 +6,13 @@ export default defineStore('common', {
 		headers: [],
 		adminLnb: [],
 		mypage: [],
-		isLoadingShow: false,
 	}),
 	getters: {
 		getHeaders: state => state.headers,
 		getAdminLnb: state => state.adminLnb,
 		getMypage: state => state.mypage,
-		getIsLoadingShow: state => state.isLoadingShow,
 	},
 	actions: {
-		setIsLoadingShow(bool) {
-			this.isLoadingShow = bool;
-		},
 		async setHeaders() {
 			await api
 				.get('/common/10000', {
