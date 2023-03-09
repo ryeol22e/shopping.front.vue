@@ -4,16 +4,16 @@
 		<header class="p-3 text-bg-dark">
 			<div>
 				<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-					<router-link to="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+					<RouterLink to="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
 						<!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg> -->
 						<h3 class="px-3 text-secondary">SHOP</h3>
-					</router-link>
+					</RouterLink>
 
 					<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
 						<li v-for="header in headers" :key="header.codeId">
-							<router-link :to="header.addInfo2" class="nav-link px-2 text-secondary text-white">
+							<RouterLink :to="header.addInfo2" class="nav-link px-2 text-secondary text-white">
 								{{ header.codeName }}
-							</router-link>
+							</RouterLink>
 						</li>
 					</ul>
 
@@ -22,12 +22,12 @@
 					</div> -->
 
 					<div class="text-end">
-						<router-link v-if="!isLogin" to="/login" class="px-2 text-secondary text-white"><span>Login</span></router-link>
+						<RouterLink v-if="!isLogin" to="/login" class="px-2 text-secondary text-white"><span>Login</span></RouterLink>
 						<a v-else @click="mypageOpen" href="javascript:void(0);" class="px-2 text-secondary text-white" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Mypage</a>
 						<a class="text-white">·</a>
-						<router-link v-if="!isLogin" to="/signup" class="px-2 text-secondary text-white">Sign-up</router-link>
+						<RouterLink v-if="!isLogin" to="/signup" class="px-2 text-secondary text-white">Sign-up</RouterLink>
 						<a v-else @click="logout" href="javascript:void(0);" class="px-2 text-secondary text-white">Logout</a>
-						<router-link v-if="isLogin && roleAdmin === MEMBER_CONST.ADMIN" to="/admin/dashboard" type="button" class="btn btn-outline-light me-2">관리자</router-link>
+						<RouterLink v-if="isLogin && roleAdmin === MEMBER_CONST.ADMIN" to="/admin/dashboard" type="button" class="btn btn-outline-light me-2">관리자</RouterLink>
 					</div>
 				</div>
 			</div>
@@ -37,11 +37,12 @@
 
 <script setup>
 	import Mypage from '@/components/common/Mypage.vue';
-	import { onMounted, computed, watchEffect, ref } from 'vue';
+	import { MEMBER_CONST } from '@/composables/useEnum';
+	import { useUtils } from '@/composables/useUtils';
 	import useStoreCommon from '@/store/useStoreCommon';
 	import useStoreMember from '@/store/useStoreMember';
-	import { useUtils } from '@/composables/useUtils';
-	import { MEMBER_CONST } from '@/composables/useEnum';
+	import { computed, onMounted, ref, watchEffect } from 'vue';
+	import { RouterLink } from 'vue-router';
 
 	const useCommon = useStoreCommon();
 	const useMember = useStoreMember();
@@ -56,10 +57,11 @@
 		sessionStorage.removeItem('userInfo');
 		useMember.setLogin(false);
 	};
-	const mypageOpen = () => {
-		useCommon.setMypageList();
+	const mypageOpen = async () => {
+		await useCommon.setMypageList();
 		mypageIsShow.value = true;
 	};
+
 	onMounted(() => {
 		useCommon.setHeaders();
 	});

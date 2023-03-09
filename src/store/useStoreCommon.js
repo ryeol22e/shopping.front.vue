@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { api } from '@/composables/useAxios.js';
+import { api } from '@/composables/useApi.js';
 
 export default defineStore('common', {
 	state: () => ({
@@ -37,14 +37,15 @@ export default defineStore('common', {
 				.then(res => (this.adminLnb = res.data))
 				.catch(error => console.log(error));
 		},
-		setMypageList() {
-			api.get('/common/10002', {
-				params: {
-					codeType: '10002',
-					codeDepth: '1',
-					useYn: 'Y',
-				},
-			})
+		async setMypageList() {
+			await api
+				.get('/common/10002', {
+					params: {
+						codeType: '10002',
+						codeDepth: '1',
+						useYn: 'Y',
+					},
+				})
 				.then(res => (this.mypage = res.data))
 				.catch(error => console.log(error));
 		},

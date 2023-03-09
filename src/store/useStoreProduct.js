@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { api } from '@/composables/useAxios.js';
+import { api } from '@/composables/useApi.js';
 
 export const useStoreProduct = defineStore('useStoreProduct', {
 	state: () => ({

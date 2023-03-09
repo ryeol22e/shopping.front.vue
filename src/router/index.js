@@ -6,7 +6,7 @@ import admin from './admin';
 import member from './member';
 import display from './display';
 import product from './product';
-import { api } from '@/composables/useAxios';
+import { api } from '@/composables/useApi';
 
 const routes = [
 	{
@@ -54,6 +54,7 @@ router.beforeEach((to, from, next) => {
 		api.defaults.headers.common['MemberId'] = localStorage.getItem('memberId');
 	} else {
 		delete api.defaults.headers.common['Authorization'];
+		delete api.defaults.headers.common['MemberId'];
 	}
 
 	useMember.authCheck();

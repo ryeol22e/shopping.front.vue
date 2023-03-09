@@ -30,9 +30,8 @@
 	const useProduct = useStoreProduct();
 	const product = computed(() => useProduct.getDetail);
 
-	onMounted(() => {
-		useProduct.setDetail(route.params.prdtNo);
-	});
+	await useProduct.setDetail(route.params.prdtNo);
+	onMounted(() => {});
 </script>
 
 <style scoped>

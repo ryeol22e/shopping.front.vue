@@ -1,11 +1,14 @@
 import { defineStore } from 'pinia';
 import { MEMBER_CONST } from '@/composables/useEnum.js';
-import { api } from '@/composables/useAxios.js';
+import { api } from '@/composables/useApi.js';
 import { useUtils } from '@/composables/useUtils.js';
+
+const isEmpty = useUtils().isEmpty;
+const useCooike = useUtils().useCookie();
 
 export default defineStore('member', {
 	state: () => ({
-		isLogin: !useUtils().isEmpty(sessionStorage.getItem('userInfo')) ? true : false,
+		isLogin: !isEmpty(useCooike.getCookie('token')) && !isEmpty(sessionStorage.getItem('userInfo')) ? true : false,
 		userInfo: {},
 		userRole: JSON.parse(sessionStorage.getItem('userInfo'))?.memberRole || MEMBER_CONST.ANONYMOUS,
 		signUpResult: false,

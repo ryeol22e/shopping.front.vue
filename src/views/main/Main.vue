@@ -79,21 +79,20 @@
 </template>
 
 <script setup>
-	import { ref, computed, onMounted, onUpdated } from 'vue';
-	import useStoreMain from '@/store/useStoreMain';
 	import { useUtils } from '@/composables/useUtils';
+	import useStoreMain from '@/store/useStoreMain';
+	import { computed, onUpdated } from 'vue';
 
 	const isEmpty = useUtils().isEmpty;
 	const useMain = useStoreMain();
 	const bannerList = computed(() => useMain.getBannerList);
 
-	onMounted(() => {
-		useMain.setBannerList({
-			bannerType: '10000',
-			useYn: 'Y',
-			dispYn: 'Y',
-		});
+	await useMain.setBannerList({
+		bannerType: '10000',
+		useYn: 'Y',
+		dispYn: 'Y',
 	});
+
 	onUpdated(() => {
 		if (bannerList.value.length > 1) {
 			document.querySelectorAll('button.active')[0].dispatchEvent(new Event('click'));
