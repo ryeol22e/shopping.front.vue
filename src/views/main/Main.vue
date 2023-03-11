@@ -81,7 +81,7 @@
 <script setup>
 	import { useUtils } from '@/composables/useUtils';
 	import useStoreMain from '@/store/useStoreMain';
-	import { computed, onUpdated } from 'vue';
+	import { computed, onMounted } from 'vue';
 
 	const isEmpty = useUtils().isEmpty;
 	const useMain = useStoreMain();
@@ -93,7 +93,7 @@
 		dispYn: 'Y',
 	});
 
-	onUpdated(() => {
+	onMounted(() => {
 		if (bannerList.value.length > 1) {
 			document.querySelectorAll('button.active')[0].dispatchEvent(new Event('click'));
 		}
