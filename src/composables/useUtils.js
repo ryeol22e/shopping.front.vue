@@ -25,14 +25,24 @@ export const useUtils = () => {
 		 * @param {} key
 		 * @param {*} value
 		 */
-		const setCookie = (key, value) => {
-			if (key === undefined || key === null || key === '') {
-				throw 'parameter error.';
-			} else if (value === undefined || value === null || value === '') {
+		const setCookie = (key, value, expires) => {
+			if (isEmpty(key)) {
 				throw 'parameter error.';
 			}
+			if (isEmpty(value)) {
+				throw 'parameter error.';
+			}
+			if (!isEmpty(expires)) {
+				if (expires.constructor !== Date) {
+					throw 'date is not Date type.';
+				}
+			}
 
-			document.cookie = key.concat('=').concat(value);
+			document.cookie = key
+				.concat('=')
+				.concat(value)
+				.concat('; expires=')
+				.concat(!isEmpty(expires) ? expires.toUTCString() : '');
 		};
 
 		/**
@@ -97,6 +107,8 @@ export const useUtils = () => {
 						if (data.length > 0) {
 							return false;
 						}
+						break;
+					case Date:
 						break;
 				}
 			}
