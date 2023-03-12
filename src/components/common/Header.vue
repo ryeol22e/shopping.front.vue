@@ -1,7 +1,7 @@
 <template>
 	<Mypage :list="myPageList" :isShow="mypageIsShow" />
 	<main>
-		<header class="p-3 text-bg-dark">
+		<header class="p-3 text-bg-dark fixed-top">
 			<div>
 				<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 					<RouterLink to="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
