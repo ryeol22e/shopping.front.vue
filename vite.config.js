@@ -7,7 +7,6 @@ import fs from 'fs';
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), '');
 	const active = env.VITE_PROFILE_ACTIVE;
-	console.log(active);
 	const config = {
 		plugins: [vue()],
 		resolve: {
