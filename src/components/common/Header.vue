@@ -1,38 +1,34 @@
 <template>
 	<Mypage :list="myPageList" :isShow="mypageIsShow" />
-	<main>
-		<header class="p-3 text-bg-dark fixed-top">
-			<div>
-				<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-					<RouterLink to="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-						<!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg> -->
-						<h3 class="px-3 text-secondary">SHOP</h3>
+	<header class="p-3 text-bg-dark sticky-top">
+		<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+			<RouterLink to="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+				<!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg> -->
+				<h3 class="px-3 text-secondary">SHOP</h3>
+			</RouterLink>
+
+			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+				<li v-for="header in headers" :key="header.codeId">
+					<RouterLink :to="header.addInfo2" class="nav-link px-2 text-secondary text-white">
+						{{ header.codeName }}
 					</RouterLink>
+				</li>
+			</ul>
 
-					<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-						<li v-for="header in headers" :key="header.codeId">
-							<RouterLink :to="header.addInfo2" class="nav-link px-2 text-secondary text-white">
-								{{ header.codeName }}
-							</RouterLink>
-						</li>
-					</ul>
-
-					<!-- <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+			<!-- <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
 						<input type="search" class="form-control form-control-dark text-bg-dark" placeholder="검색어를 입력하세요." aria-label="Search">
 					</div> -->
 
-					<div class="text-end">
-						<RouterLink v-if="!isLogin" to="/login" class="px-2 text-secondary text-white"><span>Login</span></RouterLink>
-						<a v-else @click="mypageOpen" href="javascript:void(0);" class="px-2 text-secondary text-white" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Mypage</a>
-						<a class="text-white">·</a>
-						<RouterLink v-if="!isLogin" to="/signup" class="px-2 text-secondary text-white">Sign-up</RouterLink>
-						<a v-else @click="logout" href="javascript:void(0);" class="px-2 text-secondary text-white">Logout</a>
-						<RouterLink v-if="isLogin && roleAdmin === MEMBER_CONST.ADMIN" to="/admin/dashboard" type="button" class="btn btn-outline-light me-2">관리자</RouterLink>
-					</div>
-				</div>
+			<div class="text-end">
+				<RouterLink v-if="!isLogin" to="/login" class="px-2 text-secondary text-white"><span>Login</span></RouterLink>
+				<a v-else @click="mypageOpen" href="javascript:void(0);" class="px-2 text-secondary text-white" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Mypage</a>
+				<a class="text-white">·</a>
+				<RouterLink v-if="!isLogin" to="/signup" class="px-2 text-secondary text-white">Sign-up</RouterLink>
+				<a v-else @click="logout" href="javascript:void(0);" class="px-2 text-secondary text-white">Logout</a>
+				<RouterLink v-if="isLogin && roleAdmin === MEMBER_CONST.ADMIN" to="/admin/dashboard" type="button" class="btn btn-outline-light me-2">관리자</RouterLink>
 			</div>
-		</header>
-	</main>
+		</div>
+	</header>
 </template>
 
 <script setup>
