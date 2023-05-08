@@ -24,7 +24,7 @@
 						<RouterLink v-if="!isLogin" to="/login" @click="closeHeader" class="px-2 text-secondary text-white"><span>Login</span></RouterLink>
 						<a v-else @click="mypageOpen" href="javascript:void(0);" class="px-2 text-secondary text-white" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Mypage</a>
 						<a class="text-white">·</a>
-						<RouterLink v-if="!isLogin" to="/signup" class="px-2 text-secondary text-white">Sign-up</RouterLink>
+						<RouterLink v-if="!isLogin" to="/signup" @click="closeHeader" class="px-2 text-secondary text-white">Sign-up</RouterLink>
 						<a v-else @click="logout" href="javascript:void(0);" class="px-2 text-secondary text-white">Logout</a>
 						<RouterLink v-if="isLogin && roleAdmin === MEMBER_CONST.ADMIN" to="/admin/dashboard" @click="closeHeader" type="button" class="btn btn-outline-light me-2">관리자</RouterLink>
 					</div>
