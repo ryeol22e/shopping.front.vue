@@ -1,38 +1,45 @@
 <template>
 	<Mypage :list="myPageList" :isShow="mypageIsShow" />
-	<header class="p-3 text-bg-dark sticky-top">
-		<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-			<RouterLink to="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-				<!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg> -->
-				<h3 class="px-3 text-secondary">SHOP</h3>
-			</RouterLink>
+	<main class="sticky-top">
+		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+			<div class="container-fluid">
+				<RouterLink to="/" class="navbar-brand">
+					<!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg> -->
+					<h3 class="px-3 text-secondary">SHOP</h3>
+				</RouterLink>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav-item-div" aria-controls="nav-item-div" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
 
-			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-				<li v-for="header in headers" :key="header.codeId">
-					<RouterLink :to="header.addInfo2" class="nav-link px-2 text-secondary text-white">
-						{{ header.codeName }}
-					</RouterLink>
-				</li>
-			</ul>
+				<div class="collapse navbar-collapse" id="nav-item-div">
+					<ul class="navbar-nav me-auto col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+						<li v-for="header in headers" :key="header.codeId" @click="closeHeader" class="nav-item">
+							<RouterLink :to="header.addInfo2" class="nav-link px-2 text-secondary text-white">
+								{{ header.codeName }}
+							</RouterLink>
+						</li>
+					</ul>
 
-			<!-- <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+					<div :class="isMobile() ? '' : 'text-end'">
+						<RouterLink v-if="!isLogin" to="/login" @click="closeHeader" class="px-2 text-secondary text-white"><span>Login</span></RouterLink>
+						<a v-else @click="mypageOpen" href="javascript:void(0);" class="px-2 text-secondary text-white" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Mypage</a>
+						<a class="text-white">·</a>
+						<RouterLink v-if="!isLogin" to="/signup" class="px-2 text-secondary text-white">Sign-up</RouterLink>
+						<a v-else @click="logout" href="javascript:void(0);" class="px-2 text-secondary text-white">Logout</a>
+						<RouterLink v-if="isLogin && roleAdmin === MEMBER_CONST.ADMIN" to="/admin/dashboard" @click="closeHeader" type="button" class="btn btn-outline-light me-2">관리자</RouterLink>
+					</div>
+				</div>
+				<!-- <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
 						<input type="search" class="form-control form-control-dark text-bg-dark" placeholder="검색어를 입력하세요." aria-label="Search">
 					</div> -->
-
-			<div class="text-end">
-				<RouterLink v-if="!isLogin" to="/login" class="px-2 text-secondary text-white"><span>Login</span></RouterLink>
-				<a v-else @click="mypageOpen" href="javascript:void(0);" class="px-2 text-secondary text-white" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Mypage</a>
-				<a class="text-white">·</a>
-				<RouterLink v-if="!isLogin" to="/signup" class="px-2 text-secondary text-white">Sign-up</RouterLink>
-				<a v-else @click="logout" href="javascript:void(0);" class="px-2 text-secondary text-white">Logout</a>
-				<RouterLink v-if="isLogin && roleAdmin === MEMBER_CONST.ADMIN" to="/admin/dashboard" type="button" class="btn btn-outline-light me-2">관리자</RouterLink>
 			</div>
-		</div>
-	</header>
+		</nav>
+	</main>
 </template>
 
 <script setup>
 	import Mypage from '@/components/common/Mypage.vue';
+	import { useDeviceManager } from '@/composables/useDeviceManager';
 	import { MEMBER_CONST } from '@/composables/useEnum';
 	import { useUtils } from '@/composables/useUtils';
 	import useStoreCommon from '@/store/useStoreCommon';
@@ -43,19 +50,30 @@
 	const useCommon = useStoreCommon();
 	const useMember = useStoreMember();
 	const useCookie = useUtils().useCookie();
+	const { isMobile } = useDeviceManager();
 	const headers = computed(() => useCommon.getHeaders);
 	const isLogin = computed(() => useMember.getIsLogin);
 	const roleAdmin = computed(() => useMember.getUserRole);
 	const myPageList = computed(() => useCommon.getMypage);
 	const mypageIsShow = ref(false);
+	const checkMobileHeader = () => {
+		if (isMobile()) {
+			if (document.getElementById('nav-item-div').classList.contains('show')) {
+				document.getElementById('nav-item-div').classList.remove('show');
+			}
+		}
+	};
 	const logout = () => {
 		useCookie.deleteCookie('token');
 		sessionStorage.removeItem('userInfo');
 		useMember.setLogin(false);
+		checkMobileHeader();
 	};
+	const closeHeader = () => checkMobileHeader();
 	const mypageOpen = async () => {
 		await useCommon.setMypageList();
 		mypageIsShow.value = true;
+		checkMobileHeader();
 	};
 
 	onMounted(() => {
@@ -68,6 +86,7 @@
 
 <style scoped>
 	@import '@/assets/css/headers.css';
+	@import '@/assets/css/navbar.css';
 
 	a {
 		text-decoration: none;
