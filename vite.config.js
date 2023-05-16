@@ -15,16 +15,17 @@ export default defineConfig(({ mode }) => {
 			},
 		},
 		server: {
-			origin: `${active === 'prod' ? 'www' : active}.shoppingmall.com:7800`,
+			// origin: `${active === 'prod' ? 'www' : active}.shoppingmall.com:7800`,
 			port: env.VITE_APP_PORT,
 			host: true,
 		},
 	};
 
 	if (active === 'local') {
-		config.server.https = {};
-		config.server.https.pfx = fs.readFileSync('./src/assets/file/ssl/shoppingmall.p12');
-		config.server.https.passphrase = 'shoppingmall1234';
+		config.server.https = {
+			pfx: fs.readFileSync('./src/assets/file/ssl/shoppingmall.p12'),
+			passphrase: 'shoppingmall1234',
+		};
 	}
 
 	return config;
