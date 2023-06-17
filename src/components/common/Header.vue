@@ -46,7 +46,9 @@
 	import useStoreMember from '@/store/useStoreMember';
 	import { computed, onMounted, ref, watchEffect } from 'vue';
 	import { RouterLink } from 'vue-router';
+	import { useRouter } from 'vue-router';
 
+	const router = useRouter();
 	const useCommon = useStoreCommon();
 	const useMember = useStoreMember();
 	const useCookie = useUtils().useCookie();
@@ -67,6 +69,7 @@
 		useCookie.deleteCookie('token');
 		sessionStorage.removeItem('userInfo');
 		useMember.setLogin(false);
+		router.push('/');
 		checkMobileHeader();
 	};
 	const closeHeader = () => checkMobileHeader();
