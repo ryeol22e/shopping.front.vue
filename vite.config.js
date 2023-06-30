@@ -15,7 +15,6 @@ export default defineConfig(({ mode }) => {
 			},
 		},
 		server: {
-			// origin: `${active === 'prod' ? 'www' : active}.shoppingmall.com:7800`,
 			port: env.VITE_APP_PORT,
 			host: true,
 		},
