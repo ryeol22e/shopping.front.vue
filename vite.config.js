@@ -1,7 +1,7 @@
+import vue from '@vitejs/plugin-vue';
+import fs from 'node:fs';
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig, loadEnv } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import fs from 'fs';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -17,6 +17,10 @@ export default defineConfig(({ mode }) => {
 		server: {
 			port: env.VITE_APP_PORT,
 			host: true,
+			fs: {
+				allow: ['.'],
+				deny: ['.env', '.env.*', '/assets/file/**'],
+			},
 		},
 	};
 
@@ -24,6 +28,7 @@ export default defineConfig(({ mode }) => {
 		config.server.https = {
 			pfx: fs.readFileSync('./src/assets/file/ssl/shoppingmall.p12'),
 			passphrase: 'shoppingmall1234',
+			timeout: 1000,
 		};
 	}
 
