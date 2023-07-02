@@ -1,11 +1,11 @@
 import axios from 'axios';
-import qs from 'qs';
+import { parse, stringify } from 'qs';
 
 const api = axios.create({
 	baseURL: import.meta.env.VITE_API_URL,
 	responseType: 'json',
 	responseEncoding: 'utf8',
-	paramsSerializer: params => qs.stringify(params),
+	paramsSerializer: { encode: parse, serialize: stringify },
 });
 
 api.interceptors.request.use(
