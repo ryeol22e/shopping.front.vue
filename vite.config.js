@@ -21,6 +21,12 @@ export default defineConfig(({ mode }) => {
 				allow: ['.'],
 				deny: ['.env', '.env.*', '/assets/file/**'],
 			},
+			proxy: {
+				'/api': {
+					target: env.VITE_API_BASE_URL,
+					changeOrigin: true,
+				},
+			},
 		},
 	};
 
