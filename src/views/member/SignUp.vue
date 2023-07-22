@@ -37,9 +37,9 @@
 </template>
 
 <script setup>
+	import useStoreMember from '@/store/useStoreMember';
 	import { reactive } from 'vue';
 	import { useRouter } from 'vue-router';
-	import useStoreMember from '@/store/useStoreMember';
 
 	const router = useRouter();
 	const useMember = useStoreMember();
@@ -78,7 +78,7 @@
 	};
 	const signUp = async () => {
 		if (validate()) {
-			const sessionAuthNum = sessionStorage.getItem('authNumber');
+			const sessionAuthNum = decodeURIComponent(sessionStorage.getItem('authNumber'));
 			const inputAuthNum = data.authNumber;
 
 			if (sessionAuthNum === inputAuthNum) {

@@ -20,18 +20,18 @@
 </template>
 
 <script setup>
-	import { ref, reactive, computed, onMounted } from 'vue';
+	import { useUtils } from '@/composables/useUtils';
+	import useStoreMember from '@/store/useStoreMember';
+	import { computed, onMounted, reactive, ref } from 'vue';
 	import { useRouter } from 'vue-router';
-	import useStoreMember from '@/store/useStoreMember.js';
-	import { useUtils } from '@/composables/useUtils.js';
 
 	const utils = useUtils();
-	const useCookie = utils.useCookie();
 	const useMember = useStoreMember();
 	const router = useRouter();
-	const memberId = localStorage.getItem('memberId');
+	const memberId = decodeURIComponent(localStorage.getItem('memberId'));
 	const remember = ref(utils.isEmpty(memberId) ? false : true);
 	const userInfo = computed(() => useMember.getUserInfo);
+	const isLogin = computed(() => useMember.getIsLogin);
 	const data = reactive({
 		memberId: remember ? memberId : '',
 		memberPassword: '',
@@ -39,17 +39,14 @@
 	const loginProcess = async () => {
 		if (validate()) {
 			await useMember.loginProcess(data);
-			const token = userInfo.value.accessToken || '';
 
-			if (!utils.isEmpty(token)) {
+			if (isLogin.value) {
 				if (remember) {
-					localStorage.setItem('memberId', userInfo.value.memberId);
+					localStorage.setItem('memberId', encodeURIComponent(userInfo.value.memberId));
 				}
 
-				sessionStorage.setItem('userInfo', JSON.stringify(userInfo.value));
-				useCookie.setCookie('token', token);
-				useMember.setLogin(true);
-				router.push('/');
+				sessionStorage.setItem('userInfo', encodeURIComponent(JSON.stringify(userInfo.value)));
+				location.href = '/';
 			} else {
 				alert('로그인에 실패했습니다.');
 			}
@@ -69,7 +66,7 @@
 	};
 
 	onMounted(() => {
-		if (!utils.isEmpty(sessionStorage.getItem('userInfo'))) {
+		if (isLogin.value) {
 			router.push('/');
 		}
 	});

@@ -1,12 +1,10 @@
 import { nextTick } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
-import useStoreMember from '@/store/useStoreMember';
-import { useUtils } from '@/composables/useUtils';
 import admin from './admin';
-import member from './member';
 import display from './display';
+import member from './member';
 import product from './product';
-import { api } from '@/composables/useApi';
+import useStoreMember from '@/store/useStoreMember';
 
 const routes = [
 	{
@@ -16,7 +14,7 @@ const routes = [
 	},
 	{
 		path: '/:pathMatch(.*)*',
-		redirect: to => {
+		redirect: (to) => {
 			return { name: 'Error', params: { errorType: '404' } };
 		},
 	},
@@ -45,20 +43,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-	const useMember = useStoreMember();
-	const useCookie = useUtils().useCookie();
-	const token = useCookie.getCookie('token');
-
-	if (token !== '') {
-		api.defaults.headers.common['Authorization'] = 'Bearer '.concat(token);
-		api.defaults.headers.common['MemberId'] = localStorage.getItem('memberId');
-	} else {
-		delete api.defaults.headers.common['Authorization'];
-		delete api.defaults.headers.common['MemberId'];
-	}
-
-	useMember.authCheck();
-
+	useStoreMember().authCheck();
 	next();
 });
 

@@ -9,12 +9,12 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(
-	res => res,
-	error => Promise.reject(error),
+	(res) => res,
+	(error) => Promise.reject(error),
 );
 api.interceptors.response.use(
-	res => res,
-	error => Promise.reject(error),
+	(res) => res,
+	(error) => Promise.reject(error),
 );
 
 export { api };
