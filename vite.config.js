@@ -28,6 +28,21 @@ export default defineConfig(({ mode }) => {
 				},
 			},
 		},
+		build: {
+			emptyOutDir: true,
+			assetsDir: 'assets',
+			target: 'modules',
+			cssTarget: 'chrome61',
+			minify: 'esbuild',
+			cssMinify: 'esbuild',
+			rollupOptions: {
+				output: {
+					entryFileNames: 'assets/[hash].js',
+					chunkFileNames: 'assets/[hash].js',
+					assetFileNames: 'assets/[hash].[ext]',
+				},
+			},
+		},
 	};
 
 	if (active === 'local') {
