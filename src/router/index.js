@@ -10,7 +10,7 @@ const routes = [
 	{
 		path: '/',
 		name: 'Main',
-		component: () => import('@/views/main/Main.vue'),
+		component: () => import('@/views/Main.vue'),
 	},
 	{
 		path: '/:pathMatch(.*)*',
@@ -21,7 +21,7 @@ const routes = [
 	{
 		path: '/error/:errorType',
 		name: 'Error',
-		component: () => import('@/views/common/CommonError.vue'),
+		component: () => import('@/views/Error.vue'),
 		props: true,
 		meta: {
 			title: 'error :(',
