@@ -1,10 +1,10 @@
+import { useLoginProcess } from '@/composables/useRouterFunc';
 import { nextTick } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import admin from './admin';
 import display from './display';
 import member from './member';
 import product from './product';
-import useStoreMember from '@/store/useStoreMember';
 
 const routes = [
 	{
@@ -42,9 +42,8 @@ const router = createRouter({
 	},
 });
 
-router.beforeEach((to, from, next) => {
-	useStoreMember().authCheck();
-	next();
+router.beforeEach(async (to, from, next) => {
+	(await useLoginProcess(to)) ? next() : next('/login');
 });
 
 router.afterEach((to, from) => {

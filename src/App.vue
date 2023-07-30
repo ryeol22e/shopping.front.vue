@@ -1,6 +1,9 @@
 <template>
-	<Header />
 	<RouterView v-slot="{ Component, route }">
+		<KeepAlive>
+			<Header />
+		</KeepAlive>
+
 		<template v-if="Component">
 			<Suspense timeout="0">
 				<template #default>
@@ -11,8 +14,11 @@
 				</template>
 			</Suspense>
 		</template>
+
+		<KeepAlive>
+			<Footer />
+		</KeepAlive>
 	</RouterView>
-	<Footer />
 </template>
 
 <script setup>

@@ -18,6 +18,9 @@
 								{{ header.codeName }}
 							</RouterLink>
 						</li>
+						<li class="nav-item">
+							<RouterLink to="/display/vip" class="nav-link px-2 text-secondary text-white"> VIP </RouterLink>
+						</li>
 					</ul>
 
 					<div :class="isMobile() ? '' : 'text-end'">

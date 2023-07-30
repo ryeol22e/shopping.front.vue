@@ -1,6 +1,7 @@
 export default [
 	{
 		path: '/display/outer',
+		name: 'Outer',
 		component: () => import('@/views/display/Outer.vue'),
 		meta: {
 			title: 'OUTER',
@@ -8,6 +9,7 @@ export default [
 	},
 	{
 		path: '/display/top',
+		name: 'Top',
 		component: () => import('@/views/display/Top.vue'),
 		meta: {
 			title: 'TOP',
@@ -15,6 +17,7 @@ export default [
 	},
 	{
 		path: '/display/pants',
+		name: 'Pants',
 		component: () => import('@/views/display/Pants.vue'),
 		meta: {
 			title: 'Pants',
@@ -22,6 +25,7 @@ export default [
 	},
 	{
 		path: '/display/shoes',
+		name: 'Shoes',
 		component: () => import('@/views/display/Shoes.vue'),
 		meta: {
 			title: 'SHOES',
@@ -29,6 +33,7 @@ export default [
 	},
 	{
 		path: '/display/event',
+		name: 'Event',
 		component: () => import('@/views/display/Event.vue'),
 		meta: {
 			title: 'EVENT',
@@ -36,6 +41,7 @@ export default [
 	},
 	{
 		path: '/display/promotion',
+		name: 'Promotion',
 		component: () => import('@/views/display/Promotion.vue'),
 		meta: {
 			title: 'PROMOTION',
@@ -43,9 +49,15 @@ export default [
 	},
 	{
 		path: '/display/acc',
+		name: 'Acc',
 		component: () => import('@/views/display/Acc.vue'),
 		meta: {
 			title: 'ACC',
 		},
+	},
+	{
+		path: '/display/vip',
+		name: 'Vip',
+		component: () => import('@/views/display/Vip.vue'),
 	},
 ];
