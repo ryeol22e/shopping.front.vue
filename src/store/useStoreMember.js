@@ -3,6 +3,7 @@ import { MEMBER_CONST } from '@/composables/useEnum';
 import { useUtils } from '@/composables/useUtils';
 import { defineStore } from 'pinia';
 
+const { isEmpty } = useUtils();
 export default defineStore('member', {
 	state: () => ({
 		isLogin: false,
@@ -38,11 +39,9 @@ export default defineStore('member', {
 		},
 		async loginProcess(param) {
 			await api
-				.get('/member/login', {
-					params: param,
-				})
+				.post('/member/login', param)
 				.then((res) => {
-					if (!useUtils().isEmpty(res.data)) {
+					if (!isEmpty(res.data)) {
 						this.userInfo = res.data;
 						this.isLogin = true;
 					}
