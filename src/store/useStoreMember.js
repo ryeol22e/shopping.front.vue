@@ -1,21 +1,19 @@
 import { api } from '@/composables/useApi';
-import { MEMBER_CONST } from '@/composables/useEnum';
 import { useUtils } from '@/composables/useUtils';
 import { defineStore } from 'pinia';
 
-const { isEmpty } = useUtils();
+const { isEmpty, useCookie } = useUtils();
+
 export default defineStore('member', {
 	state: () => ({
 		isLogin: false,
-		userInfo: {},
-		userRole: MEMBER_CONST.ANONYMOUS,
+		userInfo: JSON.parse(decodeURIComponent(sessionStorage.getItem('userInfo'))) || {},
 		signUpResult: false,
 		authNumber: '',
 	}),
 	getters: {
 		getIsLogin: (state) => state.isLogin,
 		getUserInfo: (state) => state.userInfo,
-		getUserRole: (state) => state.userRole,
 		getSignUpResult: (state) => state.signUpResult,
 		getAuthNumber: (state) => state.authNumber,
 	},
@@ -28,9 +26,6 @@ export default defineStore('member', {
 
 					if (!bool) {
 						sessionStorage.removeItem('userInfo');
-						this.userRole = MEMBER_CONST.ANONYMOUS;
-					} else {
-						this.userRole = JSON.parse(decodeURIComponent(sessionStorage.getItem('userInfo'))).memberRole;
 					}
 
 					this.isLogin = bool;
@@ -43,7 +38,19 @@ export default defineStore('member', {
 				.then((res) => {
 					if (!isEmpty(res.data)) {
 						this.userInfo = res.data;
+						sessionStorage.setItem('userInfo', encodeURIComponent(JSON.stringify(res.data)));
 						this.isLogin = true;
+					}
+				})
+				.catch((error) => console.log(error));
+		},
+		async logoutProcess() {
+			await api
+				.post('/member/logout')
+				.then((res) => {
+					if (Boolean(res.data)) {
+						useCookie().deleteCookie('token');
+						sessionStorage.removeItem('userInfo');
 					}
 				})
 				.catch((error) => console.log(error));

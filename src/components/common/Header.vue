@@ -44,20 +44,17 @@
 	import Mypage from '@/components/common/Mypage.vue';
 	import { useDeviceManager } from '@/composables/useDeviceManager';
 	import { MEMBER_CONST } from '@/composables/useEnum';
-	import { useUtils } from '@/composables/useUtils';
 	import useStoreCommon from '@/store/useStoreCommon';
 	import useStoreMember from '@/store/useStoreMember';
 	import { computed, onMounted, ref, watchEffect } from 'vue';
-	import { RouterLink, useRouter } from 'vue-router';
+	import { RouterLink } from 'vue-router';
 
-	const router = useRouter();
 	const useCommon = useStoreCommon();
 	const useMember = useStoreMember();
-	const useCookie = useUtils().useCookie();
 	const { isMobile } = useDeviceManager();
 	const headers = computed(() => useCommon.getHeaders);
 	const isLogin = computed(() => useMember.getIsLogin);
-	const roleAdmin = computed(() => useMember.getUserRole);
+	const roleAdmin = computed(() => useMember.getUserInfo.memberRole);
 	const myPageList = computed(() => useCommon.getMypage);
 	const mypageIsShow = ref(false);
 	const checkMobileHeader = () => {
@@ -67,9 +64,9 @@
 			}
 		}
 	};
-	const logout = () => {
-		useCookie.deleteCookie('token');
-		sessionStorage.removeItem('userInfo');
+	const logout = async () => {
+		await useMember.logoutProcess();
+
 		location.href = '/';
 		checkMobileHeader();
 	};

@@ -14,12 +14,10 @@ const routes = [
 	},
 	{
 		path: '/:pathMatch(.*)*',
-		redirect: (to) => {
-			return { name: 'Error', params: { errorType: '404' } };
-		},
+		redirect: (to) => ({ name: 'Error', state: { errorType: '404' }, query: {}, params: {} }),
 	},
 	{
-		path: '/error/:errorType',
+		path: '/error',
 		name: 'Error',
 		component: () => import('@/views/Error.vue'),
 		props: true,

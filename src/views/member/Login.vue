@@ -25,12 +25,11 @@
 	import { computed, onMounted, reactive, ref } from 'vue';
 	import { useRouter } from 'vue-router';
 
-	const utils = useUtils();
 	const useMember = useStoreMember();
 	const router = useRouter();
+	const { isEmpty } = useUtils();
 	const memberId = decodeURIComponent(localStorage.getItem('memberId'));
-	const remember = ref(utils.isEmpty(memberId) ? false : true);
-	const userInfo = computed(() => useMember.getUserInfo);
+	const remember = ref(isEmpty(memberId) ? false : true);
 	const isLogin = computed(() => useMember.getIsLogin);
 	const data = reactive({
 		memberId: remember ? memberId : '',
@@ -42,10 +41,10 @@
 
 			if (isLogin.value) {
 				if (remember) {
-					localStorage.setItem('memberId', encodeURIComponent(userInfo.value.memberId));
+					const memberId = useMember.getUserInfo.memberId;
+					localStorage.setItem('memberId', encodeURIComponent(memberId));
 				}
 
-				sessionStorage.setItem('userInfo', encodeURIComponent(JSON.stringify(userInfo.value)));
 				location.href = '/';
 			} else {
 				alert('로그인에 실패했습니다.');

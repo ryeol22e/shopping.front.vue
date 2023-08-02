@@ -9,8 +9,8 @@ import router from './router';
 // s : vue create
 const app = createApp(App);
 
+app.use(createPinia());
 app.use(LoadScript);
 app.use(router);
-app.use(createPinia());
 app.mount('body');
 // e : vue create
