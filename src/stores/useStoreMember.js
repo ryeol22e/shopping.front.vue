@@ -29,7 +29,7 @@ export default defineStore('member', {
 			await api
 				.get('/auth/check')
 				.then((res) => (this.isLogin = res.data))
-				.then((data) => (data ? this.setMemberInfo() : null))
+				.then((data) => (data && !this.isInfoSet ? this.setMemberInfo() : null))
 				.catch((error) => console.log(error));
 		},
 		async loginProcess(param) {
@@ -39,14 +39,12 @@ export default defineStore('member', {
 				.catch((error) => console.log(error));
 		},
 		async setMemberInfo() {
-			if (!this.isInfoSet) {
-				await api
-					.get('/member/info')
-					.then((res) => (this.userInfo = res.data))
-					.catch((error) => console.log(error));
+			await api
+				.get('/member/info')
+				.then((res) => (this.userInfo = res.data))
+				.catch((error) => console.log(error));
 
-				this.isInfoSet = true;
-			}
+			this.isInfoSet = true;
 		},
 		async logoutProcess() {
 			await api
