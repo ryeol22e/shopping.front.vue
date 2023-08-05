@@ -18,7 +18,7 @@
 								{{ header.codeName }}
 							</RouterLink>
 						</li>
-						<li class="nav-item">
+						<li v-if="memberRole === MEMBER_CONST.VIP || memberRole === MEMBER_CONST.ADMIN" class="nav-item">
 							<RouterLink to="/display/vip" class="nav-link px-2 text-secondary text-white"> VIP </RouterLink>
 						</li>
 					</ul>
@@ -29,7 +29,7 @@
 						<a class="text-white">·</a>
 						<RouterLink v-if="!isLogin" to="/signup" @click="closeHeader" class="px-2 text-secondary text-white">Sign-up</RouterLink>
 						<a v-else @click="logout" href="javascript:void(0);" class="px-2 text-secondary text-white">Logout</a>
-						<RouterLink v-if="isLogin && roleAdmin === MEMBER_CONST.ADMIN" to="/admin/dashboard" @click="closeHeader" type="button" class="btn btn-outline-light me-2">관리자</RouterLink>
+						<RouterLink v-if="isLogin && memberRole === MEMBER_CONST.ADMIN" to="/admin/dashboard" @click="closeHeader" type="button" class="btn btn-outline-light me-2">관리자</RouterLink>
 					</div>
 				</div>
 				<!-- <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -55,7 +55,7 @@
 	const useMember = useStoreMember();
 	const headers = computed(() => useCommon.getHeaders);
 	const isLogin = computed(() => useMember.getIsLogin);
-	const roleAdmin = computed(() => useMember.getUserInfo.memberRole);
+	const memberRole = computed(() => useMember.getUserInfo.memberRole);
 	const mypageIsShow = ref(false);
 	const checkMobileHeader = () => {
 		if (isMobile()) {

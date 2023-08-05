@@ -3,6 +3,7 @@ export default () => {
 		ADMIN: '10003',
 		MEMBER: '10000',
 		ANONYMOUS: '9999',
+		VIP: '10001',
 	};
 	const COMMON_CONST = {};
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { parse, stringify } from 'qs';
-
+import { useRouter } from 'vue-router';
 const api = axios.create({
 	baseURL: '/api',
 	responseType: 'json',
@@ -14,7 +14,7 @@ api.interceptors.request.use(
 );
 api.interceptors.response.use(
 	(res) => res,
-	(error) => Promise.reject(error),
+	(error) => useRouter().push({ name: 'Error', state: { erorType: 500 }, query: {}, params: {} }),
 );
 
 export { api };

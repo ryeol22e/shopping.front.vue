@@ -34,7 +34,11 @@ export default defineStore('member', {
 		},
 		async loginProcess(param) {
 			await api
-				.post('/member/login', param)
+				.post('/member/login', param, {
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded',
+					},
+				})
 				.then((res) => (this.isLogin = res.data))
 				.catch((error) => console.log(error));
 		},
@@ -47,14 +51,7 @@ export default defineStore('member', {
 			this.isInfoSet = true;
 		},
 		async logoutProcess() {
-			await api
-				.post('/member/logout')
-				.then((res) => {
-					if (Boolean(res.data)) {
-						cookie().deleteCookie('token');
-					}
-				})
-				.catch((error) => console.log(error));
+			await api.post('/member/logout').catch((error) => console.log(error));
 		},
 		async signUpProcess(param) {
 			await api
