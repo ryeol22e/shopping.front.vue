@@ -1,7 +1,7 @@
 <template>
 	<div :class="`offcanvas offcanvas-start${isShow ? ' show' : ''}`" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
 		<div class="offcanvas-header">
-			<h5 class="offcanvas-title" id="staticBackdropLabel">Mypage</h5>
+			<h5 class="offcanvas-title" id="staticBackdropLabel">{{ `${memberName}님의 ` }} Mypage</h5>
 			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 		</div>
 		<div class="offcanvas-body">
@@ -15,14 +15,16 @@
 </template>
 
 <script setup>
-	import { useRouter, RouterLink } from 'vue-router';
+	import useStoreCommon from '@/stores/useStoreCommon';
+	import useStoreMember from '@/stores/useStoreMember';
+	import { computed } from 'vue';
+	import { RouterLink } from 'vue-router';
 
-	const router = useRouter();
+	const useCommon = useStoreCommon();
+	const useMember = useStoreMember();
+	const list = computed(() => useCommon.getMypageList);
+	const memberName = computed(() => useMember.getUserInfo.memberName);
 	const props = defineProps({
-		list: {
-			type: Array,
-			default: [],
-		},
 		isShow: {
 			type: Boolean,
 			default: false,

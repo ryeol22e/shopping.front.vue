@@ -5,9 +5,9 @@
 </template>
 
 <script setup>
-	import DisplayHeader from "@/components/display/DisplayHeader.vue";
-	import { useRoute } from "vue-router";
-	import { useStoreProduct } from "@/store/useStoreProduct.js";
+	import DisplayHeader from '@/components/display/DisplayHeader.vue';
+	import { useRoute } from 'vue-router';
+	import { useStoreProduct } from '@/stores/useStoreProduct.js';
 
 	const route = useRoute();
 	const useProduct = useStoreProduct();

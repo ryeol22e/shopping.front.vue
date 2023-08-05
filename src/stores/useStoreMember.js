@@ -1,13 +1,19 @@
 import { api } from '@/composables/useApi';
+import { MEMBER_CONST } from '@/composables/useEnum';
 import { useUtils } from '@/composables/useUtils';
 import { defineStore } from 'pinia';
 
-const { isEmpty, useCookie } = useUtils();
+const { useCookie } = useUtils();
 
 export default defineStore('member', {
 	state: () => ({
 		isLogin: false,
-		userInfo: JSON.parse(decodeURIComponent(sessionStorage.getItem('userInfo'))) || {},
+		isInfoSet: false,
+		userInfo: {
+			memberNo: '',
+			memberName: '',
+			memberRole: MEMBER_CONST.ANONYMOUS,
+		},
 		signUpResult: false,
 		authNumber: '',
 	}),
@@ -21,28 +27,25 @@ export default defineStore('member', {
 		async authCheck() {
 			await api
 				.get('/auth/check')
-				.then((res) => {
-					const bool = res.data;
-
-					if (!bool) {
-						sessionStorage.removeItem('userInfo');
-					}
-
-					this.isLogin = bool;
-				})
+				.then((res) => (this.isLogin = res.data))
+				.then((res) => (res ? this.setMemberInfo() : null))
 				.catch((error) => console.log(error));
 		},
 		async loginProcess(param) {
 			await api
 				.post('/member/login', param)
-				.then((res) => {
-					if (!isEmpty(res.data)) {
-						this.userInfo = res.data;
-						sessionStorage.setItem('userInfo', encodeURIComponent(JSON.stringify(res.data)));
-						this.isLogin = true;
-					}
-				})
+				.then((res) => (this.isLogin = res.data))
 				.catch((error) => console.log(error));
+		},
+		async setMemberInfo() {
+			if (!this.isInfoSet) {
+				await api
+					.get('/member/info')
+					.then((res) => (this.userInfo = res.data))
+					.catch((error) => console.log(error));
+
+				this.isInfoSet = true;
+			}
 		},
 		async logoutProcess() {
 			await api
@@ -50,18 +53,19 @@ export default defineStore('member', {
 				.then((res) => {
 					if (Boolean(res.data)) {
 						useCookie().deleteCookie('token');
-						sessionStorage.removeItem('userInfo');
 					}
 				})
 				.catch((error) => console.log(error));
 		},
-		signUpProcess(param) {
-			api.post('/member/join', param)
+		async signUpProcess(param) {
+			await api
+				.post('/member/join', param)
 				.then((res) => (this.signUpResult = res.data))
 				.catch((error) => console.log(error));
 		},
-		setAuthNumber(param) {
-			api.post('/member/auth/number', param)
+		async setAuthNumber(param) {
+			await api
+				.post('/member/auth/number', param)
 				.then((res) => (this.authNumber = res.data))
 				.catch((error) => console.log(error));
 		},

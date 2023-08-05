@@ -1,10 +1,12 @@
-import useStoreMember from '@/store/useStoreMember';
+import useStoreMember from '@/stores/useStoreMember';
 import { MEMBER_CONST } from './useEnum';
 
-export const loginManager = () => {
-	const isLogin = useStoreMember().getIsLogin;
-	const userInfo = useStoreMember().getUserInfo;
-	const userRole = userInfo.memberRole;
+const loginManager = () => {
+	const useMember = useStoreMember();
+
+	const isLogin = useMember.getIsLogin;
+	const userInfo = useMember.getUserInfo;
+	const userRole = useMember.getUserInfo.memberRole;
 
 	return {
 		isLogin,
@@ -13,6 +15,6 @@ export const loginManager = () => {
 	};
 };
 
-export const isLogin = loginManager().isLogin;
+export const userIsLogin = loginManager().isLogin;
 export const userInfo = loginManager().userInfo || {};
 export const userRole = loginManager().userRole || MEMBER_CONST.ANONYMOUS;

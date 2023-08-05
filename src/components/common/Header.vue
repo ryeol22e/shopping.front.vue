@@ -1,5 +1,5 @@
 <template>
-	<Mypage :list="myPageList" :isShow="mypageIsShow" />
+	<Mypage :isShow="mypageIsShow" />
 	<main class="sticky-top">
 		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 			<div class="container-fluid">
@@ -44,18 +44,17 @@
 	import Mypage from '@/components/common/Mypage.vue';
 	import { useDeviceManager } from '@/composables/useDeviceManager';
 	import { MEMBER_CONST } from '@/composables/useEnum';
-	import useStoreCommon from '@/store/useStoreCommon';
-	import useStoreMember from '@/store/useStoreMember';
-	import { computed, onMounted, ref, watchEffect } from 'vue';
+	import useStoreCommon from '@/stores/useStoreCommon';
+	import useStoreMember from '@/stores/useStoreMember';
+	import { computed, onMounted, ref } from 'vue';
 	import { RouterLink } from 'vue-router';
 
+	const { isMobile } = useDeviceManager();
 	const useCommon = useStoreCommon();
 	const useMember = useStoreMember();
-	const { isMobile } = useDeviceManager();
 	const headers = computed(() => useCommon.getHeaders);
 	const isLogin = computed(() => useMember.getIsLogin);
 	const roleAdmin = computed(() => useMember.getUserInfo.memberRole);
-	const myPageList = computed(() => useCommon.getMypage);
 	const mypageIsShow = ref(false);
 	const checkMobileHeader = () => {
 		if (isMobile()) {
@@ -78,10 +77,11 @@
 	};
 
 	onMounted(() => {
-		useCommon.setHeaders();
-	});
-	watchEffect(() => {
-		roleAdmin.value;
+		useCommon.setHeaders({
+			codeType: '10000',
+			codeDepth: '1',
+			useYn: 'Y',
+		});
 	});
 </script>
 

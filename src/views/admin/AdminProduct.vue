@@ -49,7 +49,7 @@
 	import { reactive, computed, onMounted, watchEffect } from 'vue';
 	import { useRouter } from 'vue-router';
 	import { useUtils } from '@/composables/useUtils.js';
-	import { useStoreProduct } from '@/store/useStoreProduct.js';
+	import { useStoreProduct } from '@/stores/useStoreProduct.js';
 
 	const router = useRouter();
 	const utils = useUtils();
@@ -65,7 +65,7 @@
 		dispYn: 'N',
 		file: null,
 	});
-	const imageUpload = e => {
+	const imageUpload = (e) => {
 		data.file = e.target.files[0];
 	};
 	const dataValidate = () => {

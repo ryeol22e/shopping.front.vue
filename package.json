@@ -13,7 +13,7 @@
 		"axios": "^1.4.0",
 		"bootstrap": "^5.2.1",
 		"core-js": "^3.6.5",
-		"pinia": "^2.1.4",
+		"pinia": "^2.1.6",
 		"qs": "^6.11.1",
 		"vue": "^3.3.4",
 		"vue-plugin-load-script": "^2.1.1",

@@ -40,7 +40,7 @@
 
 <script setup>
 	import { reactive } from 'vue';
-	import { useStoreBo } from '@/store/useStoreBackOffice.js';
+	import { useStoreBo } from '@/stores/useStoreBackOffice.js';
 	import { useUtils } from '@/composables/useUtils.js';
 
 	const isEmpty = useUtils().isEmpty;
@@ -55,7 +55,7 @@
 		dispYn: 'Y',
 		file: null,
 	});
-	const imageUpload = e => {
+	const imageUpload = (e) => {
 		data.file = e.target.files[0];
 	};
 	const validate = () => {

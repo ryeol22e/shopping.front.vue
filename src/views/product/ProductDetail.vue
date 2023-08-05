@@ -22,7 +22,7 @@
 <script setup>
 	import { computed, onMounted } from 'vue';
 	import { useRoute } from 'vue-router';
-	import { useStoreProduct } from '@/store/useStoreProduct.js';
+	import { useStoreProduct } from '@/stores/useStoreProduct.js';
 	import { useUtils } from '@/composables/useUtils.js';
 
 	const route = useRoute();

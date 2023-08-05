@@ -21,7 +21,7 @@
 
 <script setup>
 	import { useUtils } from '@/composables/useUtils';
-	import useStoreMember from '@/store/useStoreMember';
+	import useStoreMember from '@/stores/useStoreMember';
 	import { computed, onMounted, reactive, ref } from 'vue';
 	import { useRouter } from 'vue-router';
 
@@ -41,8 +41,7 @@
 
 			if (isLogin.value) {
 				if (remember) {
-					const memberId = useMember.getUserInfo.memberId;
-					localStorage.setItem('memberId', encodeURIComponent(memberId));
+					localStorage.setItem('memberId', encodeURIComponent(data.memberId));
 				}
 
 				location.href = '/';

@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-	import useStoreMember from '@/store/useStoreMember';
+	import useStoreMember from '@/stores/useStoreMember';
 	import { reactive } from 'vue';
 	import { useRouter } from 'vue-router';
 

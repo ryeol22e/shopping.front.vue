@@ -10,13 +10,17 @@
 <script setup>
 	import { onMounted, computed } from 'vue';
 	import Lnb from '@/components/common/Lnb.vue';
-	import useStoreCommon from '@/store/useStoreCommon.js';
+	import useStoreCommon from '@/stores/useStoreCommon.js';
 
 	const useCommon = useStoreCommon();
 	const menuList = computed(() => useCommon.getAdminLnb);
 
 	onMounted(() => {
-		useCommon.setAdminLnb();
+		useCommon.setAdminLnb({
+			codeType: '10003',
+			codeDepth: '1',
+			useYn: 'Y',
+		});
 	});
 </script>
 

@@ -10,5 +10,3 @@
 		<p class="text-center text-muted">&copy; 2022 Company, Inc</p>
 	</footer>
 </template>
-
-<script setup></script>
