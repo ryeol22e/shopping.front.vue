@@ -39,11 +39,11 @@
 </template>
 
 <script setup>
+	import useUtils from '@/composables/useUtils';
+	import { useStoreBo } from '@/stores/useStoreBackOffice';
 	import { reactive } from 'vue';
-	import { useStoreBo } from '@/stores/useStoreBackOffice.js';
-	import { useUtils } from '@/composables/useUtils.js';
 
-	const isEmpty = useUtils().isEmpty;
+	const { isEmpty, changeToFormData } = useUtils();
 	const useBo = useStoreBo();
 	const data = reactive({
 		bannerType: '10000',
@@ -80,7 +80,7 @@
 	};
 	const registBanner = () => {
 		if (validate()) {
-			useBo.registBannerInfo(useUtils().changeToFormData(data));
+			useBo.registBannerInfo(changeToFormData(data));
 		}
 	};
 </script>

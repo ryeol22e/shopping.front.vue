@@ -1,7 +1,7 @@
 'use strict';
 
-export const useUtils = () => {
-	const useCookie = () => {
+export default () => {
+	const cookie = () => {
 		/**
 		 * document.cookie object로 convert
 		 * @returns
@@ -10,7 +10,7 @@ export const useUtils = () => {
 			const list = document.cookie.split('; ');
 			const object = new Object();
 
-			list.forEach(item => {
+			list.forEach((item) => {
 				const key = item.substring(0, item.indexOf('='));
 				const value = item.substring(item.indexOf('=') + 1, item.length);
 
@@ -58,7 +58,7 @@ export const useUtils = () => {
 		 * @param {*} key
 		 * @returns
 		 */
-		const getCookie = key => {
+		const getCookie = (key) => {
 			const object = cookieObject();
 			let value = null;
 
@@ -73,7 +73,7 @@ export const useUtils = () => {
 		 * cookie 삭제
 		 * @param {*} key
 		 */
-		const deleteCookie = key => {
+		const deleteCookie = (key) => {
 			const object = cookieObject();
 
 			if (key.constructor !== String) {
@@ -89,7 +89,7 @@ export const useUtils = () => {
 			deleteCookie,
 		};
 	};
-	const isEmpty = data => {
+	const isEmpty = (data) => {
 		if (data !== undefined) {
 			if (data !== null) {
 				switch (data.constructor) {
@@ -116,7 +116,7 @@ export const useUtils = () => {
 
 		return true;
 	};
-	const changeToFormData = data => {
+	const changeToFormData = (data) => {
 		const form = new FormData();
 		const keyList = Object.keys(data);
 
@@ -129,12 +129,12 @@ export const useUtils = () => {
 
 		return form;
 	};
-	const scrollEvent = target => {
-		return window.addEventListener('scroll', e => {});
+	const scrollEvent = (target) => {
+		return window.addEventListener('scroll', (e) => {});
 	};
 
 	return {
-		useCookie,
+		cookie,
 		isEmpty,
 		changeToFormData,
 		scrollEvent,

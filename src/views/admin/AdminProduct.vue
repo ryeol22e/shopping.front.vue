@@ -46,13 +46,13 @@
 </template>
 
 <script setup>
-	import { reactive, computed, onMounted, watchEffect } from 'vue';
+	import useUtils from '@/composables/useUtils';
+	import { useStoreProduct } from '@/stores/useStoreProduct';
+	import { computed, onMounted, reactive, watchEffect } from 'vue';
 	import { useRouter } from 'vue-router';
-	import { useUtils } from '@/composables/useUtils.js';
-	import { useStoreProduct } from '@/stores/useStoreProduct.js';
 
+	const { changeToFormData } = useUtils();
 	const router = useRouter();
-	const utils = useUtils();
 	const useProduct = useStoreProduct();
 	const cateList = computed(() => useProduct.getCateList);
 	const data = reactive({
@@ -94,7 +94,7 @@
 	};
 	const registProduct = async () => {
 		if (dataValidate()) {
-			await useProduct.setProductData(utils.changeToFormData(data));
+			await useProduct.setProductData(changeToFormData(data));
 			const result = useProduct.getPrdtResult;
 
 			if (result) {

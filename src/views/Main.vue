@@ -79,11 +79,11 @@
 </template>
 
 <script setup>
-	import { useUtils } from '@/composables/useUtils';
+	import useUtils from '@/composables/useUtils';
 	import useStoreMain from '@/stores/useStoreMain';
 	import { computed, onMounted } from 'vue';
 
-	const isEmpty = useUtils().isEmpty;
+	const { isEmpty } = useUtils();
 	const useMain = useStoreMain();
 	const bannerList = computed(() => useMain.getBannerList);
 

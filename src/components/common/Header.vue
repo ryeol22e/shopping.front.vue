@@ -43,12 +43,13 @@
 <script setup>
 	import Mypage from '@/components/common/Mypage.vue';
 	import { useDeviceManager } from '@/composables/useDeviceManager';
-	import { MEMBER_CONST } from '@/composables/useEnum';
+	import useEnum from '@/composables/useEnum';
 	import useStoreCommon from '@/stores/useStoreCommon';
 	import useStoreMember from '@/stores/useStoreMember';
 	import { computed, onMounted, ref } from 'vue';
 	import { RouterLink } from 'vue-router';
 
+	const { MEMBER_CONST } = useEnum();
 	const { isMobile } = useDeviceManager();
 	const useCommon = useStoreCommon();
 	const useMember = useStoreMember();

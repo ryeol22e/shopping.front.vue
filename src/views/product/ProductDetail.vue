@@ -7,7 +7,7 @@
 					<p class="lead">{{ description }}</p>
 				</div>
 				<div class="bg-body shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0">
-					<img v-if="utils.isEmpty(product.image)" :src="`data:image/png;base64,${product.image}`" :alt="product.prdtName" />
+					<img v-if="isEmpty(product.image)" :src="`data:image/png;base64,${product.image}`" :alt="product.prdtName" />
 					<svg v-else class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
 						<title>Placeholder</title>
 						<rect width="100%" height="100%" fill="#55595c" />
@@ -20,13 +20,13 @@
 </template>
 
 <script setup>
+	import useUtils from '@/composables/useUtils';
+	import { useStoreProduct } from '@/stores/useStoreProduct';
 	import { computed, onMounted } from 'vue';
 	import { useRoute } from 'vue-router';
-	import { useStoreProduct } from '@/stores/useStoreProduct.js';
-	import { useUtils } from '@/composables/useUtils.js';
 
+	const { isEmpty } = useUtils();
 	const route = useRoute();
-	const utils = useUtils();
 	const useProduct = useStoreProduct();
 	const product = computed(() => useProduct.getDetail);
 

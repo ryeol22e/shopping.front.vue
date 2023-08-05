@@ -149,12 +149,12 @@
 
 <script setup>
 	import { onMounted } from 'vue';
-	import { useCommon } from '@/composables/useCommon.js';
+	import useCommonFunc from '@/composables/useCommonFunc';
 
-	const common = useCommon();
+	const { dashboard } = useCommonFunc();
 
 	onMounted(() => {
-		common.useDashboard();
+		dashboard();
 	});
 </script>
 

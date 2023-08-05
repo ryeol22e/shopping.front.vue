@@ -35,12 +35,11 @@
 </template>
 
 <script setup>
-	import { useCommon } from '@/composables/useCommon.js';
-	import { useUtils } from '@/composables/useUtils.js';
+	import useCommonFunc from '@/composables/useCommonFunc';
+	import useUtils from '@/composables/useUtils';
 
-	const common = useCommon();
-	const isEmpty = useUtils().isEmpty;
-	const numberComma = common.useNumComma;
+	const { numberComma } = useCommonFunc();
+	const { isEmpty } = useUtils();
 	const props = defineProps({
 		list: {
 			type: Array,

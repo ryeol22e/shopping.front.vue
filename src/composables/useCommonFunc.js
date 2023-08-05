@@ -1,5 +1,5 @@
-export const useCommon = () => {
-	const useDashboard = () => {
+export default () => {
+	const dashboard = () => {
 		feather.replace({ 'aria-hidden': 'true' });
 
 		// Graphs
@@ -36,13 +36,13 @@ export const useCommon = () => {
 			},
 		});
 	};
-	const useNumComma = data => {
+	const numberComma = (data) => {
 		const num = Number(data);
 
 		return num.toLocaleString(navigator.language);
 	};
 	return {
-		useDashboard,
-		useNumComma,
+		dashboard,
+		numberComma,
 	};
 };

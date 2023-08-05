@@ -1,9 +1,10 @@
 import { api } from '@/composables/useApi';
-import { MEMBER_CONST } from '@/composables/useEnum';
-import { useUtils } from '@/composables/useUtils';
+import useEnum from '@/composables/useEnum';
+import useUtils from '@/composables/useUtils';
 import { defineStore } from 'pinia';
 
-const { useCookie } = useUtils();
+const { MEMBER_CONST } = useEnum();
+const { cookie } = useUtils();
 
 export default defineStore('member', {
 	state: () => ({
@@ -28,7 +29,7 @@ export default defineStore('member', {
 			await api
 				.get('/auth/check')
 				.then((res) => (this.isLogin = res.data))
-				.then((res) => (res ? this.setMemberInfo() : null))
+				.then((data) => (data ? this.setMemberInfo() : null))
 				.catch((error) => console.log(error));
 		},
 		async loginProcess(param) {
@@ -52,7 +53,7 @@ export default defineStore('member', {
 				.post('/member/logout')
 				.then((res) => {
 					if (Boolean(res.data)) {
-						useCookie().deleteCookie('token');
+						cookie().deleteCookie('token');
 					}
 				})
 				.catch((error) => console.log(error));
