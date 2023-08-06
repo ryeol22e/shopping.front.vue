@@ -36,13 +36,11 @@ export default () => {
 			},
 		});
 	};
-	const numberComma = (data) => {
-		const num = Number(data);
 
-		return num.toLocaleString(navigator.language);
-	};
+	const AUTH_URL_LIST = ['/display/vip'];
+
 	return {
 		dashboard,
-		numberComma,
+		AUTH_URL_LIST,
 	};
 };

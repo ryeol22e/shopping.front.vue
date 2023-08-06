@@ -1,6 +1,8 @@
 import { useStoreMember } from '@/stores/useStoreMember';
+import useCommonFunc from './useCommonFunc';
 
-const authUrl = ['/display/vip'];
+const { AUTH_URL_LIST } = useCommonFunc();
+
 export const useLoginProcess = async (to) => {
 	const path = String(to.path);
 	const useMember = useStoreMember();
@@ -8,7 +10,7 @@ export const useLoginProcess = async (to) => {
 
 	if (!path.includes('error')) {
 		await useMember.authCheck();
-		if (authUrl.includes(path)) {
+		if (AUTH_URL_LIST.includes(path)) {
 			if (!useMember.getIsLogin) {
 				bool = false;
 			}

@@ -35,11 +35,9 @@
 </template>
 
 <script setup>
-	import useCommonFunc from '@/composables/useCommonFunc';
 	import useUtils from '@/composables/useUtils';
 
-	const { numberComma } = useCommonFunc();
-	const { isEmpty } = useUtils();
+	const { isEmpty, numberComma } = useUtils();
 	const props = defineProps({
 		list: {
 			type: Array,

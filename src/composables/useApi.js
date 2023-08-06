@@ -3,6 +3,7 @@ import { parse, stringify } from 'qs';
 import { usePageLink } from './usePageLink';
 
 const { errorPage } = usePageLink();
+
 const api = axios.create({
 	baseURL: '/api',
 	responseType: 'json',
@@ -20,7 +21,7 @@ api.interceptors.response.use(
 	(error) => {
 		const url = String(error.request.responseURL);
 
-		if (!url.includes('login') && !url.includes('logout')) {
+		if (!url.includes('login') && !url.includes('join') && !url.includes('logout')) {
 			errorPage(500);
 		}
 

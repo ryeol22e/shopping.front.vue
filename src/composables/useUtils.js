@@ -1,121 +1,49 @@
 'use strict';
 
 export default () => {
-	const cookie = () => {
-		/**
-		 * document.cookie object로 convert
-		 * @returns
-		 */
-		const cookieObject = () => {
-			const list = document.cookie.split('; ');
-			const object = new Object();
-
-			list.forEach((item) => {
-				const key = item.substring(0, item.indexOf('='));
-				const value = item.substring(item.indexOf('=') + 1, item.length);
-
-				object[key] = value;
-			});
-
-			return object;
-		};
-
-		/**
-		 * cookie 추가
-		 * @param {} key
-		 * @param {*} value
-		 */
-		const setCookie = (key, value, expires) => {
-			if (isEmpty(key)) {
-				throw 'parameter error.';
-			}
-			if (isEmpty(value)) {
-				throw 'parameter error.';
-			}
-			if (!isEmpty(expires)) {
-				if (expires.constructor !== Date) {
-					throw 'date is not Date type.';
-				}
-			}
-
-			document.cookie = key
-				.concat('=')
-				.concat(value)
-				.concat('; expires=')
-				.concat(!isEmpty(expires) ? expires.toUTCString() : '');
-		};
-
-		/**
-		 * cookie 전체 객체로 반환
-		 * @returns
-		 */
-		const getCookieObject = () => {
-			return cookieObject();
-		};
-
-		/**
-		 * cookie 특정 값 반환
-		 * @param {*} key
-		 * @returns
-		 */
-		const getCookie = (key) => {
-			const object = cookieObject();
-			let value = null;
-
-			if (object.hasOwnProperty(key)) {
-				value = object[key];
-			}
-
-			return value || '';
-		};
-
-		/**
-		 * cookie 삭제
-		 * @param {*} key
-		 */
-		const deleteCookie = (key) => {
-			const object = cookieObject();
-
-			if (key.constructor !== String) {
-				throw 'parameter is not String.';
-			}
-
-			document.cookie = key.concat('=; expires=').concat(new Date('1970/01/01').toString()).concat('; ');
-		};
-
-		return {
-			setCookie,
-			getCookie,
-			deleteCookie,
-		};
-	};
+	/**
+	 * 데이터 empty 검사
+	 * @param {*} data
+	 */
 	const isEmpty = (data) => {
-		if (data !== undefined) {
-			if (data !== null) {
-				switch (data.constructor) {
-					case String:
-						if (data.replace(/\s/gi, '').length > 0) {
-							return false;
-						}
-						break;
-					case Object:
-						if (Object.keys(data).length > 0) {
-							return false;
-						}
-						break;
-					case Array:
-						if (data.length > 0) {
-							return false;
-						}
-						break;
-					case Date:
-						break;
-				}
+		let bool = true;
+
+		if (data !== undefined && data !== null) {
+			switch (data.constructor) {
+				case String:
+					if (data.replace(/\s/gi, '').length > 0) {
+						bool = false;
+					}
+					break;
+				case Object:
+					if (Object.keys(data).length > 0) {
+						bool = false;
+					}
+					break;
+				case Array:
+					if (data.length > 0) {
+						bool = false;
+					}
+					break;
+				case Date || Number || Boolean:
+					bool = false;
+					break;
 			}
 		}
 
-		return true;
+		return bool;
 	};
+	/**
+	 * 객체 프로퍼티 존재유무 검사
+	 * @param {*} object
+	 * @param {*} property
+	 */
+	const hasObjectProperty = (object, property) => (isEmpty(object) ? false : Object.hasOwnProperty.call(object, property));
+
+	/**
+	 * model data formData로 변경
+	 * @param {*} data
+	 */
 	const changeToFormData = (data) => {
 		const form = new FormData();
 		const keyList = Object.keys(data);
@@ -129,14 +57,22 @@ export default () => {
 
 		return form;
 	};
+
+	const numberComma = (data) => Number(data).toLocaleString(navigator.language);
+
+	/**
+	 * 스크롤이벤트
+	 * @param {*} target
+	 */
 	const scrollEvent = (target) => {
 		return window.addEventListener('scroll', (e) => {});
 	};
 
 	return {
-		cookie,
 		isEmpty,
+		hasObjectProperty,
 		changeToFormData,
+		numberComma,
 		scrollEvent,
 	};
 };

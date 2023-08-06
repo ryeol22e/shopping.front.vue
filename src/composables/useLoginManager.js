@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import useEnum from './useEnum';
 
 const { MEMBER_CONST } = useEnum();
+
 export default () => {
 	const useMember = useStoreMember();
 
