@@ -23,7 +23,7 @@
 						</li>
 					</ul>
 
-					<div :class="isMobile() ? '' : 'text-end'">
+					<div :class="isMobile ? '' : 'text-end'">
 						<RouterLink v-if="!isLogin" to="/login" @click="closeHeader" class="px-2 text-secondary text-white"><span>Login</span></RouterLink>
 						<a v-else @click="mypageOpen" href="javascript:void(0);" class="px-2 text-secondary text-white" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Mypage</a>
 						<a class="text-white">·</a>
@@ -58,7 +58,7 @@
 	const headers = computed(() => useCommon.getHeaders);
 	const mypageIsShow = ref(false);
 	const checkMobileHeader = () => {
-		if (isMobile()) {
+		if (isMobile.value) {
 			if (document.getElementById('nav-item-div').classList.contains('show')) {
 				document.getElementById('nav-item-div').classList.remove('show');
 			}

@@ -26,9 +26,9 @@
 	import { computed, onMounted, reactive, ref } from 'vue';
 	import { usePageLink } from '@/composables/usePageLink';
 
-	const useMember = useStoreMember();
 	const { movePage, reloadPage } = usePageLink();
 	const { isEmpty } = useUtils();
+	const useMember = useStoreMember();
 	const memberId = decodeURIComponent(localStorage.getItem('memberId'));
 	const remember = ref(isEmpty(memberId) ? false : true);
 	const isLogin = computed(() => useMember.getIsLogin);

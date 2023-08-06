@@ -1,10 +1,8 @@
 import { api } from '@/composables/useApi';
 import useEnum from '@/composables/useEnum';
-import useUtils from '@/composables/useUtils';
 import { defineStore } from 'pinia';
 
 const { MEMBER_CONST } = useEnum();
-const { cookie } = useUtils();
 
 export const useStoreMember = defineStore('useStoreMember', {
 	state: () => ({
