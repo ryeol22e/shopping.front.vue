@@ -1,10 +1,13 @@
 import axios from 'axios';
 import { parse, stringify } from 'qs';
-import { useRouter } from 'vue-router';
+import { usePageLink } from './usePageLink';
+
+const { errorPage } = usePageLink();
 const api = axios.create({
 	baseURL: '/api',
 	responseType: 'json',
 	responseEncoding: 'utf8',
+	timeout: 2000,
 	paramsSerializer: { encode: parse, serialize: stringify },
 });
 
@@ -14,7 +17,15 @@ api.interceptors.request.use(
 );
 api.interceptors.response.use(
 	(res) => res,
-	(error) => useRouter().push({ name: 'Error', state: { erorType: 500 }, query: {}, params: {} }),
+	(error) => {
+		const url = String(error.request.responseURL);
+
+		if (!url.includes('login') && !url.includes('logout')) {
+			errorPage(500);
+		}
+
+		return Promise.reject(error);
+	},
 );
 
 export { api };

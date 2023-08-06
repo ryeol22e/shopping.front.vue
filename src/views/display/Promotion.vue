@@ -8,9 +8,9 @@
 <script setup>
 	import DisplayHeader from '@/components/display/DisplayHeader.vue';
 	import ProductList from '@/components/display/ProductList.vue';
-	import { useRoute } from 'vue-router';
-	import { useStoreProduct } from '@/stores/useStoreProduct.js';
+	import { usePageLink } from '@/composables/usePageLink';
+	import { useStoreProduct } from '@/stores/useStoreProduct';
 
-	const route = useRoute();
+	const { movePage } = usePageLink();
 	const useProduct = useStoreProduct();
 </script>

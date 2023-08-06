@@ -1,4 +1,4 @@
-import useStoreMember from '@/stores/useStoreMember';
+import { useStoreMember } from '@/stores/useStoreMember';
 
 const authUrl = ['/display/vip'];
 export const useLoginProcess = async (to) => {
@@ -6,10 +6,12 @@ export const useLoginProcess = async (to) => {
 	const useMember = useStoreMember();
 	let bool = true;
 
-	await useMember.authCheck();
-	if (authUrl.includes(path)) {
-		if (!useMember.getIsLogin) {
-			bool = false;
+	if (!path.includes('error')) {
+		await useMember.authCheck();
+		if (authUrl.includes(path)) {
+			if (!useMember.getIsLogin) {
+				bool = false;
+			}
 		}
 	}
 

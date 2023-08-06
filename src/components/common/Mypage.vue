@@ -15,8 +15,8 @@
 </template>
 
 <script setup>
-	import useStoreCommon from '@/stores/useStoreCommon';
-	import useStoreMember from '@/stores/useStoreMember';
+	import { useStoreCommon } from '@/stores/useStoreCommon';
+	import { useStoreMember } from '@/stores/useStoreMember';
 	import { computed } from 'vue';
 	import { RouterLink } from 'vue-router';
 

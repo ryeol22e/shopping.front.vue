@@ -10,7 +10,7 @@
 <script setup>
 	import { onMounted, computed } from 'vue';
 	import Lnb from '@/components/common/Lnb.vue';
-	import useStoreCommon from '@/stores/useStoreCommon.js';
+	import { useStoreCommon } from '@/stores/useStoreCommon';
 
 	const useCommon = useStoreCommon();
 	const menuList = computed(() => useCommon.getAdminLnb);

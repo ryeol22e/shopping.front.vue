@@ -18,7 +18,7 @@
 								{{ header.codeName }}
 							</RouterLink>
 						</li>
-						<li v-if="memberRole === MEMBER_CONST.VIP || memberRole === MEMBER_CONST.ADMIN" class="nav-item">
+						<li v-if="userRole === MEMBER_CONST.VIP || userRole === MEMBER_CONST.ADMIN" class="nav-item">
 							<RouterLink to="/display/vip" class="nav-link px-2 text-secondary text-white"> VIP </RouterLink>
 						</li>
 					</ul>
@@ -29,7 +29,7 @@
 						<a class="text-white">·</a>
 						<RouterLink v-if="!isLogin" to="/signup" @click="closeHeader" class="px-2 text-secondary text-white">Sign-up</RouterLink>
 						<a v-else @click="logout" href="javascript:void(0);" class="px-2 text-secondary text-white">Logout</a>
-						<RouterLink v-if="isLogin && memberRole === MEMBER_CONST.ADMIN" to="/admin/dashboard" @click="closeHeader" type="button" class="btn btn-outline-light me-2">관리자</RouterLink>
+						<RouterLink v-if="isLogin && userRole === MEMBER_CONST.ADMIN" to="/admin/dashboard" @click="closeHeader" type="button" class="btn btn-outline-light me-2">관리자</RouterLink>
 					</div>
 				</div>
 				<!-- <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -44,18 +44,18 @@
 	import Mypage from '@/components/common/Mypage.vue';
 	import { useDeviceManager } from '@/composables/useDeviceManager';
 	import useEnum from '@/composables/useEnum';
-	import useStoreCommon from '@/stores/useStoreCommon';
-	import useStoreMember from '@/stores/useStoreMember';
-	import { computed, onMounted, ref } from 'vue';
+	import useLoginManager from '@/composables/useLoginManager';
+	import { useStoreCommon } from '@/stores/useStoreCommon';
+	import { useStoreMember } from '@/stores/useStoreMember';
+	import { computed, ref } from 'vue';
 	import { RouterLink } from 'vue-router';
 
+	const { isLogin, userRole } = useLoginManager();
 	const { MEMBER_CONST } = useEnum();
 	const { isMobile } = useDeviceManager();
 	const useCommon = useStoreCommon();
 	const useMember = useStoreMember();
 	const headers = computed(() => useCommon.getHeaders);
-	const isLogin = computed(() => useMember.getIsLogin);
-	const memberRole = computed(() => useMember.getUserInfo.memberRole);
 	const mypageIsShow = ref(false);
 	const checkMobileHeader = () => {
 		if (isMobile()) {
@@ -77,12 +77,10 @@
 		checkMobileHeader();
 	};
 
-	onMounted(() => {
-		useCommon.setHeaders({
-			codeType: '10000',
-			codeDepth: '1',
-			useYn: 'Y',
-		});
+	useCommon.setHeaders({
+		codeType: '10000',
+		codeDepth: '1',
+		useYn: 'Y',
 	});
 </script>
 

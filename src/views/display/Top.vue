@@ -8,11 +8,11 @@
 <script setup>
 	import DisplayHeader from '@/components/display/DisplayHeader.vue';
 	import ProductList from '@/components/display/ProductList.vue';
+	import { usePageLink } from '@/composables/usePageLink';
+	import { useStoreProduct } from '@/stores/useStoreProduct';
 	import { computed, onMounted } from 'vue';
-	import { useRoute } from 'vue-router';
-	import { useStoreProduct } from '@/stores/useStoreProduct.js';
 
-	const route = useRoute();
+	const { movePage } = usePageLink();
 	const useProduct = useStoreProduct();
 	const list = computed(() => useProduct.getList);
 

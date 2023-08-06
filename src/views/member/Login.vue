@@ -2,31 +2,33 @@
 	<main class="form-signin w-100 m-auto">
 		<h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-		<div class="form-floating">
-			<input type="text" class="form-control" placeholder="ID" v-model="data.memberId" />
-			<label for="floatingInput">ID</label>
-		</div>
-		<div class="form-floating">
-			<input type="password" class="form-control" placeholder="Password" v-model="data.memberPassword" @keyup.enter="loginProcess" />
-			<label for="floatingPassword">Password</label>
-		</div>
+		<form @submit.prevent="loginProcess">
+			<div class="form-floating">
+				<input type="text" class="form-control" placeholder="ID" v-model="data.memberId" />
+				<label for="floatingInput">ID</label>
+			</div>
+			<div class="form-floating">
+				<input type="password" class="form-control" placeholder="Password" v-model="data.memberPassword" />
+				<label for="floatingPassword">Password</label>
+			</div>
 
-		<div class="checkbox mb-3">
-			<label> <input type="checkbox" value="remember-me" v-model="remember" /> Remember me </label>
-		</div>
-		<button class="w-100 btn btn-lg btn-primary" type="button" @click="loginProcess">Sign in</button>
+			<div class="checkbox mb-3">
+				<label> <input type="checkbox" value="remember-me" v-model="remember" /> Remember me </label>
+			</div>
+			<button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+		</form>
 		<p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
 	</main>
 </template>
 
 <script setup>
 	import useUtils from '@/composables/useUtils';
-	import useStoreMember from '@/stores/useStoreMember';
+	import { useStoreMember } from '@/stores/useStoreMember';
 	import { computed, onMounted, reactive, ref } from 'vue';
-	import { useRouter } from 'vue-router';
+	import { usePageLink } from '@/composables/usePageLink';
 
 	const useMember = useStoreMember();
-	const router = useRouter();
+	const { movePage, reloadPage } = usePageLink();
 	const { isEmpty } = useUtils();
 	const memberId = decodeURIComponent(localStorage.getItem('memberId'));
 	const remember = ref(isEmpty(memberId) ? false : true);
@@ -36,9 +38,9 @@
 		memberPassword: '',
 	});
 	const loginProcess = async () => {
-		await useMember.loginProcess(data);
-
 		if (validate()) {
+			await useMember.loginProcess(data);
+
 			if (isLogin.value) {
 				if (remember) {
 					localStorage.setItem('memberId', encodeURIComponent(data.memberId));
@@ -46,7 +48,7 @@
 				location.href = '/';
 			} else {
 				alert('로그인에 실패했습니다.');
-				router.go();
+				reloadPage();
 			}
 		}
 	};
@@ -65,7 +67,7 @@
 
 	onMounted(() => {
 		if (isLogin.value) {
-			router.push('/');
+			movePage('/');
 		}
 	});
 </script>

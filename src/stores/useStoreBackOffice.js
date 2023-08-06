@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { api } from '@/composables/useApi.js';
-import router from '@/router/index.js';
+import { api } from '@/composables/useApi';
+import router from '@/router/index';
 
 export const useStoreBo = defineStore('useStoreBo', {
 	state: () => ({
@@ -14,7 +14,7 @@ export const useStoreBo = defineStore('useStoreBo', {
 					'Content-Type': 'multipart/form-data',
 				},
 			})
-				.then(res => {
+				.then((res) => {
 					const result = res.data;
 
 					if (result) {
@@ -22,7 +22,7 @@ export const useStoreBo = defineStore('useStoreBo', {
 						router.go();
 					}
 				})
-				.catch(error => console.log(error));
+				.catch((error) => console.log(error));
 		},
 	},
 });

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { api } from '@/composables/useApi.js';
+import { api } from '@/composables/useApi';
 
 export const useStoreProduct = defineStore('useStoreProduct', {
 	state: () => ({
@@ -9,10 +9,10 @@ export const useStoreProduct = defineStore('useStoreProduct', {
 		saveProductResult: false,
 	}),
 	getters: {
-		getList: state => state.list,
-		getDetail: state => state.detail,
-		getCateList: state => state.cateList,
-		getPrdtResult: state => state.saveProductResult,
+		getList: (state) => state.list,
+		getDetail: (state) => state.detail,
+		getCateList: (state) => state.cateList,
+		getPrdtResult: (state) => state.saveProductResult,
 	},
 	actions: {
 		async setList(cateNo) {
@@ -24,22 +24,22 @@ export const useStoreProduct = defineStore('useStoreProduct', {
 						dispYn: 'Y',
 					},
 				})
-				.then(res => (this.list = res.data))
-				.catch(error => console.log(error));
+				.then((res) => (this.list = res.data))
+				.catch((error) => console.log(error));
 		},
 		async setDetail(prdtNo) {
 			await api
 				.get(`/product/${prdtNo}`)
-				.then(res => (this.detail = res.data))
-				.catch(error => console.log(error));
+				.then((res) => (this.detail = res.data))
+				.catch((error) => console.log(error));
 		},
 		async setCateList(param) {
 			await api
 				.get(`/cate/list`, {
 					params: param,
 				})
-				.then(res => (this.cateList = res.data))
-				.catch(error => console.log(error));
+				.then((res) => (this.cateList = res.data))
+				.catch((error) => console.log(error));
 		},
 		async setProductData(data) {
 			const prdtNo = data.get('prdtNo');
@@ -49,8 +49,8 @@ export const useStoreProduct = defineStore('useStoreProduct', {
 						'Content-Type': 'multipart/form-data',
 					},
 				})
-				.then(res => (this.saveProductResult = res.data || false))
-				.catch(error => console.log(error));
+				.then((res) => (this.saveProductResult = res.data || false))
+				.catch((error) => console.log(error));
 		},
 	},
 });

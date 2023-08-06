@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
-import { api } from '@/composables/useApi.js';
+import { api } from '@/composables/useApi';
 
-export default defineStore('common', {
+export const useStoreCommon = defineStore('useStoreCommon', {
 	state: () => ({
 		headers: [],
 		adminLnb: [],

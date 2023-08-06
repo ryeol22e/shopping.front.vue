@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia';
-import { api } from '@/composables/useApi.js';
+import { api } from '@/composables/useApi';
 
-export default defineStore('main', {
+export const useStoreMain = defineStore('useStoreMain', {
 	state: () => ({
 		bannerList: [],
 	}),
 	getters: {
-		getBannerList: state => state.bannerList,
+		getBannerList: (state) => state.bannerList,
 	},
 	actions: {
 		async setBannerList(param) {
@@ -14,8 +14,8 @@ export default defineStore('main', {
 				.get('/display/main/banner', {
 					params: param,
 				})
-				.then(res => (this.bannerList = res.data))
-				.catch(error => console.log(error));
+				.then((res) => (this.bannerList = res.data))
+				.catch((error) => console.log(error));
 		},
 	},
 });

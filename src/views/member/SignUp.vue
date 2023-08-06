@@ -37,11 +37,11 @@
 </template>
 
 <script setup>
-	import useStoreMember from '@/stores/useStoreMember';
+	import { useStoreMember } from '@/stores/useStoreMember';
 	import { reactive } from 'vue';
-	import { useRouter } from 'vue-router';
+	import { usePageLink } from '@/composables/usePageLink';
 
-	const router = useRouter();
+	const { movePage } = usePageLink();
 	const useMember = useStoreMember();
 	const data = reactive({
 		memberId: '',
@@ -91,7 +91,7 @@
 						alert('가입이 완료되었습니다.');
 
 						sessionStorage.removeItem('authNumber');
-						router.push('/');
+						movePage('/');
 					}
 				}, 100);
 			}

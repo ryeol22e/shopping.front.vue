@@ -6,13 +6,13 @@
 </template>
 
 <script setup>
-	import { onMounted, computed } from 'vue';
 	import DisplayHeader from '@/components/display/DisplayHeader.vue';
 	import ProductList from '@/components/display/ProductList.vue';
-	import { useRoute } from 'vue-router';
-	import { useStoreProduct } from '@/stores/useStoreProduct.js';
+	import { usePageLink } from '@/composables/usePageLink';
+	import { useStoreProduct } from '@/stores/useStoreProduct';
+	import { computed, onMounted } from 'vue';
 
-	const route = useRoute();
+	const { movePage } = usePageLink();
 	const useProduct = useStoreProduct();
 	const list = computed(() => useProduct.getList);
 

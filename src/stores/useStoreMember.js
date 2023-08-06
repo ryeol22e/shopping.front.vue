@@ -6,7 +6,7 @@ import { defineStore } from 'pinia';
 const { MEMBER_CONST } = useEnum();
 const { cookie } = useUtils();
 
-export default defineStore('member', {
+export const useStoreMember = defineStore('useStoreMember', {
 	state: () => ({
 		isLogin: false,
 		isInfoSet: false,

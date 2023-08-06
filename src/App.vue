@@ -25,10 +25,10 @@
 	import Footer from '@/components/common/Footer.vue';
 	import Header from '@/components/common/Header.vue';
 	import Loading from '@/components/common/Loading.vue';
+	import { usePageLink } from '@/composables/usePageLink';
 	import { onErrorCaptured } from 'vue';
-	import { useRouter } from 'vue-router';
 
-	const router = useRouter();
+	const { errorPage } = usePageLink();
 
-	onErrorCaptured((error) => router.push({ path: '/error', state: { errorType: 404 } }));
+	onErrorCaptured((error) => errorPage(404));
 </script>

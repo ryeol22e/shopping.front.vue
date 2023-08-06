@@ -49,10 +49,10 @@
 	import useUtils from '@/composables/useUtils';
 	import { useStoreProduct } from '@/stores/useStoreProduct';
 	import { computed, onMounted, reactive, watchEffect } from 'vue';
-	import { useRouter } from 'vue-router';
+	import { usePageLink } from '@/composables/usePageLink';
 
 	const { changeToFormData } = useUtils();
-	const router = useRouter();
+	const { errorPage } = usePageLink();
 	const useProduct = useStoreProduct();
 	const cateList = computed(() => useProduct.getCateList);
 	const data = reactive({
@@ -99,7 +99,7 @@
 
 			if (result) {
 				alert('상품이 등록되었습니다.');
-				router.go();
+				reloadPage();
 			} else {
 				alert('등록 실패했습니다.');
 			}
