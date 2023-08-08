@@ -35,11 +35,12 @@ export default defineConfig(({ mode }) => {
 			cssTarget: 'chrome61',
 			minify: 'esbuild',
 			cssMinify: 'esbuild',
+			ssr: false,
 			rollupOptions: {
 				output: {
-					entryFileNames: 'assets/[hash].js',
+					entryFileNames: '[name].js',
 					chunkFileNames: 'assets/[hash].js',
-					assetFileNames: 'assets/[hash].[ext]',
+					assetFileNames: 'css/[hash].[ext]',
 				},
 			},
 		},
