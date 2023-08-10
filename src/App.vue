@@ -30,5 +30,5 @@
 
 	const { errorPage } = usePageLink();
 
-	onErrorCaptured((error) => errorPage(404));
+	onErrorCaptured((error) => errorPage(500));
 </script>
