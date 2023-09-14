@@ -14,7 +14,7 @@
 				<div class="collapse navbar-collapse" id="nav-item-div">
 					<ul class="navbar-nav me-auto col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
 						<li v-for="header in headers" :key="header.codeId" @click="closeHeader" class="nav-item">
-							<RouterLink :to="header.addInfo2" class="nav-link px-2 text-secondary text-white">
+							<RouterLink :to="{ path: header.addInfo2, query: { page: 1 } }" class="nav-link px-2 text-secondary text-white">
 								{{ header.codeName }}
 							</RouterLink>
 						</li>
