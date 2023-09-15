@@ -21,15 +21,19 @@
 <script setup>
 	import { onMounted } from 'vue';
 	import { useRoute } from 'vue-router';
+	import { usePageLink } from '@/composables/usePageLink';
+
+	const { movePage } = usePageLink();
 
 	const route = useRoute();
+	const setPagination = (data) => {
+		if (data.constructor === Number) {
+		} else {
+		}
+	};
 	const goPage = (page) => {
-		const obj = history.state;
-		const now = obj.current;
-
-		obj.back = now;
-		obj.current = now.replace(`page=${route.query.page}`, `page=${page}`);
-		history.pushState(obj, `page=${page}`, `?page=${page}`);
+		setPagination(page);
+		movePage({ path: route.fullPath, query: { ...route.query, page } });
 	};
 
 	onMounted(() => {
