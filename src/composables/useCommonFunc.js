@@ -37,7 +37,7 @@ export default () => {
 		});
 	};
 
-	const AUTH_URL_LIST = ['/display/vip'];
+	const AUTH_URL_LIST = ['/display/vip', '/admin/dashboard'];
 
 	return {
 		dashboard,

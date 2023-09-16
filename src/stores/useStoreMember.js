@@ -27,7 +27,7 @@ export const useStoreMember = defineStore('useStoreMember', {
 			await api
 				.get('/auth/check')
 				.then((res) => (this.isLogin = res.data))
-				.then((data) => (data && !this.isInfoSet ? this.setMemberInfo() : null))
+				.then((isLogin) => isLogin && !this.isInfoSet && this.setMemberInfo())
 				.catch((error) => console.log(error));
 		},
 		async loginProcess(param) {
