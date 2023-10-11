@@ -1,10 +1,10 @@
 <template>
 	<RouterView v-slot="{ Component, route }">
-		<KeepAlive>
-			<Header />
-		</KeepAlive>
-
 		<template v-if="Component">
+			<KeepAlive>
+				<Header />
+			</KeepAlive>
+
 			<Suspense timeout="0">
 				<template #default>
 					<component :is="Component" :key="route.fullPath" />
@@ -13,11 +13,11 @@
 					<Loading />
 				</template>
 			</Suspense>
-		</template>
 
-		<KeepAlive>
-			<Footer />
-		</KeepAlive>
+			<KeepAlive>
+				<Footer />
+			</KeepAlive>
+		</template>
 	</RouterView>
 </template>
 
