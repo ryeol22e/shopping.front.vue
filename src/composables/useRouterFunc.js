@@ -1,7 +1,9 @@
 import { useStoreMember } from '@/stores/useStoreMember';
 import useCommonFunc from './useCommonFunc';
+import useUtils from './useUtils';
 
 const { AUTH_URL_LIST } = useCommonFunc();
+const { findListSearch } = useUtils();
 
 export const useLoginProcess = async (to) => {
 	const path = String(to.path);
@@ -10,7 +12,7 @@ export const useLoginProcess = async (to) => {
 
 	if (!path.includes('error')) {
 		await useMember.authCheck();
-		if (AUTH_URL_LIST.includes(path)) {
+		if (findListSearch(AUTH_URL_LIST, path)) {
 			if (!useMember.getIsLogin) {
 				bool = false;
 			}
