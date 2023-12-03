@@ -1,8 +1,8 @@
 import { usePageLink } from '@/composables/usePageLink';
 import useUtils from '@/composables/useUtils';
-import { parse, stringify } from 'qs';
+import { stringify } from 'qs';
 
-const { isEmpty, hasObjectProperty } = useUtils();
+const { isEmpty } = useUtils();
 const { errorPage } = usePageLink();
 
 const BASE_URL = '/api';
