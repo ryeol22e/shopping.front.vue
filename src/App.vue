@@ -25,10 +25,19 @@
 	import Footer from '@/components/common/Footer.vue';
 	import Header from '@/components/common/Header.vue';
 	import Loading from '@/components/common/Loading.vue';
+
 	import { usePageLink } from '@/composables/usePageLink';
 	import { onErrorCaptured } from 'vue';
+	import { useStoreCommon } from './stores/useStoreCommon';
 
 	const { errorPage } = usePageLink();
+	const storeCommon = useStoreCommon();
+
+	storeCommon.setHeaders({
+		codeType: '10000',
+		codeDepth: '1',
+		useYn: 'Y',
+	});
 
 	onErrorCaptured((error) => errorPage(500));
 </script>

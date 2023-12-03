@@ -1,4 +1,4 @@
-import { api } from '@/composables/useApi';
+import { appApi } from '@/composables/useApi';
 import { defineStore } from 'pinia';
 
 export const useStoreMain = defineStore('useStoreMain', {
@@ -10,10 +10,8 @@ export const useStoreMain = defineStore('useStoreMain', {
 	},
 	actions: {
 		async setBannerList(param) {
-			await api
-				.get('/display/main/banner', {
-					params: param,
-				})
+			await appApi
+				.get('/display/main/banner', param)
 				.then((res) => (this.bannerList = res.data))
 				.catch((error) => console.log(error));
 		},

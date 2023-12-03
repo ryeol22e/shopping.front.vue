@@ -28,17 +28,17 @@
 
 	const { movePage, reloadPage } = usePageLink();
 	const { isEmpty } = useUtils();
-	const useMember = useStoreMember();
+	const storeMember = useStoreMember();
 	const memberId = decodeURIComponent(localStorage.getItem('memberId'));
 	const remember = ref(isEmpty(memberId) ? false : true);
-	const isLogin = computed(() => useMember.getIsLogin);
+	const isLogin = computed(() => storeMember.getIsLogin);
 	const data = reactive({
 		memberId: remember ? memberId : '',
 		memberPassword: '',
 	});
 	const loginProcess = async () => {
 		if (validate()) {
-			await useMember.loginProcess(data);
+			await storeMember.loginProcess(data);
 
 			if (isLogin.value) {
 				if (remember) {

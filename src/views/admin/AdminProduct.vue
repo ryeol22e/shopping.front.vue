@@ -30,8 +30,9 @@
 		</div>
 		<div class="input-group mb-3">
 			<span class="input-group-text">이미지</span>
-			<input @change="imageUpload" class="form-control" type="file" />
+			<input @change="imageUpload" id="fileUpload" name="fileUpload" class="form-control" type="file" multiple />
 		</div>
+		<div id="dropBox" style="width: 800px; height: 300px; border: 1px solid skyblue"></div>
 		<div class="input-group mb-3">
 			<span class="input-group-text">정상가</span>
 			<input v-model="data.normalPrice" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
@@ -51,7 +52,8 @@
 	import { computed, onMounted, reactive, watchEffect } from 'vue';
 	import { usePageLink } from '@/composables/usePageLink';
 
-	const { changeToFormData } = useUtils();
+	const { changeToFormData, fileUpload } = useUtils();
+	const { excuteFileUpload } = fileUpload();
 	const { errorPage } = usePageLink();
 	const useProduct = useStoreProduct();
 	const cateList = computed(() => useProduct.getCateList);
@@ -118,5 +120,6 @@
 			useYn: 'Y',
 			dispYn: 'Y',
 		});
+		excuteFileUpload();
 	});
 </script>

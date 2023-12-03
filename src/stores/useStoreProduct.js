@@ -1,5 +1,5 @@
+import { appApi } from '@/composables/useApi';
 import { defineStore } from 'pinia';
-import { api } from '@/composables/useApi';
 
 export const useStoreProduct = defineStore('useStoreProduct', {
 	state: () => ({
@@ -16,39 +16,31 @@ export const useStoreProduct = defineStore('useStoreProduct', {
 	},
 	actions: {
 		async setList(cateNo) {
-			await api
+			await appApi
 				.get(`/display/product/list`, {
-					params: {
-						cateNo: cateNo,
-						useYn: 'Y',
-						dispYn: 'Y',
-					},
+					cateNo: cateNo,
+					useYn: 'Y',
+					dispYn: 'Y',
 				})
 				.then((res) => (this.list = res.data))
 				.catch((error) => console.log(error));
 		},
 		async setDetail(prdtNo) {
-			await api
+			await appApi
 				.get(`/product/${prdtNo}`)
 				.then((res) => (this.detail = res.data))
 				.catch((error) => console.log(error));
 		},
 		async setCateList(param) {
-			await api
-				.get(`/cate/list`, {
-					params: param,
-				})
+			await appApi
+				.get(`/cate/list`, param)
 				.then((res) => (this.cateList = res.data))
 				.catch((error) => console.log(error));
 		},
 		async setProductData(data) {
 			const prdtNo = data.get('prdtNo');
-			await api
-				.post(`/product/${prdtNo}`, data, {
-					headers: {
-						'Content-Type': 'multipart/form-data',
-					},
-				})
+			await appApi
+				.uploadFile(`/product/${prdtNo}`, data)
 				.then((res) => (this.saveProductResult = res.data || false))
 				.catch((error) => console.log(error));
 		},

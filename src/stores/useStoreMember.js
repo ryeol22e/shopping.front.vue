@@ -1,4 +1,4 @@
-import { api } from '@/composables/useApi';
+import { appApi } from '@/composables/useApi';
 import useEnum from '@/composables/useEnum';
 import { defineStore } from 'pinia';
 
@@ -24,24 +24,20 @@ export const useStoreMember = defineStore('useStoreMember', {
 	},
 	actions: {
 		async authCheck() {
-			await api
+			await appApi
 				.get('/auth/check')
 				.then((res) => (this.isLogin = res.data))
 				.then((isLogin) => isLogin && !this.isInfoSet && this.setMemberInfo())
 				.catch((error) => console.log(error));
 		},
 		async loginProcess(param) {
-			await api
-				.post('/member/login', param, {
-					headers: {
-						'Content-Type': 'application/x-www-form-urlencoded',
-					},
-				})
+			await appApi
+				.login('/member/login', param)
 				.then((res) => (this.isLogin = res.data))
 				.catch((error) => console.log(error));
 		},
 		async setMemberInfo() {
-			await api
+			await appApi
 				.get('/member/info')
 				.then((res) => (this.userInfo = res.data))
 				.catch((error) => console.log(error));
@@ -49,16 +45,16 @@ export const useStoreMember = defineStore('useStoreMember', {
 			this.isInfoSet = true;
 		},
 		async logoutProcess() {
-			await api.post('/member/logout').catch((error) => console.log(error));
+			await appApi.post('/member/logout').catch((error) => console.log(error));
 		},
 		async signUpProcess(param) {
-			await api
+			await appApi
 				.post('/member/join', param)
 				.then((res) => (this.signUpResult = res.data))
 				.catch((error) => console.log(error));
 		},
 		async setAuthNumber(param) {
-			await api
+			await appApi
 				.post('/member/auth/number', param)
 				.then((res) => (this.authNumber = res.data))
 				.catch((error) => console.log(error));

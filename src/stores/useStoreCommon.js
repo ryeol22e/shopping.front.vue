@@ -1,4 +1,4 @@
-import { api } from '@/composables/useApi';
+import { appApi } from '@/composables/useApi';
 import { defineStore } from 'pinia';
 
 export const useStoreCommon = defineStore('useStoreCommon', {
@@ -13,26 +13,24 @@ export const useStoreCommon = defineStore('useStoreCommon', {
 		getMypageList: (state) => state.mypageList,
 	},
 	actions: {
-		async setHeaders(params) {
-			await api
-				.get('/common/10000', { params })
+		async setHeaders(param) {
+			await appApi
+				.get('/common/10000', param)
 				.then((res) => (this.headers = res.data))
 				.catch((error) => console.log(error));
 		},
-		async setAdminLnb(params) {
-			await api
-				.get('/admin/menu', { params })
+		async setAdminLnb(param) {
+			await appApi
+				.get('/admin/menu', param)
 				.then((res) => (this.adminLnb = res.data))
 				.catch((error) => console.log(error));
 		},
 		async setMypageList() {
-			await api
+			await appApi
 				.get('/common/10002', {
-					params: {
-						codeType: '10002',
-						codeDepth: '1',
-						useYn: 'Y',
-					},
+					codeType: '10002',
+					codeDepth: '1',
+					useYn: 'Y',
 				})
 				.then((res) => (this.mypageList = res.data))
 				.catch((error) => console.log(error));

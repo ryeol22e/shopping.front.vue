@@ -1,15 +1,16 @@
+import useEnum from './useEnum';
+
 import { useStoreMember } from '@/stores/useStoreMember';
 import { computed } from 'vue';
-import useEnum from './useEnum';
 
 const { MEMBER_CONST } = useEnum();
 
 export default () => {
-	const useMember = useStoreMember();
+	const storeMember = useStoreMember();
 
-	const isLogin = computed(() => useMember.getIsLogin);
-	const userInfo = computed(() => useMember.getUserInfo);
-	const userRole = computed(() => useMember.getUserInfo.memberRole || MEMBER_CONST.ANONYMOUS);
+	const isLogin = computed(() => storeMember.getIsLogin);
+	const userInfo = computed(() => storeMember.getUserInfo);
+	const userRole = computed(() => storeMember.getUserInfo.memberRole || MEMBER_CONST.ANONYMOUS);
 
 	return {
 		isLogin,

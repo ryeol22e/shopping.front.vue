@@ -1,4 +1,4 @@
-import { useLoginProcess } from '@/composables/useRouterFunc';
+import { loginProcess } from '@/composables/useRouterFunc';
 import { nextTick } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import admin from './admin';
@@ -41,7 +41,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-	(await useLoginProcess(to)) ? next() : next('/login');
+	loginProcess(to) ? next() : next('/login');
 });
 
 router.afterEach((to, from) => {

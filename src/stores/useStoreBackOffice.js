@@ -1,4 +1,4 @@
-import { api } from '@/composables/useApi';
+import { appApi } from '@/composables/useApi';
 import router from '@/router/index';
 import { defineStore } from 'pinia';
 
@@ -8,12 +8,9 @@ export const useStoreBo = defineStore('useStoreBo', {
 	}),
 	getters: {},
 	actions: {
-		registBannerInfo(data) {
-			api.post('/admin/banner/save', data, {
-				headers: {
-					'Content-Type': 'multipart/form-data',
-				},
-			})
+		registBannerInfo(param) {
+			appApi
+				.uploadFile('/admin/banner/save', param)
 				.then((res) => {
 					const result = res.data;
 

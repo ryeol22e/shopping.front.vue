@@ -53,10 +53,12 @@
 	const { isLogin, userRole } = useLoginManager();
 	const { MEMBER_CONST } = useEnum();
 	const { isMobile } = useDeviceManager();
-	const useCommon = useStoreCommon();
+	const storeCommon = useStoreCommon();
 	const useMember = useStoreMember();
-	const headers = computed(() => useCommon.getHeaders);
+
 	const mypageIsShow = ref(false);
+	const headers = computed(() => storeCommon.getHeaders);
+
 	const checkMobileHeader = () => {
 		if (isMobile.value) {
 			if (document.getElementById('nav-item-div').classList.contains('show')) {
@@ -72,16 +74,10 @@
 	};
 	const closeHeader = () => checkMobileHeader();
 	const mypageOpen = async () => {
-		await useCommon.setMypageList();
+		await storeCommon.setMypageList();
 		mypageIsShow.value = true;
 		checkMobileHeader();
 	};
-
-	useCommon.setHeaders({
-		codeType: '10000',
-		codeDepth: '1',
-		useYn: 'Y',
-	});
 </script>
 
 <style scoped>
