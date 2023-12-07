@@ -17,12 +17,13 @@ export default () => {
 			const object = {};
 
 			list.forEach((item) => {
+				const regex = /^[^{|^\[]*[a-zA-Z|ㄱ-ㅎ가-힣][^}|^\]]*$/gi;
 				const key = item.substring(0, item.indexOf('='));
-				const value = decodeURIComponent(item.substring(item.indexOf('=') + 1, item.length));
+				const value = decodeURIComponent(item.substring(item.indexOf('=') + 1, item.length)).replace(/\s|\t|\n/gi, '');
 
-				if (/{|}|\[|\]/gi.test(value)) {
-					object[key] = JSON.parse(value);
-				} else {
+				try {
+					object[key] = regex.test(value) ? value : JSON.parse(value);
+				} catch (error) {
 					object[key] = value;
 				}
 			});
@@ -54,16 +55,11 @@ export default () => {
 						}
 					}
 
-					optionStr += ';'.concat(key).concat('=').concat(option[key]).concat(';');
+					optionStr += `;${key}=${option[key]}`;
 				});
 			}
 
-			document.cookie = String(key)
-				.concat('=')
-				.concat(encodeURIComponent(JSON.stringify(value)))
-				.concat(';')
-				.concat('path=/')
-				.concat(optionStr);
+			document.cookie = `${key}=${encodeURIComponent(JSON.stringify(value))};path=/${optionStr}`;
 		};
 
 		/**
@@ -91,14 +87,7 @@ export default () => {
 				throw 'parameter is not String.';
 			}
 
-			const fixedDomainKey = ['FILTER_OPTION'];
-			let cookieStr = key.concat('=;expires=').concat(new Date('1970/01/01').toUTCString()).concat(';');
-
-			if (fixedDomainKey.includes(key)) {
-				cookieStr += 'domain=.a-rt.com; path=/;';
-			}
-
-			document.cookie = cookieStr;
+			document.cookie = `${key}=;expires=${new Date('1970/01/01').toUTCString()};domain=${location.origin}; path=/;`;
 		};
 
 		return {
@@ -113,8 +102,20 @@ export default () => {
 	 */
 	const appSession = () => {
 		const setItem = (key, value) => sessionStorage.setItem(key, encodeURIComponent(JSON.stringify(value)));
-		const getItem = (key) => JSON.parse(decodeURIComponent(sessionStorage.getItem(key)));
 		const removeItem = (key) => sessionStorage.removeItem(key);
+		const getItem = (key) => {
+			const regex = /^[^{|^\[]*[a-zA-Z|ㄱ-ㅎ가-힣][^}|^\]]*$/gi;
+			const value = decodeURIComponent(sessionStorage.getItem(key));
+			let resultValue = null;
+
+			try {
+				resultValue = regex.test(value) ? value : JSON.parse(value);
+			} catch (error) {
+				resultValue = value;
+			}
+
+			return resultValue || null;
+		};
 
 		return {
 			setItem,
@@ -128,19 +129,20 @@ export default () => {
 	 */
 	const appLocalStorage = () => {
 		const setItem = (key, value) => localStorage.setItem(key, encodeURIComponent(JSON.stringify(value)));
+		const removeItem = (key) => localStorage.removeItem(key);
 		const getItem = (key) => {
+			const regex = /^[^{|^\[]*[a-zA-Z|ㄱ-ㅎ가-힣][^}|^\]]*$/gi;
 			const value = decodeURIComponent(localStorage.getItem(key));
-			let resultValue = '';
+			let resultValue = null;
 
-			if (/{|}|\[|\]/gi.test(value)) {
-				resultValue = JSON.parse(value);
-			} else {
+			try {
+				resultValue = regex.test(value) ? value : JSON.parse(value);
+			} catch (error) {
 				resultValue = value;
 			}
 
 			return resultValue || null;
 		};
-		const removeItem = (key) => localStorage.removeItem(key);
 
 		return {
 			setItem,
