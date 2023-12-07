@@ -32,7 +32,7 @@ export const useStoreMember = defineStore('useStoreMember', {
 		},
 		async loginProcess(param) {
 			await appApi
-				.login('/member/login', param)
+				.post('/member/login', param)
 				.then((res) => (this.isLogin = res.data))
 				.catch((error) => console.log(error));
 		},

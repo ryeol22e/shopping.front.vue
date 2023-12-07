@@ -2,13 +2,13 @@
 	<main class="form-signin w-100 m-auto">
 		<h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-		<form @submit.prevent="loginProcess">
+		<form @submit.prevent="loginProcess" id="loginForm">
 			<div class="form-floating">
-				<input type="text" class="form-control" placeholder="ID" v-model="data.memberId" />
+				<input type="text" class="form-control" placeholder="ID" name="memberId" v-model="data.memberId" />
 				<label for="floatingInput">ID</label>
 			</div>
 			<div class="form-floating">
-				<input type="password" class="form-control" placeholder="Password" v-model="data.memberPassword" />
+				<input type="password" class="form-control" placeholder="Password" name="memberPassword" v-model="data.memberPassword" />
 				<label for="floatingPassword">Password</label>
 			</div>
 
@@ -21,10 +21,10 @@
 </template>
 
 <script setup>
+	import { usePageLink } from '@/composables/usePageLink';
 	import useUtils from '@/composables/useUtils';
 	import { useStoreMember } from '@/stores/useStoreMember';
 	import { computed, onMounted, reactive, ref } from 'vue';
-	import { usePageLink } from '@/composables/usePageLink';
 
 	const { movePage, reloadPage } = usePageLink();
 	const { isEmpty } = useUtils();
@@ -38,7 +38,7 @@
 	});
 	const loginProcess = async () => {
 		if (validate()) {
-			await storeMember.loginProcess(data);
+			await storeMember.loginProcess(new FormData(document.getElementById('loginForm')));
 
 			if (isLogin.value) {
 				if (remember) {
