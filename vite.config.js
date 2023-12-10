@@ -14,6 +14,7 @@ export default defineConfig(({ mode }) => {
 				'@': fileURLToPath(new URL('./src', import.meta.url)),
 			},
 		},
+		logLevel: 'info',
 		server: {
 			port: env.VITE_APP_PORT,
 			host: true,
