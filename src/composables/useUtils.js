@@ -289,7 +289,7 @@ export default () => {
 			const formData = new FormData();
 
 			if (fileList.length > 0) {
-				formData.append('fileList', fileList);
+				fileList.forEach((item) => formData.append('fileList[]', item));
 
 				await fetch(sendServerUrl, {
 					headers: {},

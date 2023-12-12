@@ -69,4 +69,4 @@ const appApi = {
 	},
 };
 
-export { appApi };
+export default () => ({ appApi });
