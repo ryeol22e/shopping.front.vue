@@ -5,9 +5,10 @@ import { defineConfig, loadEnv } from 'vite';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-	const env = loadEnv(mode, process.cwd(), '');
+	const env = loadEnv(mode, `${process.cwd()}/env`, '');
 	const active = env.VITE_PROFILE_ACTIVE;
 	const config = {
+		envDir: './env',
 		plugins: [vue()],
 		resolve: {
 			alias: {
