@@ -1,6 +1,6 @@
 import vue from '@vitejs/plugin-vue';
 import fs from 'node:fs';
-import path from 'node:path';
+// import path from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig, loadEnv } from 'vite';
 
