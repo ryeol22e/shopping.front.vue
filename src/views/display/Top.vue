@@ -8,14 +8,18 @@
 <script setup>
 	import DisplayHeader from '@/components/display/DisplayHeader.vue';
 	import ProductList from '@/components/display/ProductList.vue';
-	import { usePageLink } from '@/composables/usePageLink';
+	import useMetaInfo from '@/composables/useMetaInfo';
+
 	import { useStoreProduct } from '@/stores/useStoreProduct';
 	import { computed, onMounted } from 'vue';
+	import { useMeta } from 'vue-meta';
 
-	const { movePage } = usePageLink();
 	const useProduct = useStoreProduct();
+	const { getMetaInfo } = useMetaInfo();
 	const list = computed(() => useProduct.getList);
 
-	await useProduct.setList('1357900001');
+	useMeta(getMetaInfo('Top'));
 	onMounted(() => {});
+
+	await useProduct.setList('1357900001');
 </script>
