@@ -1,4 +1,4 @@
-import { loginProcess, setMeta } from '@/composables/useRouterFunc';
+import { loginProcess } from '@/composables/useRouterFunc';
 import { nextTick } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -46,9 +46,7 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach((to, from) => {
-	nextTick(() => {
-		setMeta(to);
-	});
+	nextTick(() => {});
 });
 
 export default router;

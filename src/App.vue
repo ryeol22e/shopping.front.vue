@@ -1,4 +1,5 @@
 <template>
+	<metainfo />
 	<RouterView v-slot="{ Component, route }">
 		<template v-if="Component">
 			<Gnb>
@@ -18,13 +19,17 @@
 <script setup>
 	import Loading from '@/components/common/Loading.vue';
 	import Gnb from '@/layouts/Gnb.vue';
+	import useMetaTag from './composables/useMetaTag';
 
 	import { usePageLink } from '@/composables/usePageLink';
-	import { onErrorCaptured } from 'vue';
-
+	import { computed, onErrorCaptured } from 'vue';
+	import { useMeta } from 'vue-meta';
+	import { useRoute } from 'vue-router';
 	import { useStoreCommon } from './stores/useStoreCommon';
 
+	const route = useRoute();
 	const { errorPage } = usePageLink();
+	const { getMetaInfo } = useMetaTag();
 
 	const storeCommon = useStoreCommon();
 	storeCommon.setHeaders({
@@ -32,6 +37,8 @@
 		codeDepth: '1',
 		useYn: 'Y',
 	});
+	const meta = computed(() => getMetaInfo(route));
+	useMeta(meta);
 
 	onErrorCaptured((error) => errorPage(500));
 </script>
