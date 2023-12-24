@@ -1,8 +1,13 @@
 import { usePageLink } from '@/composables/usePageLink';
-import useUtils from '@/composables/useUtils';
 import { stringify } from 'qs';
 
+import useUtils from '@/composables/useUtils';
+import useStorage from '@/composables/useStorage';
+
+const AUCCESS_TOKEN = 'AUCCESS_TOKEN';
 const { isEmpty } = useUtils();
+const { appCookie } = useStorage();
+const { getCookie } = appCookie();
 const { errorPage } = usePageLink();
 
 const BASE_URL = '/api';
@@ -20,7 +25,7 @@ const fetchFunc = async (path, data, resolve, reject) => {
 const appApi = {
 	async get(path, param = {}) {
 		const queryString = !isEmpty(param) ? `?${stringify(param)}` : '';
-		const data = await fetch(`${BASE_URL}${path}${queryString}`, {
+		const options = {
 			method: 'get',
 			mode: 'same-origin',
 			credentials: 'include',
@@ -28,12 +33,16 @@ const appApi = {
 			headers: {
 				'Content-Type': 'application/json;charset=UTF-8',
 			},
-		});
+		};
+		if (!isEmpty(getCookie(AUCCESS_TOKEN))) {
+			options.headers['Authroization'] = `Bearer ${getCookie(AUCCESS_TOKEN)}`;
+		}
+		const data = await fetch(`${BASE_URL}${path}${queryString}`, options);
 
 		return new Promise((resolve, reject) => fetchFunc(path, data, resolve, reject));
 	},
 	async post(path, param = {}) {
-		const option = {
+		const options = {
 			method: 'post',
 			mode: 'same-origin',
 			credentials: 'include',
@@ -55,15 +64,19 @@ const appApi = {
 			}
 
 			if (isExistsFile) {
-				option.headers['Content-Type'] = 'multipart/form-data;charset=UTF-8';
-				option.body = param;
+				options.headers['Content-Type'] = 'multipart/form-data;charset=UTF-8';
+				options.body = param;
 			} else {
-				option.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-				option.body = new URLSearchParams(param);
+				options.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+				options.body = new URLSearchParams(param);
 			}
 		}
 
-		const data = await fetch(`${BASE_URL}${path}`, option);
+		if (!isEmpty(getCookie(AUCCESS_TOKEN))) {
+			options.headers['Authroization'] = `Bearer ${getCookie(AUCCESS_TOKEN)}`;
+		}
+
+		const data = await fetch(`${BASE_URL}${path}`, options);
 
 		return new Promise((resolve, reject) => fetchFunc(path, data, resolve, reject));
 	},

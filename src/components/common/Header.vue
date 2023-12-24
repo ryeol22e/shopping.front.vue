@@ -68,8 +68,6 @@
 	};
 	const logout = async () => {
 		await useMember.logoutProcess();
-
-		location.href = '/';
 		checkMobileHeader();
 	};
 	const closeHeader = () => checkMobileHeader();

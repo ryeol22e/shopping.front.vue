@@ -38,17 +38,18 @@
 	});
 	const loginProcess = async () => {
 		if (validate()) {
-			await storeMember.loginProcess(new FormData(document.getElementById('loginForm')));
+			await storeMember.loginProcess(new FormData(document.getElementById('loginForm'))).then(() => {
+				if (isLogin.value) {
+					if (remember) {
+						localStorage.setItem('memberId', encodeURIComponent(data.memberId));
+					}
 
-			if (isLogin.value) {
-				if (remember) {
-					localStorage.setItem('memberId', encodeURIComponent(data.memberId));
+					location.href = '/';
+				} else {
+					alert('로그인에 실패했습니다.');
+					reloadPage();
 				}
-				location.href = '/';
-			} else {
-				alert('로그인에 실패했습니다.');
-				reloadPage();
-			}
+			});
 		}
 	};
 	const validate = () => {

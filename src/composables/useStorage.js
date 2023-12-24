@@ -1,9 +1,9 @@
-import { useUtils } from './useUtils';
-
-const { isEmpty } = useUtils();
+import useUtils from './useUtils';
 
 ('use strict');
 export default () => {
+	const { isEmpty } = useUtils();
+
 	/**
 	 * 쿠키함수
 	 */
@@ -17,15 +17,10 @@ export default () => {
 			const object = {};
 
 			list.forEach((item) => {
-				const regex = /^[^{|^\[]*[a-zA-Z|ㄱ-ㅎ가-힣][^}|^\]]*$/gi;
 				const key = item.substring(0, item.indexOf('='));
 				const value = decodeURIComponent(item.substring(item.indexOf('=') + 1, item.length)).replace(/\s|\t|\n/gi, '');
 
-				try {
-					object[key] = regex.test(value) ? value : JSON.parse(value);
-				} catch (error) {
-					object[key] = value;
-				}
+				object[key] = !isEmpty(value) ? JSON.parse(value) : null;
 			});
 
 			return object;
@@ -87,7 +82,8 @@ export default () => {
 				throw 'parameter is not String.';
 			}
 
-			document.cookie = `${key}=;expires=${new Date('1970/01/01').toUTCString()};domain=${location.origin}; path=/;`;
+			document.cookie = `${key}=;expires=${new Date('1970/01/01').toUTCString()}; path=/;`;
+			console.log(document.cookie);
 		};
 
 		return {
@@ -104,17 +100,9 @@ export default () => {
 		const setItem = (key, value) => sessionStorage.setItem(key, encodeURIComponent(JSON.stringify(value)));
 		const removeItem = (key) => sessionStorage.removeItem(key);
 		const getItem = (key) => {
-			const regex = /^[^{|^\[]*[a-zA-Z|ㄱ-ㅎ가-힣][^}|^\]]*$/gi;
-			const value = decodeURIComponent(sessionStorage.getItem(key));
-			let resultValue = null;
+			const value = JSON.parse(decodeURIComponent(sessionStorage.getItem(key)));
 
-			try {
-				resultValue = regex.test(value) ? value : JSON.parse(value);
-			} catch (error) {
-				resultValue = value;
-			}
-
-			return resultValue || null;
+			return !isEmpty(value) ? value : null;
 		};
 
 		return {
@@ -131,17 +119,9 @@ export default () => {
 		const setItem = (key, value) => localStorage.setItem(key, encodeURIComponent(JSON.stringify(value)));
 		const removeItem = (key) => localStorage.removeItem(key);
 		const getItem = (key) => {
-			const regex = /^[^{|^\[]*[a-zA-Z|ㄱ-ㅎ가-힣][^}|^\]]*$/gi;
-			const value = decodeURIComponent(localStorage.getItem(key));
-			let resultValue = null;
+			const value = JSON.parse(decodeURIComponent(sessionStorage.getItem(key)));
 
-			try {
-				resultValue = regex.test(value) ? value : JSON.parse(value);
-			} catch (error) {
-				resultValue = value;
-			}
-
-			return resultValue || null;
+			return !isEmpty(value) ? value : null;
 		};
 
 		return {
