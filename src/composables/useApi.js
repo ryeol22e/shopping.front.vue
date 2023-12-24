@@ -1,8 +1,7 @@
 import { usePageLink } from '@/composables/usePageLink';
+import { useStorage } from '@/composables/useStorage';
+import { useUtils } from '@/composables/useUtils';
 import { stringify } from 'qs';
-
-import useUtils from '@/composables/useUtils';
-import useStorage from '@/composables/useStorage';
 
 const AUCCESS_TOKEN = 'AUCCESS_TOKEN';
 const { isEmpty } = useUtils();
@@ -82,4 +81,4 @@ const appApi = {
 	},
 };
 
-export default () => ({ appApi });
+export const useApi = () => ({ appApi });

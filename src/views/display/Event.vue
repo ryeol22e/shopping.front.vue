@@ -6,6 +6,7 @@
 
 <script setup>
 	import DisplayHeader from '@/components/display/DisplayHeader.vue';
+
 	import { usePageLink } from '@/composables/usePageLink';
 	import { useStoreProduct } from '@/stores/useStoreProduct';
 

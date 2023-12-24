@@ -1,9 +1,9 @@
-'use strict';
-import useUtils from './useUtils';
+import { useUtils } from './useUtils';
 
 const { isEmpty, hasObjectProperty } = useUtils();
 
-export default () => {
+('use strict');
+export const useHttp = () => {
 	const cookie = () => {
 		/**
 		 * document.cookie object로 convert

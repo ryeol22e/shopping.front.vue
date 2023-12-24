@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-	import useUtils from '@/composables/useUtils';
+	import { useUtils } from '@/composables/useUtils';
 
 	const { isEmpty, numberComma } = useUtils();
 	const props = defineProps({

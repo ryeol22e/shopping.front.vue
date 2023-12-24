@@ -42,9 +42,10 @@
 
 <script setup>
 	import Mypage from '@/components/common/Mypage.vue';
+
 	import { useDeviceManager } from '@/composables/useDeviceManager';
-	import useEnum from '@/composables/useEnum';
-	import useLoginManager from '@/composables/useLoginManager';
+	import { useEnum } from '@/composables/useEnum';
+	import { useLoginManager } from '@/composables/useLoginManager';
 	import { useStoreCommon } from '@/stores/useStoreCommon';
 	import { useStoreMember } from '@/stores/useStoreMember';
 	import { computed, ref } from 'vue';

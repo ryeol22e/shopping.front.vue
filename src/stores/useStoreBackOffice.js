@@ -1,5 +1,5 @@
-import useApi from '@/composables/useApi';
-import router from '@/router/index';
+import { useApi } from '@/composables/useApi';
+import { reloadPage } from '@/composables/usePageLink';
 import { defineStore } from 'pinia';
 
 export const useStoreBo = () => {
@@ -19,7 +19,7 @@ export const useStoreBo = () => {
 
 						if (result) {
 							alert('저장완료되었습니다.');
-							router.go();
+							reloadPage();
 						}
 					})
 					.catch((error) => console.log(error));

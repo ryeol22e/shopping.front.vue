@@ -1,4 +1,4 @@
-export default () => {
+export const useEnum = () => {
 	const MEMBER_CONST = {
 		ADMIN: '10003',
 		MEMBER: '10000',

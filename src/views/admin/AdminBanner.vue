@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-	import useUtils from '@/composables/useUtils';
+	import { useUtils } from '@/composables/useUtils';
 	import { useStoreBo } from '@/stores/useStoreBackOffice';
 	import { reactive } from 'vue';
 

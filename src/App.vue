@@ -19,12 +19,12 @@
 <script setup>
 	import Loading from '@/components/common/Loading.vue';
 	import Gnb from '@/layouts/Gnb.vue';
-	import useMetaTag from './composables/useMetaTag';
 
 	import { usePageLink } from '@/composables/usePageLink';
 	import { computed, onErrorCaptured } from 'vue';
 	import { useMeta } from 'vue-meta';
 	import { useRoute } from 'vue-router';
+	import { useMetaTag } from './composables/useMetaTag';
 	import { useStoreCommon } from './stores/useStoreCommon';
 
 	const route = useRoute();
@@ -37,8 +37,8 @@
 		codeDepth: '1',
 		useYn: 'Y',
 	});
-	const meta = computed(() => getMetaInfo(route));
-	useMeta(meta);
+
+	useMeta(computed(() => getMetaInfo(route)));
 
 	onErrorCaptured((error) => errorPage(500));
 </script>

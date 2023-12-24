@@ -22,7 +22,7 @@
 
 <script setup>
 	import { usePageLink } from '@/composables/usePageLink';
-	import useUtils from '@/composables/useUtils';
+	import { useUtils } from '@/composables/useUtils';
 	import { useStoreMember } from '@/stores/useStoreMember';
 	import { computed, onMounted, reactive, ref } from 'vue';
 

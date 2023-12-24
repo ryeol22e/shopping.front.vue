@@ -1,11 +1,10 @@
-import useEnum from './useEnum';
-
 import { useStoreMember } from '@/stores/useStoreMember';
 import { computed } from 'vue';
+import { useEnum } from './useEnum';
 
 const { MEMBER_CONST } = useEnum();
 
-export default () => {
+export const useLoginManager = () => {
 	const storeMember = useStoreMember();
 
 	const isLogin = computed(() => storeMember.getIsLogin);

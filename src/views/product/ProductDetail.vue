@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-	import useUtils from '@/composables/useUtils';
+	import { useUtils } from '@/composables/useUtils';
 	import { useStoreProduct } from '@/stores/useStoreProduct';
 	import { computed, onMounted } from 'vue';
 	import { useRoute } from 'vue-router';

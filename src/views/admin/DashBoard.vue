@@ -148,8 +148,8 @@
 </template>
 
 <script setup>
+	import { useCommonFunc } from '@/composables/useCommonFunc';
 	import { onMounted } from 'vue';
-	import useCommonFunc from '@/composables/useCommonFunc';
 
 	const { dashboard } = useCommonFunc();
 

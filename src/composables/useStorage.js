@@ -1,7 +1,7 @@
-import useUtils from './useUtils';
+import { useUtils } from './useUtils';
 
 ('use strict');
-export default () => {
+export const useStorage = () => {
 	const { isEmpty } = useUtils();
 
 	/**

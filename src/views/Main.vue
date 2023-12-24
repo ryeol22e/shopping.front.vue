@@ -79,7 +79,7 @@
 </template>
 
 <script setup>
-	import useUtils from '@/composables/useUtils';
+	import { useUtils } from '@/composables/useUtils';
 	import { useStoreMain } from '@/stores/useStoreMain';
 	import { computed, onMounted } from 'vue';
 

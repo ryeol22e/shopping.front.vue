@@ -1,4 +1,4 @@
-import useApi from '@/composables/useApi';
+import { useApi } from '@/composables/useApi';
 import { defineStore } from 'pinia';
 
 export const useStoreProduct = () => {

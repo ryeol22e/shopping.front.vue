@@ -1,6 +1,6 @@
-import useApi from '@/composables/useApi';
-import useEnum from '@/composables/useEnum';
-import useStorage from '@/composables/useStorage';
+import { useApi } from '@/composables/useApi';
+import { useEnum } from '@/composables/useEnum';
+import { useStorage } from '@/composables/useStorage';
 import { defineStore } from 'pinia';
 
 export const useStoreMember = () => {
@@ -58,7 +58,7 @@ export const useStoreMember = () => {
 				this.isInfoSet = true;
 			},
 			async logoutProcess() {
-				deleteCookie('token');
+				deleteCookie('AUCCESS_TOKEN');
 				location.href = '/';
 			},
 			async signUpProcess(param) {

@@ -1,6 +1,6 @@
-import useLoginManager from '@/composables/useLoginManager';
-import useCommonFunc from './useCommonFunc';
-import useUtils from './useUtils';
+import { useLoginManager } from '@/composables/useLoginManager';
+import { useCommonFunc } from './useCommonFunc';
+import { useUtils } from './useUtils';
 
 import { useStoreMember } from '@/stores/useStoreMember';
 

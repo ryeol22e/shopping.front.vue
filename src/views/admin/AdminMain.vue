@@ -8,9 +8,10 @@
 </template>
 
 <script setup>
-	import { onMounted, computed } from 'vue';
 	import Lnb from '@/components/common/Lnb.vue';
+
 	import { useStoreCommon } from '@/stores/useStoreCommon';
+	import { computed, onMounted } from 'vue';
 
 	const useCommon = useStoreCommon();
 	const menuList = computed(() => useCommon.getAdminLnb);

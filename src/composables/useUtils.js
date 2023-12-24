@@ -1,5 +1,5 @@
 'use strict';
-export default () => {
+export const useUtils = () => {
 	/**
 	 * 숫자 자릿수찍기
 	 * useNumberComma(data)

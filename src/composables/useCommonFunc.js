@@ -1,4 +1,4 @@
-export default () => {
+export const useCommonFunc = () => {
 	const dashboard = () => {
 		feather.replace({ 'aria-hidden': 'true' });
 

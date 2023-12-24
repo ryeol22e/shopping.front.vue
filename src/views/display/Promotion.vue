@@ -8,6 +8,7 @@
 <script setup>
 	import DisplayHeader from '@/components/display/DisplayHeader.vue';
 	import ProductList from '@/components/display/ProductList.vue';
+
 	import { usePageLink } from '@/composables/usePageLink';
 	import { useStoreProduct } from '@/stores/useStoreProduct';
 

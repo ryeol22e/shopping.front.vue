@@ -3,7 +3,7 @@ import { useUtils } from './useUtils';
 const { numberAddZero, isEmpty } = useUtils();
 
 ('use strict');
-export default () => {
+export const useDate = () => {
 	/**
 	 * 오늘 날짜랑 파라메터랑 diff
 	 * @param {*} data

@@ -1,4 +1,4 @@
-import useUtils from './useUtils';
+import { useUtils } from './useUtils';
 
 {
 	/* <meta property="og:type" content="website">
@@ -20,7 +20,7 @@ import useUtils from './useUtils';
 		<meta property="al:android:package" content="" /> 
 		<meta property="al:web:url" content="" /> */
 }
-export default () => ({
+export const useMetaTag = () => ({
 	getMetaInfo(to = {}) {
 		const { isEmpty, hasObjectProperty } = useUtils();
 
