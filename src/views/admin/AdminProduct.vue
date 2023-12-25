@@ -30,7 +30,7 @@
 		</div>
 		<div class="input-group mb-3">
 			<span class="input-group-text">이미지</span>
-			<input @change="imageUpload" id="fileUpload" name="fileUpload" class="form-control" type="file" multiple />
+			<input type="file" @change="imageUpload" id="fileUpload" name="fileUpload" class="form-control" multiple />
 		</div>
 		<div id="dropBox" style="width: 800px; height: 300px; border: 1px solid skyblue"></div>
 		<div class="input-group mb-3">
@@ -120,6 +120,6 @@
 			useYn: 'Y',
 			dispYn: 'Y',
 		});
-		excuteFileUpload();
+		// excuteFileUpload();
 	});
 </script>

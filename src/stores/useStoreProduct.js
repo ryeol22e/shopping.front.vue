@@ -43,7 +43,7 @@ export const useStoreProduct = () => {
 			async setProductData(data) {
 				const prdtNo = data.get('prdtNo');
 				await appApi
-					.uploadFile(`/product/${prdtNo}`, data)
+					.post(`/product/${prdtNo}`, data)
 					.then((res) => (this.saveProductResult = res.data || false))
 					.catch((error) => console.log(error));
 			},

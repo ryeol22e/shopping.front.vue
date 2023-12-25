@@ -68,6 +68,28 @@ export const useUtils = () => {
 						bool = false;
 					}
 					break;
+				case FileList:
+					if (data.length > 0) {
+						let check = false;
+
+						for (const file of data) {
+							if (isEmpty(file)) {
+								check = true;
+								break;
+							}
+						}
+
+						bool = check;
+					}
+					break;
+				case File:
+					const fileName = String(data.name).replace(/[\s|\t]/gi, '');
+					const fileSize = data.size;
+
+					if (fileName !== 'null' && fileName.length > 0 && fileSize > 0) {
+						bool = false;
+					}
+					break;
 				case Date:
 					bool = false;
 					break;
@@ -179,7 +201,9 @@ export const useUtils = () => {
 			const key = keyList[i];
 			const value = data[key];
 
-			form.append(key, value);
+			if (!isEmpty(value)) {
+				form.append(key, value);
+			}
 		}
 
 		return form;

@@ -30,10 +30,9 @@ const appApi = {
 			mode: 'same-origin',
 			credentials: 'include',
 			cache: 'default',
-			headers: {
-				'Content-Type': 'application/json;charset=UTF-8',
-			},
+			headers: {},
 		};
+
 		if (!isEmpty(token)) {
 			options.headers['Authorization'] = `Bearer ${token}`;
 		}
@@ -48,37 +47,18 @@ const appApi = {
 			mode: 'same-origin',
 			credentials: 'include',
 			cache: 'default',
-			headers: {
-				'Content-Type': 'application/json;charset=UTF-8',
-			},
+			headers: {},
 			body: JSON.stringify(param),
 		};
 
 		if (param.constructor === FormData) {
-			let isExistsFile = false;
-
-			for (const key of param.keys()) {
-				const value = param.get(key);
-
-				if (value.constructor === FileList || value.constructor === File) {
-					isExistsFile = true;
-					break;
-				}
-			}
-
-			if (isExistsFile) {
-				options.headers['Content-Type'] = 'multipart/form-data;charset=UTF-8';
-				options.body = param;
-			} else {
-				options.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-				options.body = new URLSearchParams(param);
-			}
+			options.body = param;
 		}
 
 		if (!isEmpty(token)) {
 			options.headers['Authorization'] = `Bearer ${token}`;
 		}
-		console.log(options);
+
 		const data = await fetch(`${BASE_URL}${path}`, options);
 
 		return new Promise((resolve, reject) => fetchFunc(path, data, resolve, reject));
