@@ -45,7 +45,7 @@ export const useStoreMember = () => {
 					.then((res) => {
 						const data = res.data;
 						this.isLogin = data.isLogin;
-						setCookie('AUCCESS_TOKEN', data.token);
+						setCookie('ACCESS_TOKEN', data.token);
 					})
 					.catch((error) => console.log(error));
 			},
@@ -58,7 +58,7 @@ export const useStoreMember = () => {
 				this.isInfoSet = true;
 			},
 			async logoutProcess() {
-				deleteCookie('AUCCESS_TOKEN');
+				deleteCookie('ACCESS_TOKEN');
 				location.href = '/';
 			},
 			async signUpProcess(param) {

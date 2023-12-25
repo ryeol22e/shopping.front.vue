@@ -3,7 +3,7 @@ import { useStorage } from '@/composables/useStorage';
 import { useUtils } from '@/composables/useUtils';
 import { stringify } from 'qs';
 
-const AUCCESS_TOKEN = 'AUCCESS_TOKEN';
+const ACCESS_TOKEN = 'ACCESS_TOKEN';
 const { isEmpty } = useUtils();
 const { appCookie } = useStorage();
 const { getCookie } = appCookie();
@@ -23,6 +23,7 @@ const fetchFunc = async (path, data, resolve, reject) => {
 
 const appApi = {
 	async get(path, param = {}) {
+		const token = getCookie(ACCESS_TOKEN);
 		const queryString = !isEmpty(param) ? `?${stringify(param)}` : '';
 		const options = {
 			method: 'get',
@@ -33,14 +34,15 @@ const appApi = {
 				'Content-Type': 'application/json;charset=UTF-8',
 			},
 		};
-		if (!isEmpty(getCookie(AUCCESS_TOKEN))) {
-			options.headers['Authroization'] = `Bearer ${getCookie(AUCCESS_TOKEN)}`;
+		if (!isEmpty(token)) {
+			options.headers['Authroization'] = `Bearer ${token}`;
 		}
 		const data = await fetch(`${BASE_URL}${path}${queryString}`, options);
 
 		return new Promise((resolve, reject) => fetchFunc(path, data, resolve, reject));
 	},
 	async post(path, param = {}) {
+		const token = getCookie(ACCESS_TOKEN);
 		const options = {
 			method: 'post',
 			mode: 'same-origin',
@@ -56,7 +58,9 @@ const appApi = {
 			let isExistsFile = false;
 
 			for (const key of param.keys()) {
-				if (key.constructor === FileList || key.constructor === File) {
+				const value = param.get(key);
+
+				if (value.constructor === FileList || value.constructor === File) {
 					isExistsFile = true;
 					break;
 				}
@@ -71,8 +75,8 @@ const appApi = {
 			}
 		}
 
-		if (!isEmpty(getCookie(AUCCESS_TOKEN))) {
-			options.headers['Authroization'] = `Bearer ${getCookie(AUCCESS_TOKEN)}`;
+		if (!isEmpty(token)) {
+			options.headers['Authroization'] = `Bearer ${token}`;
 		}
 
 		const data = await fetch(`${BASE_URL}${path}`, options);
