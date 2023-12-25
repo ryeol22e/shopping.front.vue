@@ -35,7 +35,7 @@ const appApi = {
 			},
 		};
 		if (!isEmpty(token)) {
-			options.headers['Authroization'] = `Bearer ${token}`;
+			options.headers['Authorization'] = `Bearer ${token}`;
 		}
 		const data = await fetch(`${BASE_URL}${path}${queryString}`, options);
 
@@ -76,9 +76,9 @@ const appApi = {
 		}
 
 		if (!isEmpty(token)) {
-			options.headers['Authroization'] = `Bearer ${token}`;
+			options.headers['Authorization'] = `Bearer ${token}`;
 		}
-
+		console.log(options);
 		const data = await fetch(`${BASE_URL}${path}`, options);
 
 		return new Promise((resolve, reject) => fetchFunc(path, data, resolve, reject));
