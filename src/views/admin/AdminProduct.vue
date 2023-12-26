@@ -54,7 +54,7 @@
 
 	const { changeToFormData, fileUpload } = useUtils();
 	const { excuteFileUpload } = fileUpload();
-	const { errorPage } = usePageLink();
+	const { reloadPage } = usePageLink();
 	const useProduct = useStoreProduct();
 	const cateList = computed(() => useProduct.getCateList);
 	const data = reactive({
