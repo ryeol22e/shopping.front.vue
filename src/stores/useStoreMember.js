@@ -1,11 +1,8 @@
 import { useApi } from '@/composables/useApi';
 import { useEnum } from '@/composables/useEnum';
-import { useStorage } from '@/composables/useStorage';
 import { defineStore } from 'pinia';
 
 export const useStoreMember = () => {
-	const { appCookie } = useStorage();
-	const { setCookie, deleteCookie } = appCookie();
 	const { MEMBER_CONST } = useEnum();
 	const { appApi } = useApi();
 
@@ -43,9 +40,7 @@ export const useStoreMember = () => {
 				await appApi
 					.post('/member/login', param)
 					.then((res) => {
-						const data = res.data;
-						this.isLogin = data.isLogin;
-						setCookie('ACCESS_TOKEN', data.token);
+						this.isLogin = res;
 					})
 					.catch((error) => console.log(error));
 			},
@@ -58,8 +53,10 @@ export const useStoreMember = () => {
 				this.isInfoSet = true;
 			},
 			async logoutProcess() {
-				deleteCookie('ACCESS_TOKEN');
-				location.href = '/';
+				await appApi
+					.post('/member/logout')
+					.then(() => (location.href = '/'))
+					.catch((error) => console.log(error));
 			},
 			async signUpProcess(param) {
 				await appApi
