@@ -18,10 +18,10 @@ export const useStoreProduct = () => {
 			getPrdtResult: (state) => state.saveProductResult,
 		},
 		actions: {
-			async setList(cateNo) {
+			async setList(params) {
 				await appApi
 					.get(`/display/product/list`, {
-						cateNo: cateNo,
+						...params,
 						useYn: 'Y',
 						dispYn: 'Y',
 					})

@@ -30,9 +30,10 @@
 		</div>
 		<div class="input-group mb-3">
 			<span class="input-group-text">이미지</span>
-			<input type="file" @change="imageUpload" id="fileUpload" name="fileUpload" class="form-control" multiple />
+			<div id="dropBox" class="" style="width: 800px; height: 300px; border: 1px solid skyblue">
+				<input type="file" @change="imageUpload" id="fileUpload" name="fileUpload" class="form-control" multiple />
+			</div>
 		</div>
-		<div id="dropBox" style="width: 800px; height: 300px; border: 1px solid skyblue"></div>
 		<div class="input-group mb-3">
 			<span class="input-group-text">정상가</span>
 			<input v-model="data.normalPrice" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
@@ -53,10 +54,10 @@
 	import { computed, onMounted, reactive, watchEffect } from 'vue';
 
 	const { changeToFormData, fileUpload } = useUtils();
-	const { excuteFileUpload } = fileUpload();
+
 	const { reloadPage } = usePageLink();
-	const useProduct = useStoreProduct();
-	const cateList = computed(() => useProduct.getCateList);
+	const storeProduct = useStoreProduct();
+	const cateList = computed(() => storeProduct.getCateList);
 	const data = reactive({
 		prdtNo: '',
 		prdtName: '',
@@ -96,8 +97,8 @@
 	};
 	const registProduct = async () => {
 		if (dataValidate()) {
-			await useProduct.setProductData(changeToFormData(data));
-			const result = useProduct.getPrdtResult;
+			await storeProduct.setProductData(changeToFormData(data));
+			const result = storeProduct.getPrdtResult;
 
 			if (result) {
 				alert('상품이 등록되었습니다.');
@@ -116,10 +117,13 @@
 		}
 	});
 	onMounted(() => {
-		useProduct.setCateList({
+		const { excuteFileUpload } = fileUpload('', true, 'dropBox');
+
+		storeProduct.setCateList({
 			useYn: 'Y',
 			dispYn: 'Y',
 		});
-		// excuteFileUpload();
+
+		excuteFileUpload();
 	});
 </script>

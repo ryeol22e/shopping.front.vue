@@ -4,10 +4,10 @@
 			<div class="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
 				<div class="my-3 p-3">
 					<h2 class="display-5">{{ product.prdtName }}</h2>
-					<p class="lead">{{ description }}</p>
+					<!-- <p class="lead">{{ description }}</p> -->
 				</div>
 				<div class="bg-body shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0">
-					<img v-if="isEmpty(product.image)" :src="`data:image/png;base64,${product.image}`" :alt="product.prdtName" />
+					<img v-if="isEmpty(product.imageFullPath)" :src="product.imageFullPath" :alt="product.prdtName" />
 					<svg v-else class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
 						<title>Placeholder</title>
 						<rect width="100%" height="100%" fill="#55595c" />
@@ -30,8 +30,9 @@
 	const useProduct = useStoreProduct();
 	const product = computed(() => useProduct.getDetail);
 
-	await useProduct.setDetail(route.params.prdtNo);
 	onMounted(() => {});
+
+	await useProduct.setDetail(route.params.prdtNo);
 </script>
 
 <style scoped>

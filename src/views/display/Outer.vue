@@ -9,15 +9,33 @@
 	import DisplayHeader from '@/components/display/DisplayHeader.vue';
 	import ProductList from '@/components/display/ProductList.vue';
 
-	import { usePageLink } from '@/composables/usePageLink';
 	import { useStoreProduct } from '@/stores/useStoreProduct';
-	import { computed, onMounted } from 'vue';
+	import { computed, onMounted, onUnmounted, ref } from 'vue';
 
-	const { movePage } = usePageLink();
-	const useProduct = useStoreProduct();
-	const list = computed(() => useProduct.getList);
+	const storeProduct = useStoreProduct();
+	const page = ref(1);
+	const reqParam = {
+		cateNo: '1357900002',
+		page: page.value,
+	};
+	const list = computed(() => storeProduct.getList);
+	const morePrdouctList = () => {
+		const scrollPosition = window.scrollY;
+		const windowHeight = window.innerHeight;
+		const fullHeight = document.body.scrollHeight;
 
-	await useProduct.setList('1357900002');
+		if (scrollPosition + windowHeight >= fullHeight) {
+			reqParam.page = ++page.value;
+			storeProduct.setList(reqParam);
+		}
+	};
 
-	onMounted(() => {});
+	onMounted(() => {
+		window.addEventListener('scroll', morePrdouctList);
+	});
+	onUnmounted(() => {
+		window.removeEventListener('scroll', morePrdouctList);
+	});
+
+	await storeProduct.setList(reqParam);
 </script>

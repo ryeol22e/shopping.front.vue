@@ -210,7 +210,7 @@ export const useUtils = () => {
 	};
 
 	/**
-	 * file upload function
+	 * file upload function. used onMounted
 	 * @param {*} url
 	 * @param {*} renderTarget
 	 * @returns
@@ -236,7 +236,7 @@ export const useUtils = () => {
 			if (flag) {
 				for (let i = 0, size = files.length; i < size; i++) {
 					const file = files[i];
-					const extRegex = /html|html|jsp|asp|lnk|exe/gi;
+					const extRegex = /html|zip|jsp|asp|lnk|exe/gi;
 					const fileExt = String(file.name)
 						.substring(file.name.lastIndexOf('.') + 1, file.name.length)
 						.toLocaleLowerCase();
@@ -270,10 +270,10 @@ export const useUtils = () => {
 			let html = '';
 
 			html += `<div id="area_${file.lastModified}">`;
-			html += `   <input type="checkbox" name="fileCheckBox" id="chk_${file.lastModified}" value="${file.lastModified}">`;
+			html += `   <input type="checkbox" name="fileCheckBox" class="form-check-input" id="chk_${file.lastModified}" value="${file.lastModified}">`;
 			html += `   <label for="chk_${file.lastModified}">${file.name}</label>`;
 			html += `	&emsp;&emsp;`;
-			html += `    <span class="fileSize" style="float: right;">${transferDataSize(file.size)}</span>`;
+			html += `   <span class="fileSize" style="float: right;">${transferDataSize(file.size)}</span>`;
 			html += `</div>`;
 
 			dropZone.insertAdjacentHTML('beforeend', html);
@@ -288,6 +288,8 @@ export const useUtils = () => {
 						renderHTML(files[i]);
 					}
 				}
+			} else {
+				inputFile.value = null;
 			}
 		};
 		const uploadFile = (e) => {
@@ -308,7 +310,7 @@ export const useUtils = () => {
 		};
 		const sendServerFile = async () => {
 			const fileList = Object.keys(fileObject)
-				.filter((key) => fileObject[key] !== undefined)
+				.filter((key) => !isEmpty(fileObject[key]))
 				.map((key) => fileObject[key]);
 			const formData = new FormData();
 
@@ -341,7 +343,9 @@ export const useUtils = () => {
 
 		const bindEvent = () => {
 			inputFile.addEventListener('change', uploadFile);
-			uploadBtn.addEventListener('click', sendServerFile);
+			if (!isEmpty(sendServerUrl)) {
+				uploadBtn.addEventListener('click', sendServerFile);
+			}
 			deleteBtn.addEventListener('click', deleteFile);
 			dropZone.addEventListener('dragover', dragFile);
 			dropZone.addEventListener('drop', dropFile);
@@ -379,7 +383,7 @@ export const useUtils = () => {
 
 					document.getElementById(renderTarget).insertAdjacentElement('beforeend', dropZone);
 				}
-				if (uploadBtn === null) {
+				if (!isEmpty(sendServerUrl) && uploadBtn === null) {
 					uploadBtn = document.createElement('button');
 					uploadBtn.name = 'uploadBtn';
 					uploadBtn.id = 'uploadBtn';
@@ -391,6 +395,7 @@ export const useUtils = () => {
 					deleteBtn = document.createElement('button');
 					deleteBtn.name = 'deleteBtn';
 					deleteBtn.id = 'deleteBtn';
+					deleteBtn.classList.add('btn', 'btn-secondary');
 					deleteBtn.textContent = '삭제';
 
 					document.getElementById(renderTarget).insertAdjacentElement('beforeend', deleteBtn);
@@ -399,26 +404,13 @@ export const useUtils = () => {
 		};
 
 		return {
-			excuteFileUpload: () =>
+			excuteFileUpload() {
 				Promise.resolve()
 					.then(() => isExcute())
 					.then(() => bindEvent())
-					.catch((error) => console.log(error)),
+					.catch((error) => console.log(error));
+			},
 		};
-	};
-
-	const scrollHandler = (func) => {
-		if (func.constructor === Function) {
-			window.addEventListener('scroll', (e) => {
-				const scrollPosition = window.scrollY;
-				const windowHeight = window.innerHeight;
-				const fullHeight = document.body.scrollHeight;
-
-				if (scrollPosition + windowHeight >= fullHeight) {
-					func();
-				}
-			});
-		}
 	};
 
 	return {
@@ -431,6 +423,5 @@ export const useUtils = () => {
 		windowPosition,
 		numberAddZero,
 		fileUpload,
-		scrollHandler,
 	};
 };
