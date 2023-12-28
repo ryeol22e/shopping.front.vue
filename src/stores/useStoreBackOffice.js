@@ -1,15 +1,19 @@
 import { useApi } from '@/composables/useApi';
-import { reloadPage } from '@/composables/usePageLink';
+import { usePageLink } from '@/composables/usePageLink';
 import { defineStore } from 'pinia';
 
 export const useStoreBo = () => {
 	const { appApi } = useApi();
+	const { reloadPage } = usePageLink();
 
 	return defineStore('useStoreBo', {
 		state: () => ({
 			bannerInfo: {},
+			saveProductResult: false,
 		}),
-		getters: {},
+		getters: {
+			getPrdtResult: (state) => state.saveProductResult,
+		},
 		actions: {
 			registBannerInfo(param) {
 				appApi
@@ -22,6 +26,13 @@ export const useStoreBo = () => {
 							reloadPage();
 						}
 					})
+					.catch((error) => console.log(error));
+			},
+			async setProductData(data) {
+				const prdtNo = data.get('prdtNo');
+				await appApi
+					.post(`/product/${prdtNo}`, data)
+					.then((res) => (this.saveProductResult = res.data || false))
 					.catch((error) => console.log(error));
 			},
 		},

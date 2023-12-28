@@ -50,6 +50,7 @@
 <script setup>
 	import { usePageLink } from '@/composables/usePageLink';
 	import { useUtils } from '@/composables/useUtils';
+	import { useStoreBo } from '@/stores/useStoreBackOffice';
 	import { useStoreProduct } from '@/stores/useStoreProduct';
 	import { computed, onMounted, reactive, watchEffect } from 'vue';
 
@@ -57,6 +58,7 @@
 
 	const { reloadPage } = usePageLink();
 	const storeProduct = useStoreProduct();
+	const storeBo = useStoreBo();
 	const cateList = computed(() => storeProduct.getCateList);
 	const data = reactive({
 		prdtNo: '',
@@ -97,8 +99,8 @@
 	};
 	const registProduct = async () => {
 		if (dataValidate()) {
-			await storeProduct.setProductData(changeToFormData(data));
-			const result = storeProduct.getPrdtResult;
+			await storeBo.setProductData(changeToFormData(data));
+			const result = storeBo.getPrdtResult;
 
 			if (result) {
 				alert('상품이 등록되었습니다.');

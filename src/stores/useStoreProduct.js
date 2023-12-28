@@ -9,13 +9,11 @@ export const useStoreProduct = () => {
 			list: [],
 			detail: {},
 			cateList: [],
-			saveProductResult: false,
 		}),
 		getters: {
 			getList: (state) => state.list,
 			getDetail: (state) => state.detail,
 			getCateList: (state) => state.cateList,
-			getPrdtResult: (state) => state.saveProductResult,
 		},
 		actions: {
 			async setList(params) {
@@ -38,13 +36,6 @@ export const useStoreProduct = () => {
 				await appApi
 					.get(`/cate/list`, param)
 					.then((res) => (this.cateList = res.data))
-					.catch((error) => console.log(error));
-			},
-			async setProductData(data) {
-				const prdtNo = data.get('prdtNo');
-				await appApi
-					.post(`/product/${prdtNo}`, data)
-					.then((res) => (this.saveProductResult = res.data || false))
 					.catch((error) => console.log(error));
 			},
 		},
