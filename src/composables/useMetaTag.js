@@ -75,8 +75,8 @@ export const useMetaTag = () => ({
 		}
 
 		const info = {
-			title: title,
-			description: description,
+			title,
+			description,
 			meta: [
 				{ vmid: 'og:url', name: 'og:url', content: url },
 				{ vmid: 'og:type', name: 'og:type', content: 'website' },
