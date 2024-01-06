@@ -77,19 +77,20 @@ export const useMetaTag = () => ({
 		const info = {
 			title,
 			description,
-			meta: [
-				{ vmid: 'og:url', name: 'og:url', content: url },
-				{ vmid: 'og:type', name: 'og:type', content: 'website' },
-				{ vmid: 'og:title', name: 'og:title', content: title },
-				{ vmid: 'og:description', name: 'og:description', content: description },
-				{ vmid: 'og:image', name: 'og:image', content: metaImage },
-
-				{ vmid: 'twitter:card', name: 'twitter:card', content: 'summary' },
-				{ vmid: 'twitter:url', name: 'twitter:url', content: url },
-				{ vmid: 'twitter:title', name: 'twitter:title', content: title },
-				{ vmid: 'twitter:description', name: 'twitter:description', content: description },
-				{ vmid: 'twitter:image', name: 'twitter:image', content: metaImage },
-			],
+			og: {
+				url,
+				type: 'website',
+				title,
+				description,
+				image: metaImage,
+			},
+			twitter: {
+				card: 'summary',
+				url,
+				title,
+				description,
+				image: metaImage,
+			},
 		};
 
 		return info;
