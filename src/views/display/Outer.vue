@@ -13,6 +13,9 @@
 	import { computed, onMounted, onUnmounted, ref } from 'vue';
 
 	const storeProduct = useStoreProduct();
+
+	let scrollTimer = null;
+	let lastScrollY = 0;
 	const page = ref(1);
 	const reqParam = {
 		cateNo: '1357900002',
@@ -20,13 +23,23 @@
 	};
 	const list = computed(() => storeProduct.getList);
 	const morePrdouctList = () => {
-		const scrollPosition = window.scrollY;
-		const windowHeight = window.innerHeight;
-		const fullHeight = document.body.scrollHeight;
+		const scrollY = window.scrollY;
+		const innerHeight = window.innerHeight;
+		const scrollPosition = scrollY + innerHeight;
+		const bodyHeight = document.body.scrollHeight;
 
-		if (scrollPosition + windowHeight >= fullHeight) {
-			reqParam.page = ++page.value;
-			storeProduct.setList(reqParam);
+		if (scrollY > lastScrollY) {
+			if (scrollPosition >= bodyHeight) {
+				if (scrollTimer !== null) {
+					clearTimeout(scrollTimer);
+				}
+				scrollTimer = setTimeout(() => {
+					reqParam.page = ++page.value;
+					storeProduct.setList(reqParam);
+
+					lastScrollY = scrollY;
+				}, 500);
+			}
 		}
 	};
 

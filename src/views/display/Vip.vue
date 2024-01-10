@@ -5,5 +5,7 @@
 <script setup>
 	import { onMounted } from 'vue';
 
+	let scrollTimer = null;
+	let lastScrollY = 0;
 	onMounted(() => {});
 </script>
