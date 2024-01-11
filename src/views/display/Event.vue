@@ -37,7 +37,7 @@
 					storeProduct.setList(reqParam);
 
 					lastScrollY = scrollY;
-				}, 500);
+				}, 50);
 			}
 		}
 	};
