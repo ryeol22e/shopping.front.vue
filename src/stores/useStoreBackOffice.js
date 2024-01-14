@@ -31,7 +31,7 @@ export const useStoreBo = () => {
 			async setProductData(data) {
 				const prdtNo = data.get('prdtNo');
 				await appApi
-					.post(`/product/${prdtNo}`, data)
+					.post(`/admin/product/${prdtNo}`, data)
 					.then((res) => (this.saveProductResult = res.data || false))
 					.catch((error) => console.log(error));
 			},

@@ -1,7 +1,8 @@
 import { useUtils } from './useUtils';
 
 {
-	/* <meta property="og:type" content="website">
+	/* 
+		<meta property="og:type" content="website">
 		<meta property="og:url" content="">
 		<meta property="og:title" content="">
 		<meta property="og:image" content="">
@@ -18,7 +19,8 @@ import { useUtils } from './useUtils';
 		<meta property="al:android:url" content="" />
 		<meta property="al:android:app_name" content="" />
 		<meta property="al:android:package" content="" /> 
-		<meta property="al:web:url" content="" /> */
+		<meta property="al:web:url" content="" />
+	*/
 }
 export const useMetaTag = () => ({
 	getMetaInfo(to = {}) {
@@ -91,6 +93,7 @@ export const useMetaTag = () => ({
 				description,
 				image: metaImage,
 			},
+			meta: [{ vmid: 'al:web:url', name: 'al:web:url', content: url }],
 		};
 
 		return info;

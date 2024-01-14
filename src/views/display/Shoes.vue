@@ -16,11 +16,11 @@
 
 	let scrollTimer = null;
 	let lastScrollY = 0;
-	const page = ref(1);
 	const reqParam = {
 		cateNo: '1357900004',
-		page: page.value,
+		lastPrdtNo: null,
 	};
+	const lastPrdtNo = computed(() => storeProduct.getLastPrdtNo);
 	const list = computed(() => storeProduct.getList);
 	const morePrdouctList = () => {
 		const scrollY = window.scrollY;
@@ -34,8 +34,8 @@
 					clearTimeout(scrollTimer);
 				}
 				scrollTimer = setTimeout(() => {
-					reqParam.page = ++page.value;
-					storeProduct.setList(reqParam);
+					reqParam.lastPrdtNo = lastPrdtNo.value;
+					storeProduct.addList(reqParam);
 
 					lastScrollY = scrollY;
 				}, 50);

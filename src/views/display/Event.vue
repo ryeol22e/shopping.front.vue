@@ -6,20 +6,19 @@
 
 <script setup>
 	import DisplayHeader from '@/components/display/DisplayHeader.vue';
-	import ProductList from '@/components/display/ProductList.vue';
 
 	import { useStoreProduct } from '@/stores/useStoreProduct';
-	import { computed, onMounted, onUnmounted, ref } from 'vue';
+	import { computed, onMounted, onUnmounted } from 'vue';
 
 	const storeProduct = useStoreProduct();
 
 	let scrollTimer = null;
 	let lastScrollY = 0;
-	const page = ref(1);
 	const reqParam = {
 		cateNo: '1357900005',
-		page: page.value,
+		lastPrdtNo: null,
 	};
+	const lastPrdtNo = computed(() => storeProduct.getLastPrdtNo);
 	const list = computed(() => storeProduct.getList);
 	const morePrdouctList = () => {
 		const scrollY = window.scrollY;
@@ -33,8 +32,8 @@
 					clearTimeout(scrollTimer);
 				}
 				scrollTimer = setTimeout(() => {
-					reqParam.page = ++page.value;
-					storeProduct.setList(reqParam);
+					reqParam.lastPrdtNo = lastPrdtNo.value;
+					storeProduct.addList(reqParam);
 
 					lastScrollY = scrollY;
 				}, 50);
