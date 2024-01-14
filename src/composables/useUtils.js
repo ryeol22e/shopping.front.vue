@@ -54,6 +54,7 @@ export const useUtils = () => {
 			switch (data.constructor) {
 				case String:
 					const str = data.replace(/[\s|\t]/gi, '');
+
 					if (str !== 'null' && str.length > 0) {
 						bool = false;
 					}
@@ -210,7 +211,7 @@ export const useUtils = () => {
 	};
 
 	/**
-	 * file upload function. used onMounted
+	 * file upload function(onMounted)
 	 * @param {*} url
 	 * @param {*} renderTarget
 	 * @returns

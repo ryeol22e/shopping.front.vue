@@ -23,7 +23,7 @@
 						</li>
 					</ul>
 
-					<div :class="isMobile ? '' : 'text-end'">
+					<div>
 						<RouterLink v-if="!isLogin" to="/login" @click="closeHeader" class="px-2 text-secondary text-white"><span>Login</span></RouterLink>
 						<a v-else @click="mypageOpen" href="javascript:void(0);" class="px-2 text-secondary text-white" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Mypage</a>
 						<a class="text-white">·</a>
@@ -48,7 +48,7 @@
 	import { useLoginManager } from '@/composables/useLoginManager';
 	import { useStoreCommon } from '@/stores/useStoreCommon';
 	import { useStoreMember } from '@/stores/useStoreMember';
-	import { computed, ref } from 'vue';
+	import { computed, nextTick, ref } from 'vue';
 	import { RouterLink } from 'vue-router';
 
 	const { isLogin, userRole } = useLoginManager();
@@ -60,22 +60,25 @@
 	const mypageIsShow = ref(false);
 	const headers = computed(() => storeCommon.getHeaders);
 
-	const checkMobileHeader = () => {
-		if (isMobile.value) {
-			if (document.getElementById('nav-item-div').classList.contains('show')) {
-				document.getElementById('nav-item-div').classList.remove('show');
-			}
-		}
-	};
 	const logout = async () => {
-		await useMember.logoutProcess();
-		checkMobileHeader();
+		await useMember.logoutProcess().then(() => {
+			closeHeader();
+		});
 	};
-	const closeHeader = () => checkMobileHeader();
+	const closeHeader = () => {
+		nextTick(() => {
+			if (isMobile.value) {
+				if (document.getElementById('nav-item-div').classList.contains('show')) {
+					document.getElementById('nav-item-div').classList.remove('show');
+				}
+			}
+		});
+	};
 	const mypageOpen = async () => {
-		await storeCommon.setMypageList();
-		mypageIsShow.value = true;
-		checkMobileHeader();
+		await storeCommon.setMypageList().then(() => {
+			closeHeader();
+			mypageIsShow.value = true;
+		});
 	};
 </script>
 

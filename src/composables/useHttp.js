@@ -14,14 +14,13 @@ export const useHttp = () => {
 			const object = {};
 
 			list.forEach((item) => {
-				const objectRex = /{|}/gi;
 				const key = item.substring(0, item.indexOf('='));
 				const value = decodeURIComponent(item.substring(item.indexOf('=') + 1, item.length)) || null;
 
-				if (!isEmpty(value) && objectRex.test(value)) {
-					object[key] = JSON.parse(value);
-				} else {
-					object[key] = value;
+				try {
+					object[key] = !isEmpty(value) ? JSON.parse(value) : null;
+				} catch (error) {
+					object[key] = !isEmpty(value) ? value : null;
 				}
 			});
 

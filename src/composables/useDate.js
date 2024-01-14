@@ -118,7 +118,7 @@ export const useDate = () => {
 	};
 
 	/**
-	 * 날짜 카운트다운
+	 * 날짜 카운트다운(onMounted)
 	 */
 	const dateCountDown = () => {
 		const elementList = [...document.getElementsByClassName('count-down')];
@@ -193,7 +193,7 @@ export const useDate = () => {
 	};
 
 	/**
-	 * 시간 카운트업
+	 * 시간 카운트업(onMounted)
 	 */
 	const timeCountUp = () => {
 		const elementList = [...document.getElementsByClassName('count-up')];
