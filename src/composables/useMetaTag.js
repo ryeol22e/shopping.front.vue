@@ -1,4 +1,6 @@
+import { useStoreProduct } from '@/stores/useStoreProduct';
 import { useUtils } from './useUtils';
+import { computed } from 'vue';
 
 {
 	/* 
@@ -70,6 +72,13 @@ export const useMetaTag = () => ({
 						title = 'vip room';
 						description = 'here is only you.';
 						break;
+					case 'productdetail':
+						const detail = useStoreProduct().getDetail;
+						const image = detail.imageFullPath;
+
+						if (!isEmpty(image)) {
+							metaImage = image;
+						}
 					default:
 						break;
 				}

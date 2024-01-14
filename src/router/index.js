@@ -41,8 +41,8 @@ const router = createRouter({
 	},
 });
 
-router.beforeEach((to, from, next) => {
-	loginProcess(to) ? next() : next('/login');
+router.beforeEach(async (to, from, next) => {
+	(await loginProcess(to)) ? next() : next('/login');
 });
 
 router.afterEach((to, from) => {
