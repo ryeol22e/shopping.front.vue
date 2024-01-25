@@ -1,75 +1,79 @@
 import { useApi } from '@/composables/useApi';
 import { useEnum } from '@/composables/useEnum';
 import { defineStore } from 'pinia';
+import { computed, ref } from 'vue';
 
-export const useStoreMember = () => {
+export const useStoreMember = defineStore('useStoreMember', () => {
 	const { MEMBER_CONST } = useEnum();
-	const { appApi } = useApi();
+	const { fetchGet, fetchPost } = useApi();
 
-	return defineStore('useStoreMember', {
-		state: () => ({
-			isLogin: false,
-			isInfoSet: false,
-			userInfo: {
-				memberId: '',
-				memberName: '',
-				memberRole: MEMBER_CONST.ANONYMOUS,
-			},
-			signUpResult: false,
-			authNumber: '',
-		}),
-		getters: {
-			getIsLogin: (state) => state.isLogin,
-			getUserInfo: (state) => state.userInfo,
-			getSignUpResult: (state) => state.signUpResult,
-			getAuthNumber: (state) => state.authNumber,
-		},
-		actions: {
-			async authCheck() {
-				await appApi
-					.get('/auth/check')
-					.then((res) => (this.isLogin = res.data))
-					.then(async (isLogin) => {
-						if (isLogin && !this.isInfoSet) {
-							await this.setMemberInfo();
-						}
-					})
-					.catch((error) => console.log(error));
-			},
-			async loginProcess(param) {
-				await appApi
-					.post('/member/login', param)
-					.then((res) => {
-						this.isLogin = res;
-					})
-					.catch((error) => console.log(error));
-			},
-			async setMemberInfo() {
-				await appApi
-					.get('/member/info')
-					.then((res) => (this.userInfo = res.data))
-					.catch((error) => console.log(error));
+	const login = ref(false);
+	const infoSet = ref(false);
+	const signUpResult = ref(false);
+	const authNumber = ref('');
+	const userInfo = ref({
+		memberId: '',
+		memberName: '',
+		memberRole: MEMBER_CONST.ANONYMOUS,
+	});
 
-				this.isInfoSet = true;
-			},
-			async logoutProcess() {
-				await appApi
-					.post('/member/logout')
-					.then(() => (location.href = '/'))
-					.catch((error) => console.log(error));
-			},
-			async signUpProcess(param) {
-				await appApi
-					.post('/member/join', param)
-					.then((res) => (this.signUpResult = res.data))
-					.catch((error) => console.log(error));
-			},
-			async setAuthNumber(param) {
-				await appApi
-					.post('/member/auth/number', param)
-					.then((res) => (this.authNumber = res.data))
-					.catch((error) => console.log(error));
-			},
-		},
-	})();
-};
+	const isLogin = computed(() => login.value);
+	const getUserInfo = computed(() => userInfo.value);
+	const isSignUpresult = computed(() => signUpResult.value);
+	const getAuthNumber = computed(() => authNumber.value);
+
+	const authCheck = async () => {
+		await fetchGet('/auth/check')
+			.then((res) => (login.value = res.data))
+			.then(async (loginBool) => {
+				console.log(loginBool);
+				if (loginBool && !infoSet.value) {
+					await setMemberInfo();
+				}
+			})
+			.catch((error) => console.log(error));
+	};
+	const loginProcess = async (param) => {
+		await fetchPost('/member/login', param)
+			.then((res) => {
+				login.value = res;
+			})
+			.catch((error) => console.log(error));
+	};
+	const setMemberInfo = async () => {
+		await fetchGet('/member/info')
+			.then((res) => {
+				userInfo.value = res.data;
+				infoSet.value = true;
+			})
+			.catch((error) => console.log(error));
+	};
+	const logoutProcess = async () => {
+		await fetchPost('/member/logout')
+			.then(() => (location.href = '/'))
+			.catch((error) => console.log(error));
+	};
+	const signUpProcess = async (param) => {
+		await fetchPost('/member/join', param)
+			.then((res) => (signUpResult.value = res.data))
+			.catch((error) => console.log(error));
+	};
+	const setAuthNumber = async (param) => {
+		await fetchPost('/member/auth/number', param)
+			.then((res) => (authNumber.value = res.data))
+			.catch((error) => console.log(error));
+	};
+
+	return {
+		isLogin,
+		isSignUpresult,
+		getUserInfo,
+		getAuthNumber,
+		authCheck,
+		loginProcess,
+		setMemberInfo,
+		logoutProcess,
+		signUpProcess,
+		setAuthNumber,
+	};
+});

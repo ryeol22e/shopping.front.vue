@@ -1,15 +1,25 @@
 import vue from '@vitejs/plugin-vue';
 import fs from 'node:fs';
+
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig, loadEnv } from 'vite';
+import { quasar, transformAssetUrls } from '@quasar/vite-plugin';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, `${process.cwd()}/env`, '');
+	console.log(process.cwd());
 	const active = env.VITE_PROFILE_ACTIVE;
 	const config = {
 		envDir: './env',
-		plugins: [vue()],
+		plugins: [
+			vue({
+				template: { transformAssetUrls },
+			}),
+			quasar({
+				sassVariables: './src/assets/sass/quasar-variables.sass',
+			}),
+		],
 		resolve: {
 			alias: {
 				'@': fileURLToPath(new URL('./src', import.meta.url)),

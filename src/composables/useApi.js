@@ -2,27 +2,27 @@ import { usePageLink } from '@/composables/usePageLink';
 import { useUtils } from '@/composables/useUtils';
 import { stringify } from 'qs';
 
-const { isEmpty } = useUtils();
-const { errorPage } = usePageLink();
+('use strict');
+export const useApi = () => {
+	const BASE_URL = '/api';
+	const { isEmpty } = useUtils();
+	const { errorPage } = usePageLink();
 
-const BASE_URL = '/api';
-const fetchFunc = async (path, res, resolve, reject) => {
-	if (res.status === 200) {
-		try {
-			resolve({ data: await res.json() });
-		} catch (error) {
-			resolve({ data: null });
+	const fetchFunc = async (path, res, resolve, reject) => {
+		if (res.status === 200) {
+			try {
+				resolve({ data: await res.json() });
+			} catch (error) {
+				resolve({ data: null });
+			}
+		} else {
+			reject({ ...res, path });
+			if (!path.includes('login') && !path.includes('join') && !path.includes('logout')) {
+				errorPage(500);
+			}
 		}
-	} else {
-		reject({ ...res, path });
-		if (!path.includes('login') && !path.includes('join') && !path.includes('logout')) {
-			errorPage(500);
-		}
-	}
-};
-
-const appApi = {
-	async get(path, param = {}) {
+	};
+	const fetchGet = async (path, param = {}) => {
 		const queryString = !isEmpty(param) ? `?${stringify(param)}` : '';
 		const options = {
 			method: 'get',
@@ -35,8 +35,9 @@ const appApi = {
 		const res = await fetch(`${BASE_URL}${path}${queryString}`, options);
 
 		return new Promise((resolve, reject) => fetchFunc(path, res, resolve, reject));
-	},
-	async post(path, param = {}) {
+	};
+
+	const fetchPost = async (path, param = {}) => {
 		const options = {
 			method: 'post',
 			mode: 'same-origin',
@@ -54,7 +55,14 @@ const appApi = {
 		const res = await fetch(`${BASE_URL}${path}`, options);
 
 		return new Promise((resolve, reject) => fetchFunc(path, res, resolve, reject));
-	},
-};
+	};
+	const fetchPut = async (path, param = {}) => {};
+	const fetchDelete = async (path, param = {}) => {};
 
-export const useApi = () => ({ appApi });
+	return {
+		fetchGet,
+		fetchPost,
+		fetchPut,
+		fetchDelete,
+	};
+};

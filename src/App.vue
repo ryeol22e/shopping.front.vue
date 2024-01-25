@@ -1,19 +1,25 @@
 <template>
 	<metainfo />
-	<RouterView v-slot="{ Component, route }">
-		<template v-if="Component">
-			<Gnb>
-				<Suspense timeout="0">
-					<template #default>
-						<component :is="Component" :key="route.fullPath" />
-					</template>
-					<template #fallback>
-						<Loading />
-					</template>
-				</Suspense>
-			</Gnb>
-		</template>
-	</RouterView>
+	<q-layout>
+		<q-page-container>
+			<RouterView v-slot="{ Component, route }">
+				<template v-if="Component">
+					<Gnb>
+						<q-page>
+							<Suspense timeout="0">
+								<template #default>
+									<component :is="Component" :key="route.fullPath" />
+								</template>
+								<template #fallback>
+									<Loading />
+								</template>
+							</Suspense>
+						</q-page>
+					</Gnb>
+				</template>
+			</RouterView>
+		</q-page-container>
+	</q-layout>
 </template>
 
 <script setup>

@@ -1,23 +1,22 @@
 import { useApi } from '@/composables/useApi';
 import { defineStore } from 'pinia';
+import { computed, ref } from 'vue';
 
-export const useStoreMain = () => {
-	const { appApi } = useApi();
+export const useStoreMain = defineStore('useStoreMain', () => {
+	const { fetchGet } = useApi();
 
-	return defineStore('useStoreMain', {
-		state: () => ({
-			bannerList: [],
-		}),
-		getters: {
-			getBannerList: (state) => state.bannerList,
-		},
-		actions: {
-			async setBannerList(param) {
-				await appApi
-					.get('/display/main/banner', param)
-					.then((res) => (this.bannerList = res.data))
-					.catch((error) => console.log(error));
-			},
-		},
-	})();
-};
+	const bannerList = ref([]);
+
+	const getBannerList = computed(() => bannerList.value);
+
+	const setBannerList = async (param) => {
+		await fetchGet('/display/main/banner', param)
+			.then((res) => (bannerList.value = res.data))
+			.catch((error) => console.log(error));
+	};
+
+	return {
+		getBannerList,
+		setBannerList,
+	};
+});

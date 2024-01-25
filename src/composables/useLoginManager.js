@@ -7,7 +7,7 @@ const { MEMBER_CONST } = useEnum();
 export const useLoginManager = () => {
 	const storeMember = useStoreMember();
 
-	const isLogin = computed(() => storeMember.getIsLogin);
+	const isLogin = computed(() => storeMember.isLogin);
 	const userInfo = computed(() => storeMember.getUserInfo);
 	const userRole = computed(() => storeMember.getUserInfo.memberRole || MEMBER_CONST.ANONYMOUS);
 

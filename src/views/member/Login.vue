@@ -31,7 +31,7 @@
 	const storeMember = useStoreMember();
 	const memberId = decodeURIComponent(localStorage.getItem('memberId'));
 	const remember = ref(isEmpty(memberId) ? false : true);
-	const isLogin = computed(() => storeMember.getIsLogin);
+	const isLogin = computed(() => storeMember.isLogin);
 	const data = reactive({
 		memberId: remember ? memberId : '',
 		memberPassword: '',

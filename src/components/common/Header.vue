@@ -1,43 +1,53 @@
 <template>
 	<Mypage :isShow="mypageIsShow" />
-	<main class="sticky-top">
-		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-			<div class="container-fluid">
-				<RouterLink to="/" class="navbar-brand">
-					<!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg> -->
-					<h3 class="px-3 text-secondary">SHOP</h3>
+
+	<q-header elevated reveal class="bg-black">
+		<q-toolbar class="glossy">
+			<!-- <q-avatar>
+					<img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+				</q-avatar> -->
+
+			<RouterLink to="/" class="text-white">
+				<q-toolbar-title>SHOP</q-toolbar-title>
+			</RouterLink>
+			<q-btn v-if="isMobile" flat round dense icon="menu" class="q-mr-sm" />
+		</q-toolbar>
+		<q-toolbar insert>
+			<q-breadcrumbs active-color="primary" style="font-size: 16px">
+				<RouterLink class="text-white" v-for="header in headers" :key="header.codeId" :to="{ path: header.addInfo2 }">
+					<q-breadcrumbs-el :label="header.codeName" />
 				</RouterLink>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav-item-div" aria-controls="nav-item-div" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+				<RouterLink v-if="userRole === MEMBER_CONST.VIP || userRole === MEMBER_CONST.ADMIN" to="/display/vip" class="text-white">
+					<q-breadcrumbs-el label="VIP" />
+				</RouterLink>
 
-				<div class="collapse navbar-collapse" id="nav-item-div">
-					<ul class="navbar-nav me-auto col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-						<li v-for="header in headers" :key="header.codeId" @click="closeHeader" class="nav-item">
-							<RouterLink :to="{ path: header.addInfo2 }" class="nav-link px-2 text-secondary text-white">
-								{{ header.codeName }}
+				<div class="absolute-right">
+					<RouterLink v-if="!isLogin" to="/login" class="text-white">
+						<q-breadcrumbs-el label="Login" />
+					</RouterLink>
+					<a v-else @click="mypageOpen" href="javascript:void(0);" class="text-white" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Mypage</a>
+
+					<a class="text-white">·</a>
+
+					<RouterLink v-if="!isLogin" to="/signup" class="text-white">
+						<q-breadcrumbs-el label="Sign-up" />
+					</RouterLink>
+					<template v-else>
+						<template v-if="userRole === MEMBER_CONST.ADMIN">
+							<RouterLink to="/admin/dashboard" class="text-white">
+								<q-breadcrumbs-el label="admin" />
 							</RouterLink>
-						</li>
-						<li v-if="userRole === MEMBER_CONST.VIP || userRole === MEMBER_CONST.ADMIN" class="nav-item">
-							<RouterLink to="/display/vip" class="nav-link px-2 text-secondary text-white"> VIP </RouterLink>
-						</li>
-					</ul>
 
-					<div>
-						<RouterLink v-if="!isLogin" to="/login" @click="closeHeader" class="px-2 text-secondary text-white"><span>Login</span></RouterLink>
-						<a v-else @click="mypageOpen" href="javascript:void(0);" class="px-2 text-secondary text-white" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Mypage</a>
-						<a class="text-white">·</a>
-						<RouterLink v-if="!isLogin" to="/signup" @click="closeHeader" class="px-2 text-secondary text-white">Sign-up</RouterLink>
-						<a v-else @click="logout" href="javascript:void(0);" class="px-2 text-secondary text-white">Logout</a>
-						<RouterLink v-if="isLogin && userRole === MEMBER_CONST.ADMIN" to="/admin/dashboard" @click="closeHeader" type="button" class="btn btn-outline-light me-2">관리자</RouterLink>
-					</div>
+							<a class="text-white">·</a>
+						</template>
+						<a @click="logout" href="javascript:void(0);" class="text-white">
+							<q-breadcrumbs-el label="Logout" />
+						</a>
+					</template>
 				</div>
-				<!-- <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-						<input type="search" class="form-control form-control-dark text-bg-dark" placeholder="검색어를 입력하세요." aria-label="Search">
-					</div> -->
-			</div>
-		</nav>
-	</main>
+			</q-breadcrumbs>
+		</q-toolbar>
+	</q-header>
 </template>
 
 <script setup>
@@ -48,7 +58,7 @@
 	import { useLoginManager } from '@/composables/useLoginManager';
 	import { useStoreCommon } from '@/stores/useStoreCommon';
 	import { useStoreMember } from '@/stores/useStoreMember';
-	import { computed, nextTick, ref } from 'vue';
+	import { computed, ref } from 'vue';
 	import { RouterLink } from 'vue-router';
 
 	const { isLogin, userRole } = useLoginManager();
@@ -61,22 +71,10 @@
 	const headers = computed(() => storeCommon.getHeaders);
 
 	const logout = async () => {
-		await useMember.logoutProcess().then(() => {
-			closeHeader();
-		});
-	};
-	const closeHeader = () => {
-		nextTick(() => {
-			if (isMobile.value) {
-				if (document.getElementById('nav-item-div').classList.contains('show')) {
-					document.getElementById('nav-item-div').classList.remove('show');
-				}
-			}
-		});
+		await useMember.logoutProcess();
 	};
 	const mypageOpen = async () => {
 		await storeCommon.setMypageList().then(() => {
-			closeHeader();
 			mypageIsShow.value = true;
 		});
 	};
