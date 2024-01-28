@@ -27,7 +27,7 @@
 <script setup>
 	import { useUtils } from '@/composables/useUtils';
 	import { useStoreMain } from '@/stores/useStoreMain';
-	import { ref, computed, onMounted } from 'vue';
+	import { computed, onMounted, ref } from 'vue';
 
 	const { isEmpty } = useUtils();
 	const useMain = useStoreMain();
