@@ -8,7 +8,6 @@ import { quasar, transformAssetUrls } from '@quasar/vite-plugin';
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, `${process.cwd()}/env`, '');
-	console.log(process.cwd());
 	const active = env.VITE_PROFILE_ACTIVE;
 	const config = {
 		envDir: './env',
